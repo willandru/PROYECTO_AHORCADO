@@ -10,7 +10,13 @@ package main;
  * @author kaliw
  */
 public class App {
+    
+     static UI ui;
     public static void main(String[] args) {
-        System.out.println("Hola Mundo");
+        
+        ui.getInstance();
+        
+        
+        System.out.println("End main");
     }
 }
