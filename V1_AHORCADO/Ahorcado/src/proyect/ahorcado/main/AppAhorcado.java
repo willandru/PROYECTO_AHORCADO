@@ -16,6 +16,7 @@ public class AppAhorcado {
     
     public static void main(String[] args) {
         ux= UxAhorcado.getInstance();
+        
     }
     
 }
