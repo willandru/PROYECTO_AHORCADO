@@ -5,6 +5,8 @@
  */
 package main;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import splashscreen.SplashScreen;
 
 /**
@@ -16,18 +18,17 @@ public class App {
      static UI ui;
      static SplashScreen ss;
 
-    private static void iniciarSplashScreen() {
-        Runner run = new Runner();
-        Thread thread1 = new Thread(run);
-        thread1.start();
-    }
-     
 
     public static void main(String[] args) {
         
         ss.getInstance();
-        ui.getInstance();
-        iniciarSplashScreen();
+         try {
+             Thread.sleep(1000);
+         } catch (InterruptedException ex) {
+             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+         }
+       ui.getInstance();
+       
         
         System.out.println("End main");
     }

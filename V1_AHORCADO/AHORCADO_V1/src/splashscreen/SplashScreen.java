@@ -6,6 +6,8 @@
 package splashscreen;
 
 import java.awt.Color;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,7 +18,7 @@ import javax.swing.JProgressBar;
  *
  * @author kaliw
  */
-public class SplashScreen extends JFrame{
+public class SplashScreen extends JFrame implements Runnable{
     
     JPanel panellIzq;
     JPanel panellDer;
@@ -26,7 +28,8 @@ public class SplashScreen extends JFrame{
     static SplashScreen instance;
     private static final int WIDTH_SPLASH = 600;
     private static final int HEIGTH_SPLASH = 600;
-    
+    Thread thread1 = new Thread(this);
+
     public static SplashScreen getInstance() {
         
         if (instance == null) {
@@ -36,13 +39,16 @@ public class SplashScreen extends JFrame{
     }
     
     public SplashScreen(){
-        initPanels();
- 
         
+        thread1.setDaemon(true);
+        setSize(WIDTH_SPLASH, HEIGTH_SPLASH);
         setLocationRelativeTo(null);
-        setUndecorated(true);
-        setVisible(true);
+        initPanels();
+        thread1.start();
+        //setUndecorated(true);
         
+        
+    
     }
 
     private void initPanels() {
@@ -67,5 +73,30 @@ public class SplashScreen extends JFrame{
         this.getContentPane().add(panellDer);
         this.add(imageA);
         this.getContentPane().add(bar);
+    }
+
+
+
+    @Override
+    public void run() {
+         int x=0;
+         try {
+             setVisible(true);
+             //this.setVisible(true);
+                     while(x<=100){
+                         
+                         bar.setValue(x);
+                         //porcentaje.setText(x+"%");
+                         //porcentaje2.setText(cad+x+"%");
+                         x+=25;
+                         //cad+=".";
+                         Thread.sleep(5000);
+                     }
+                     dispose();
+                     
+                 } catch (Exception e) {
+                     System.out.println("Exception "+ e.getMessage());
+                 }
+
     }
 }
