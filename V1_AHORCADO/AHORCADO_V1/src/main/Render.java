@@ -13,7 +13,12 @@ import java.awt.Graphics;
  */
 public class Render {
     
-    public Render(){
+    
+    private App app;
+    
+    public Render(App ap){
+        
+        this.app=ap;
         
     }
     
@@ -21,13 +26,13 @@ public class Render {
         
         switch(StatesApp.gameState){
             case MENU:
-                StatesApp.getMenu().render(g);
+                app.getMenu().render(g);
                 break;
             case PLAYIN:
-                renderGame.getPlaying().render(g);
+                app.getPlaying().render(g);
                 break;
             case SETTINGS:
-                renderGame.getSetts().render(g);
+                app.getSetts().render(g);
                 break;
             
         }
