@@ -28,8 +28,8 @@ public class SplashScreen extends JFrame implements Runnable{
     JProgressBar bar;
     static UI uiInst;
     static SplashScreen instance;
-    private static final int WIDTH_SPLASH = 400;
-    private static final int HEIGTH_SPLASH = 100;
+    private static final int WIDTH_SPLASH = 700;
+    private static final int HEIGTH_SPLASH = 300;
     private Thread thread1=null; 
 
     public static SplashScreen getInstance() {
@@ -67,7 +67,7 @@ public class SplashScreen extends JFrame implements Runnable{
         ImageIcon img1;
         img1 = new ImageIcon("/images/pic.gif");
         imageA= new JLabel(img1);   
-        imageA.setBounds(0, HEIGTH_SPLASH/4,256,256);
+        imageA.setBounds(0, HEIGTH_SPLASH/4,40,40);
         
         bar = new javax.swing.JProgressBar();
         bar.setBounds(0,HEIGTH_SPLASH-30, WIDTH,30);
@@ -77,6 +77,7 @@ public class SplashScreen extends JFrame implements Runnable{
         this.getContentPane().add(panellDer);
         this.add(imageA);
         this.getContentPane().add(bar);
+        this.setUndecorated(true);
     }
 
 
@@ -86,7 +87,7 @@ public class SplashScreen extends JFrame implements Runnable{
         
         while(thread1 !=null){
             try{
-                Thread.sleep(5000);
+                Thread.sleep(4000);
                 this.dispose();
                 uiInst.getInstance();
             }catch (Exception e){
