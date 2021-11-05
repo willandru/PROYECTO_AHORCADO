@@ -15,19 +15,14 @@ import splashscreen.SplashScreen;
  */
 public class App {
     
-     static UI ui;
+
      static SplashScreen ss;
 
 
     public static void main(String[] args) {
         
         ss.getInstance();
-         try {
-             Thread.sleep(1000);
-         } catch (InterruptedException ex) {
-             Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
-         }
-       ui.getInstance();
+
        
         
         System.out.println("End main");

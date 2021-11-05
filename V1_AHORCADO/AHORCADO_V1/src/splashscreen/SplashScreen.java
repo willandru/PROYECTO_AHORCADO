@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import main.UI;
 
 /**
  *
@@ -25,10 +26,11 @@ public class SplashScreen extends JFrame implements Runnable{
     JLabel imageA;
     JLabel imageB;
     JProgressBar bar;
+    static UI uiInst;
     static SplashScreen instance;
-    private static final int WIDTH_SPLASH = 600;
-    private static final int HEIGTH_SPLASH = 600;
-    Thread thread1 = new Thread(this);
+    private static final int WIDTH_SPLASH = 400;
+    private static final int HEIGTH_SPLASH = 100;
+    private Thread thread1=null; 
 
     public static SplashScreen getInstance() {
         
@@ -39,11 +41,13 @@ public class SplashScreen extends JFrame implements Runnable{
     }
     
     public SplashScreen(){
-        
-        thread1.setDaemon(true);
+        thread1 = new Thread(this);
+        //thread1.setDaemon(true);
         setSize(WIDTH_SPLASH, HEIGTH_SPLASH);
         setLocationRelativeTo(null);
         initPanels();
+        setVisible(true);
+        //setUndecorated(false);
         thread1.start();
         //setUndecorated(true);
         
@@ -79,24 +83,17 @@ public class SplashScreen extends JFrame implements Runnable{
 
     @Override
     public void run() {
-         int x=0;
-         try {
-             setVisible(true);
-             //this.setVisible(true);
-                     while(x<=100){
-                         
-                         bar.setValue(x);
-                         //porcentaje.setText(x+"%");
-                         //porcentaje2.setText(cad+x+"%");
-                         x+=25;
-                         //cad+=".";
-                         Thread.sleep(5000);
-                     }
-                     dispose();
-                     
-                 } catch (Exception e) {
-                     System.out.println("Exception "+ e.getMessage());
-                 }
-
+        
+        while(thread1 !=null){
+            try{
+                Thread.sleep(5000);
+                this.dispose();
+                uiInst.getInstance();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            thread1=null;
+        }
+    } 
+    
     }
-}
