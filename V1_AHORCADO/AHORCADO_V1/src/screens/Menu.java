@@ -34,10 +34,13 @@ public class Menu extends JPanel implements ActionListener{
     
     public Menu(){
        
+       
         setLayout(null);
+        setBackground(new Color(0x137756));
         importImages();
         initButtons();
         addButtons();
+        setVisible(true);
         
     }
 

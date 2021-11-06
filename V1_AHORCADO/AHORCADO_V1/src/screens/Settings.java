@@ -5,6 +5,7 @@
  */
 package screens;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,6 +22,7 @@ public class Settings extends JPanel implements ActionListener{
 private JButton btn;
     public Settings(){
         System.out.println("CONFIGS");
+        setBackground(new Color(0x123456));
         setLayout(null);
         initButn();
         addButn();
@@ -36,7 +38,7 @@ private JButton btn;
     public void actionPerformed(ActionEvent ae) {
         Object origen = ae.getSource();
          if(origen == this.btn){
-           StatesApp.gameState= PLAYIN;
+           StatesApp.gameState= MENU;
             
         }
     }
