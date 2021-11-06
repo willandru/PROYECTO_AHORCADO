@@ -32,7 +32,7 @@ public class Render {
                 app.getPlaying().render(g);
                 break;
             case SETTINGS:
-                app.getSetts().render(g);
+                //app.getSetts().render(g);
                 break;
             
         }

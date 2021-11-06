@@ -8,6 +8,7 @@ package main;
 import java.awt.Color;
 import javax.swing.JFrame;
 import screens.Menu;
+import screens.Settings;
 
 /**
  *
@@ -18,6 +19,7 @@ public class UI extends JFrame implements Runnable{ //IMPLEMENTS RUNNABLE
     private static final int WIDTH_SCREEN = 400;
     private static final int HEIGHT_SCREEN = 700;
     private Menu menu=new Menu();
+    private Settings setts= new Settings();
     
     
     private Thread uiThread=null;
@@ -58,10 +60,12 @@ public class UI extends JFrame implements Runnable{ //IMPLEMENTS RUNNABLE
                 System.out.println("MENU");
                 break;
             case PLAYIN:
-                System.out.println("main.UI.run()");
+                System.out.println("PLAYING");
                 break;
             case SETTINGS:
-                System.out.println("main.UI.run()");
+                System.out.println("SETTINGS");
+                this.add(setts);
+                this.setVisible(true);
                 break;
             
                 }

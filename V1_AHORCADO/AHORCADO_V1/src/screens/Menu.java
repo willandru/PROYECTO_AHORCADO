@@ -91,6 +91,9 @@ public class Menu extends JPanel implements ActionListener{
         
         btnQuit=new JButton("QUIT");
         btnQuit.setBounds(130,480,124,40);
+          btnPlay.addActionListener(this);
+         btnSetts.addActionListener(this);
+          btnQuit.addActionListener(this);
     }
 
     private void addButtons() {
