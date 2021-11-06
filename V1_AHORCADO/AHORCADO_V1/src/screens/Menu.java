@@ -12,14 +12,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
-import main.App;
-import main.UI;
+import javax.swing.JPanel;
+
 
 /**
  *
  * @author kaliw
  */
-public class Menu extends UI implements ScreenMethods{
+public class Menu extends JPanel implements ScreenMethods{
     
     private BufferedImage imgbtn1;
     private BufferedImage rojoT;
@@ -29,8 +29,8 @@ public class Menu extends UI implements ScreenMethods{
      private JButton btnPlay, btnSetts, btnQuit;
     
     public Menu(){
-        super();
-        getContentPane().setBackground(Color.green);
+       
+        setLayout(null);
         importImages();
         initButtons();
         addButtons();
@@ -86,14 +86,17 @@ public class Menu extends UI implements ScreenMethods{
 
     private void initButtons() {
         
+        
+        
+        
         btnPlay = new JButton();
-        btnPlay.setBounds(100,300,124,40);
+        btnPlay.setBounds(130,300,124,40);
         
         btnSetts=new JButton();
-        btnSetts.setBounds(100,370,124,40);
+        btnSetts.setBounds(130,390,124,40);
         
         btnQuit=new JButton("QUIT");
-        btnQuit.setBounds(100,440,124,40);
+        btnQuit.setBounds(130,480,124,40);
     }
 
     private void addButtons() {

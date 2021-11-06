@@ -63,6 +63,7 @@ public class SplashScreen extends JFrame implements Runnable{
         panellDer = new JPanel();
         panellDer.setSize(WIDTH_SPLASH / 2, HEIGTH_SPLASH);
         panellDer.setBackground(Color.black);
+        panellDer.setLocation(WIDTH/2, WIDTH);
         
         ImageIcon img1;
         img1 = new ImageIcon("/images/pic.gif");
@@ -73,7 +74,7 @@ public class SplashScreen extends JFrame implements Runnable{
         bar.setBounds(0,HEIGTH_SPLASH-30, WIDTH,30);
         
         
-        this.getContentPane().add(panellIzq);
+         this.getContentPane().add(panellIzq);
         this.getContentPane().add(panellDer);
         this.add(imageA);
         this.getContentPane().add(bar);
@@ -87,7 +88,7 @@ public class SplashScreen extends JFrame implements Runnable{
         
         while(thread1 !=null){
             try{
-                Thread.sleep(4000);
+                Thread.sleep(2600);
                 this.dispose();
                 uiInst.getInstance();
             }catch (Exception e){
