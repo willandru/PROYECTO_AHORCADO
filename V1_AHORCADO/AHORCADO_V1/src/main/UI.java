@@ -22,7 +22,7 @@ public class UI extends JFrame{
         setSize(WIDTH_SCREEN, HEIGHT_SCREEN);
         setResizable(false);
         setLocationRelativeTo(null);
-        
+        getContentPane().setBackground(Color.black);
         
         setVisible(true);
     }
