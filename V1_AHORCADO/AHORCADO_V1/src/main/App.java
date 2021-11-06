@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package main;
+/*FIXING COMMENT FROM SPLASH BRANCH"*/
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
