@@ -5,8 +5,12 @@
  */
 package main;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+
+import screens.Menu;
+import screens.Playing;
+import screens.Settings;
+
 import splashscreen.SplashScreen;
 
 /**
@@ -17,6 +21,10 @@ public class App {
     
 
      static SplashScreen ss;
+     
+    private Menu menu;
+    private Playing playing;
+    private Settings setts;
 
 
     public static void main(String[] args) {
@@ -27,4 +35,32 @@ public class App {
         
         System.out.println("End main");
     }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public void setMenu(Menu menu) {
+        this.menu = menu;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(Playing playing) {
+        this.playing = playing;
+    }
+
+    public Settings getSetts() {
+        return setts;
+    }
+
+    public void setSetts(Settings setts) {
+        this.setts = setts;
+    }
+    
+    
+    
+    
 }
