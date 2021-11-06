@@ -5,25 +5,17 @@
  */
 package main;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import splashscreen.SplashScreen;
-
 /**
  *
  * @author kaliw
  */
 public class App {
     
-
-     static SplashScreen ss;
-
-
+     static UI ui;
     public static void main(String[] args) {
         
-        ss.getInstance();
-
-       
+        ui.getInstance();
+        
         
         System.out.println("End main");
     }
