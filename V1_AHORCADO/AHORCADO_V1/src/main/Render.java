@@ -26,7 +26,7 @@ public class Render {
         
         switch(StatesApp.gameState){
             case MENU:
-                app.getMenu().render(g);
+               // app.getMenu().render(g);
                 break;
             case PLAYIN:
                 app.getPlaying().render(g);

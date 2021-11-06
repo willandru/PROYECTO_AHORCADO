@@ -7,19 +7,23 @@ package screens;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import main.StatesApp;
+import static main.StatesApp.*;
 
 
 /**
  *
  * @author kaliw
  */
-public class Menu extends JPanel implements ScreenMethods{
+public class Menu extends JPanel implements ActionListener{
     
     private BufferedImage imgbtn1;
     private BufferedImage rojoT;
@@ -34,35 +38,25 @@ public class Menu extends JPanel implements ScreenMethods{
         importImages();
         initButtons();
         addButtons();
+        
     }
 
+     
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+         Object origen = ae.getSource();
+         if(origen == this.btnPlay){
+           StatesApp.gameState=PLAYIN;
+            
+        } else if(origen == this.btnSetts){
+            StatesApp.gameState=SETTINGS;
+            
+        }else if(origen == this.btnQuit){
+            System.exit(0);
+        }
+        
+    }
     
-    
-
-                @Override
-                public void render(Graphics g) {
-                }
-
-                @Override
-                public void mouseClick(int x, int y) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mouseMov(int x, int y) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mousePress(int x, int y) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
-                @Override
-                public void mouseReleas(int x, int y) {
-                    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-                }
-
 
     
     
@@ -105,5 +99,15 @@ public class Menu extends JPanel implements ScreenMethods{
         this.add(btnQuit);
 
     }
+
+    
+    
+    
+    
+    
+    
+    
+    
+   
     
 }
