@@ -4,10 +4,15 @@
  * and open the template in the editor.
  */
 package main;
+/*FIXING COMMENT FROM SPLASH BRANCH"*/
 
 import screens.Menu;
 import screens.Playing;
 import screens.Settings;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import splashscreen.SplashScreen;
 
 /**
@@ -16,25 +21,19 @@ import splashscreen.SplashScreen;
  */
 public class App {
     
-     static UI ui;
+
      static SplashScreen ss;
      
     private Menu menu;
     private Playing playing;
     private Settings setts;
 
-    private static void iniciarSplashScreen() {
-        Runner run = new Runner();
-        Thread thread1 = new Thread(run);
-        thread1.start();
-    }
-     
 
     public static void main(String[] args) {
         
         ss.getInstance();
-        ui.getInstance();
-        iniciarSplashScreen();
+
+       
         
         System.out.println("End main");
     }
