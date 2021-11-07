@@ -10,7 +10,7 @@ package main;
  * @author kaliw
  */
 public enum StatesApp {
-     PLAYIN,    MENU,    SETTINGS, QUIT;
+     PLAYING,    MENU,    SETTINGS, QUIT;
     public static StatesApp gameState = MENU;
     
     public static void SetStatesApp(StatesApp state){

@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
-import scenes.MENU;
+import scenes.*;
 
 /**
  *
@@ -30,7 +30,10 @@ public class UI extends JFrame {
     public boolean settsPintado=false;
     public boolean playPintado=false;
     
-    private Thread T1=null;
+    
+    public MENU m;
+    public PLAYING p;
+ 
     UI(){
 //        T1= new Thread(this);
         setSize(ANCHO, ALTO);
@@ -41,7 +44,8 @@ public class UI extends JFrame {
         myPanel=new JPanel ();
         initMainPanel();
         add(myPanel);
-        // T1.start();
+       
+        
         start();
         setVisible(true);
     }
@@ -55,7 +59,7 @@ public class UI extends JFrame {
     
    
     private void start(){
-        SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
+        SwingWorker<Void, StatesApp> worker = new SwingWorker<Void, StatesApp>() {
             @Override
             protected Void doInBackground() throws Exception {
                 
@@ -63,12 +67,13 @@ public class UI extends JFrame {
                 MENU m = new MENU();
                 
               while(continua){ 
-                  Thread.sleep(300);
+                  Thread.sleep(30);
                 switch(StatesApp.gameState){
               
             case MENU:
                
                 if(!menuPintado){
+                    m = new MENU();
                 m.setSize(ANCHO, ALTO);
                 //m.setBackground(Color.blue);
                 
@@ -79,28 +84,32 @@ public class UI extends JFrame {
                  
                 System.out.println("Menu painted");
                 menuPintado=true;
-                }
+                playPintado=false;
+                
+            }
                 System.out.println("NUMBER: "+ m.getNumero());
-                publish(m.getNumero());
-                System.out.println("MENU PUBLISHED");
+                publish(StatesApp.gameState);
+                System.out.println("MENU holi PUBLISHED");
         
                 break;
-            case PLAYIN:
+            case PLAYING:
                 
                 if(!playPintado){
-                JPanel n = new JPanel();
-                n.setSize(ANCHO, ALTO);
-                n.setBackground(Color.yellow);
+                p = new PLAYING();
+                p.setSize(ANCHO, ALTO);
+                p.setBackground(Color.yellow);
                 
                 myPanel.removeAll();
-                myPanel.add(n);
+                myPanel.add(p);
                 myPanel.revalidate();
                 myPanel.repaint();
                 System.out.println("PLAYIN painted");
                 playPintado=true;
+                menuPintado=false;
                 }
-                 //publish(StatesApp.gameState);
-                System.out.println("PLAYING");
+                 publish(StatesApp.gameState);
+                System.out.println("PLAYING holi PUBLISHED");
+               // System.out.println("");
                 break;
             case SETTINGS:
                 
@@ -115,6 +124,8 @@ public class UI extends JFrame {
                 myPanel.repaint();
                 System.out.println("SETTS painted");
                 settsPintado=true;
+                menuPintado=false;
+               
                 }
                // publish(StatesApp.gameState);
                 System.out.println("SETTINGS");
@@ -132,24 +143,12 @@ public class UI extends JFrame {
             }
 
             @Override
-            protected void process(List<Integer> chunks) {
-                 Integer value= chunks.get(chunks.size()-1);
+            protected void process(List<StatesApp> chunks) {
+                 StatesApp value= chunks.get(chunks.size()-1);
                 
-                 if(value==1){
-                     menuPintado=false;
-                     settsPintado=false;
-                     
-                     StatesApp.gameState= StatesApp.PLAYIN;
-                     
-                 }else if(value == 2){
-                     menuPintado=false;
-                     playPintado=false;
-                     StatesApp.gameState= StatesApp.SETTINGS;
-                 }else if(value == 0){
-                     settsPintado=false;
-                     playPintado=false;
-                     StatesApp.gameState= StatesApp.MENU;
-                 }
+                System.out.println(".process(): "  + value);
+                    // StatesApp.gameState= StatesApp.MENU;
+                 
                 
             }
             

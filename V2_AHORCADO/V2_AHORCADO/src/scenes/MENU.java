@@ -15,8 +15,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import scenes.StatesApp;
-import static scenes.StatesApp.*;
+import main.StatesApp;
+import static main.StatesApp.*;
 
 /**
  *
@@ -47,7 +47,7 @@ public class MENU extends JPanel implements ActionListener{
          Object origen = ae.getSource();
          if(origen == this.btnPlay){
              numero=1;
-           StatesApp.gameState=PLAYIN;
+           StatesApp.gameState=PLAYING;
            System.out.println("actiion PLAYING");
             
         } else if(origen == this.btnSetts){
@@ -72,10 +72,10 @@ public class MENU extends JPanel implements ActionListener{
 
     private void initButtons() {
 
-        btnPlay = new JButton();
+        btnPlay = new JButton("PLAY");
         btnPlay.setBounds(130,300,124,40);
         
-        btnSetts=new JButton();
+        btnSetts=new JButton("SETTINGS");
         btnSetts.setBounds(130,390,124,40);
         
         btnQuit=new JButton("QUIT");
