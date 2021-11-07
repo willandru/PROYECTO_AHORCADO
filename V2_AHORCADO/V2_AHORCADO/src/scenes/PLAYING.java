@@ -5,10 +5,15 @@
  */
 package scenes;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author kaliw
  */
 public class PLAYING {
+    public JButton goMenu;
+    
+    
     
 }

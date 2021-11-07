@@ -26,6 +26,9 @@ public class UI extends JFrame {
     private static final int ALTO=680;
     
     public boolean continua=true;
+    public boolean menuPintado=false;
+    public boolean settsPintado=false;
+    public boolean playPintado=false;
     
     private Thread T1=null;
     UI(){
@@ -60,26 +63,31 @@ public class UI extends JFrame {
                 MENU m = new MENU();
                 
               while(continua){ 
-                  Thread.sleep(1000);
+                  Thread.sleep(300);
                 switch(StatesApp.gameState){
               
             case MENU:
                
+                if(!menuPintado){
                 m.setSize(ANCHO, ALTO);
-                m.setBackground(Color.blue);
+                //m.setBackground(Color.blue);
                 
                 myPanel.removeAll();
                 myPanel.add(m);
                 myPanel.revalidate();
                 myPanel.repaint();
                  
+                System.out.println("Menu painted");
+                menuPintado=true;
+                }
                 System.out.println("NUMBER: "+ m.getNumero());
                 publish(m.getNumero());
                 System.out.println("MENU PUBLISHED");
-                
-                        
+        
                 break;
             case PLAYIN:
+                
+                if(!playPintado){
                 JPanel n = new JPanel();
                 n.setSize(ANCHO, ALTO);
                 n.setBackground(Color.yellow);
@@ -88,11 +96,15 @@ public class UI extends JFrame {
                 myPanel.add(n);
                 myPanel.revalidate();
                 myPanel.repaint();
-                
+                System.out.println("PLAYIN painted");
+                playPintado=true;
+                }
                  //publish(StatesApp.gameState);
                 System.out.println("PLAYING");
                 break;
             case SETTINGS:
+                
+                if(!settsPintado){
                 JPanel o = new JPanel();
                 o.setSize(ANCHO, ALTO);
                 o.setBackground(Color.red);
@@ -101,7 +113,9 @@ public class UI extends JFrame {
                 myPanel.add(o);
                 myPanel.revalidate();
                 myPanel.repaint();
-                
+                System.out.println("SETTS painted");
+                settsPintado=true;
+                }
                // publish(StatesApp.gameState);
                 System.out.println("SETTINGS");
                 
@@ -122,17 +136,19 @@ public class UI extends JFrame {
                  Integer value= chunks.get(chunks.size()-1);
                 
                  if(value==1){
+                     menuPintado=false;
+                     settsPintado=false;
+                     
                      StatesApp.gameState= StatesApp.PLAYIN;
-                     while(true){
-                         System.out.println(".process()");
-                         try {
-                             Thread.sleep(3000);
-                         } catch (InterruptedException ex) {
-                             Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
-                         }
-                     }
+                     
                  }else if(value == 2){
+                     menuPintado=false;
+                     playPintado=false;
                      StatesApp.gameState= StatesApp.SETTINGS;
+                 }else if(value == 0){
+                     settsPintado=false;
+                     playPintado=false;
+                     StatesApp.gameState= StatesApp.MENU;
                  }
                 
             }
