@@ -19,13 +19,15 @@ import scenes.MENU;
  *
  * @author kaliw
  */
-public class UI extends JFrame {
+public class UI extends JFrame implements Runnable{
     
     private JPanel myPanel;
     private static final int ANCHO=400;
     private static final int ALTO=680;
     
+    private Thread T1=null;
     UI(){
+        T1= new Thread(this);
         setSize(ANCHO, ALTO);
         setBackground(new Color(0x123456));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,37 +47,67 @@ public class UI extends JFrame {
         myPanel.setLayout(null);
     }
     
-    
-    
-    
+   
     private void start(){
-        SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
+        SwingWorker<Void, StatesApp> worker = new SwingWorker<Void, StatesApp>() {
             @Override
             protected Void doInBackground() throws Exception {
                 
+                T1.start();
                 
-                JPanel n = new JPanel();
-                n.setSize(ANCHO, ALTO);
-                n.setBackground(Color.yellow);
+                    System.out.println(".doInBackground()");    
+
                 
-                myPanel.removeAll();
-                 myPanel.add(n);
-                myPanel.revalidate();
-                myPanel.repaint();
+                return null;
+            }
+
+            @Override
+            protected void process(List<StatesApp> chunks) {
                 
-                Thread.sleep(1000);
-                  
+
+                StatesApp.gameState=chunks.get(chunks.size()-1);
+                
+            }
+            
+           
+        };
+        worker.execute();
+    }
+
+    @Override
+    public void run() {
+            while(T1!=null){
+                try{
+                    Thread.sleep(1000);
+                    
+                   
+                switch(StatesApp.gameState){
+            case MENU:
                 MENU m = new MENU();
                 m.setSize(ANCHO, ALTO);
                 m.setBackground(Color.blue);
                 
                 myPanel.removeAll();
-                 myPanel.add(m);
+                myPanel.add(m);
+                myPanel.revalidate();
+                myPanel.repaint();
+                  
+                
+                System.out.println("MENU");
+                break;
+            case PLAYIN:
+                JPanel n = new JPanel();
+                n.setSize(ANCHO, ALTO);
+                n.setBackground(Color.yellow);
+                
+                myPanel.removeAll();
+                myPanel.add(n);
                 myPanel.revalidate();
                 myPanel.repaint();
                 
-                Thread.sleep(1000);
-                  
+                System.out.println("PLAYING");
+                break;
+            case SETTINGS:
                 JPanel o = new JPanel();
                 o.setSize(ANCHO, ALTO);
                 o.setBackground(Color.red);
@@ -84,18 +116,22 @@ public class UI extends JFrame {
                  myPanel.add(o);
                 myPanel.revalidate();
                 myPanel.repaint();
+                System.out.println("SETTINGS");
                 
-                return null;
-            }
-
-            @Override
-            protected void process(List<Integer> chunks) {
-                
-            }
+                break;
+            default:
+                System.out.println("notin");
+                    
             
-           
-        };
-        worker.execute();
-    }
+                }
+               
+            
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+           // T1=null;
+        
     
+        }
+}
 }

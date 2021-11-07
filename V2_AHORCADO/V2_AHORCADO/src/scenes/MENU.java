@@ -48,9 +48,11 @@ public class MENU extends JPanel implements ActionListener{
          Object origen = ae.getSource();
          if(origen == this.btnPlay){
            StatesApp.gameState=PLAYIN;
+           System.out.println("actiion PLAYING");
             
         } else if(origen == this.btnSetts){
             StatesApp.gameState=SETTINGS;
+            System.out.println("actiion SETTINGS");
             
         }else if(origen == this.btnQuit){
             System.exit(0);
