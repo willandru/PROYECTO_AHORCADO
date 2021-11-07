@@ -10,10 +10,12 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
 import scenes.MENU;
+import scenes.PLAYING;
 
 /**
  *
@@ -30,6 +32,12 @@ public class UI extends JFrame {
     public boolean settsPintado=false;
     public boolean playPintado=false;
     
+    public PLAYING n;
+    public MENU m;
+    public JPanel o;
+    
+    public Integer value=0;
+    
     private Thread T1=null;
     UI(){
 //        T1= new Thread(this);
@@ -39,8 +47,12 @@ public class UI extends JFrame {
         setLocationRelativeTo(null);
         
         myPanel=new JPanel ();
+        m = new MENU();
+        o = new JPanel();
         initMainPanel();
         add(myPanel);
+        
+        n = new PLAYING();
         // T1.start();
         start();
         setVisible(true);
@@ -60,13 +72,14 @@ public class UI extends JFrame {
             protected Void doInBackground() throws Exception {
                 
                 System.out.println("BEGIN WORKER");
-                MENU m = new MENU();
+               
+                 
                 
               while(continua){ 
                   Thread.sleep(300);
-                switch(StatesApp.gameState){
+                switch(value){
               
-            case MENU:
+            case 0:
                
                 if(!menuPintado){
                 m.setSize(ANCHO, ALTO);
@@ -85,10 +98,11 @@ public class UI extends JFrame {
                 System.out.println("MENU PUBLISHED");
         
                 break;
-            case PLAYIN:
+            case 1:
                 
                 if(!playPintado){
-                JPanel n = new JPanel();
+               
+                //n.setLayout();
                 n.setSize(ANCHO, ALTO);
                 n.setBackground(Color.yellow);
                 
@@ -98,28 +112,28 @@ public class UI extends JFrame {
                 myPanel.repaint();
                 System.out.println("PLAYIN painted");
                 playPintado=true;
+                   
                 }
-                 //publish(StatesApp.gameState);
+                 publish(m.getNumero());
                 System.out.println("PLAYING");
                 break;
-            case SETTINGS:
+            case 2:
                 
-                if(!settsPintado){
-                JPanel o = new JPanel();
-                o.setSize(ANCHO, ALTO);
-                o.setBackground(Color.red);
+                if(!menuPintado){
+                m.setSize(ANCHO, ALTO);
+                m.setBackground(Color.blue);
                 
                 myPanel.removeAll();
-                myPanel.add(o);
+                myPanel.add(m);
                 myPanel.revalidate();
                 myPanel.repaint();
-                System.out.println("SETTS painted");
-                settsPintado=true;
+                 
+                System.out.println("Menu painted");
+                menuPintado=true;
                 }
-               // publish(StatesApp.gameState);
-                System.out.println("SETTINGS");
-                
-                break;
+                System.out.println("NUMBER: "+ m.getNumero());
+                publish(m.getNumero());
+                System.out.println("MENU PUBLISHED");
             
                     
             
@@ -133,7 +147,7 @@ public class UI extends JFrame {
 
             @Override
             protected void process(List<Integer> chunks) {
-                 Integer value= chunks.get(chunks.size()-1);
+                 value= chunks.get(chunks.size()-1);
                 
                  if(value==1){
                      menuPintado=false;
