@@ -28,6 +28,7 @@ public class MENU extends JPanel implements ActionListener{
 
      public JButton btnPlay, btnSetts, btnQuit;
      public int numero;
+     public boolean enEspera=false;
     
     public MENU(){
        

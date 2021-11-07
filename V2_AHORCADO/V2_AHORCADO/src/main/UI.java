@@ -25,6 +25,8 @@ public class UI extends JFrame {
     private static final int ANCHO=400;
     private static final int ALTO=680;
     
+    public boolean continua=true;
+    
     private Thread T1=null;
     UI(){
 //        T1= new Thread(this);
@@ -57,8 +59,8 @@ public class UI extends JFrame {
                 System.out.println("BEGIN WORKER");
                 MENU m = new MENU();
                 
-              while(StatesApp.gameState != StatesApp.QUIT){ 
-                  Thread.sleep(20);
+              while(continua){ 
+                  Thread.sleep(1000);
                 switch(StatesApp.gameState){
               
             case MENU:
@@ -74,7 +76,8 @@ public class UI extends JFrame {
                 System.out.println("NUMBER: "+ m.getNumero());
                 publish(m.getNumero());
                 System.out.println("MENU PUBLISHED");
-                 Thread.sleep(8000);
+                
+                        
                 break;
             case PLAYIN:
                 JPanel n = new JPanel();
@@ -120,6 +123,14 @@ public class UI extends JFrame {
                 
                  if(value==1){
                      StatesApp.gameState= StatesApp.PLAYIN;
+                     while(true){
+                         System.out.println(".process()");
+                         try {
+                             Thread.sleep(3000);
+                         } catch (InterruptedException ex) {
+                             Logger.getLogger(UI.class.getName()).log(Level.SEVERE, null, ex);
+                         }
+                     }
                  }else if(value == 2){
                      StatesApp.gameState= StatesApp.SETTINGS;
                  }
