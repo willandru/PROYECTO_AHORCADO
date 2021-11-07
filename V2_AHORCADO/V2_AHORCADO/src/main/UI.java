@@ -45,11 +45,12 @@ public class UI extends JFrame {
         setBackground(new Color(0x123456));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
  //INICIALIZAMOS Y AGREGAMOS el panel principal unido directamente al FRAME       
         myPanel=new JPanel ();
         initMainPanel();
         add(myPanel);
-       
+      
  //EMPIEZA EL HILO SWING WORKER  
         start();
         
