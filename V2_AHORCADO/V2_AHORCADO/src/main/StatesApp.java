@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package scenes;
+package main;
 
 /**
  *
  * @author kaliw
  */
 public enum StatesApp {
-     PLAYIN,    MENU,    SETTINGS;
+     PLAYING,    MENU,    SETTINGS, QUIT;
     public static StatesApp gameState = MENU;
     
     public static void SetStatesApp(StatesApp state){
