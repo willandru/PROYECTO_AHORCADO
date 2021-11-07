@@ -7,9 +7,6 @@ package main;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
@@ -24,6 +21,8 @@ public class UI extends JFrame {
     private JPanel myPanel;
     private static final int ANCHO=400;
     private static final int ALTO=680;
+    
+    public static UI instance;
  
     
    //BOOLEANS  :: Permiten al HILO SWINGwORKER correr infinitamente y 
@@ -163,6 +162,14 @@ public class UI extends JFrame {
            
         };
         worker.execute();
+    }
+    
+    public static UI getInstance() {
+        
+        if (instance == null) {
+            instance = new UI();
+        }
+        return instance;
     }
 
     

@@ -13,7 +13,7 @@ import javax.swing.SwingUtilities;
  */
 public class MainAPP {
     //****VARIABLES****
-    static UI uiInstance;
+    static SplashScreen instance;
     //UX uxInstance;
     
     //****MAIN****
@@ -23,7 +23,7 @@ public class MainAPP {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               uiInstance= new UI();
+               instance= new SplashScreen();
             }
         });
         
