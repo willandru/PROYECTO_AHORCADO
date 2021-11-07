@@ -24,12 +24,10 @@ import static scenes.StatesApp.*;
  */
 public class MENU extends JPanel implements ActionListener{
     
-    private BufferedImage imgbtn1;
-    private BufferedImage rojoT;
-    private BufferedImage verT;
-    private BufferedImage negT;
+  
 
-     private JButton btnPlay, btnSetts, btnQuit;
+     public JButton btnPlay, btnSetts, btnQuit;
+     public int numero;
     
     public MENU(){
        
@@ -47,12 +45,16 @@ public class MENU extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent ae) {
          Object origen = ae.getSource();
          if(origen == this.btnPlay){
+             numero=1;
            StatesApp.gameState=PLAYIN;
            System.out.println("actiion PLAYING");
             
         } else if(origen == this.btnSetts){
+            numero=2;
             StatesApp.gameState=SETTINGS;
             System.out.println("actiion SETTINGS");
+            System.out.println("state: "+ StatesApp.gameState);
+
             
         }else if(origen == this.btnQuit){
             System.exit(0);
@@ -61,7 +63,9 @@ public class MENU extends JPanel implements ActionListener{
     }
     
 
-    
+    public int  getNumero(){
+        return numero;
+    }
     
 
 

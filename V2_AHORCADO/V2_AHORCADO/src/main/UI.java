@@ -19,7 +19,7 @@ import scenes.MENU;
  *
  * @author kaliw
  */
-public class UI extends JFrame implements Runnable{
+public class UI extends JFrame {
     
     private JPanel myPanel;
     private static final int ANCHO=400;
@@ -27,7 +27,7 @@ public class UI extends JFrame implements Runnable{
     
     private Thread T1=null;
     UI(){
-        T1= new Thread(this);
+//        T1= new Thread(this);
         setSize(ANCHO, ALTO);
         setBackground(new Color(0x123456));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -36,6 +36,7 @@ public class UI extends JFrame implements Runnable{
         myPanel=new JPanel ();
         initMainPanel();
         add(myPanel);
+        // T1.start();
         start();
         setVisible(true);
     }
@@ -49,41 +50,19 @@ public class UI extends JFrame implements Runnable{
     
    
     private void start(){
-        SwingWorker<Void, StatesApp> worker = new SwingWorker<Void, StatesApp>() {
+        SwingWorker<Void, Integer> worker = new SwingWorker<Void, Integer>() {
             @Override
             protected Void doInBackground() throws Exception {
                 
-                T1.start();
-                
-                    System.out.println(".doInBackground()");    
-
-                
-                return null;
-            }
-
-            @Override
-            protected void process(List<StatesApp> chunks) {
-                
-
-                StatesApp.gameState=chunks.get(chunks.size()-1);
-                
-            }
-            
-           
-        };
-        worker.execute();
-    }
-
-    @Override
-    public void run() {
-            while(T1!=null){
-                try{
-                    Thread.sleep(1000);
-                    
-                   
-                switch(StatesApp.gameState){
-            case MENU:
+                System.out.println("BEGIN WORKER");
                 MENU m = new MENU();
+                
+              while(StatesApp.gameState != StatesApp.QUIT){ 
+                  Thread.sleep(20);
+                switch(StatesApp.gameState){
+              
+            case MENU:
+               
                 m.setSize(ANCHO, ALTO);
                 m.setBackground(Color.blue);
                 
@@ -91,9 +70,11 @@ public class UI extends JFrame implements Runnable{
                 myPanel.add(m);
                 myPanel.revalidate();
                 myPanel.repaint();
-                  
-                
-                System.out.println("MENU");
+                 
+                System.out.println("NUMBER: "+ m.getNumero());
+                publish(m.getNumero());
+                System.out.println("MENU PUBLISHED");
+                 Thread.sleep(8000);
                 break;
             case PLAYIN:
                 JPanel n = new JPanel();
@@ -105,6 +86,7 @@ public class UI extends JFrame implements Runnable{
                 myPanel.revalidate();
                 myPanel.repaint();
                 
+                 //publish(StatesApp.gameState);
                 System.out.println("PLAYING");
                 break;
             case SETTINGS:
@@ -113,25 +95,42 @@ public class UI extends JFrame implements Runnable{
                 o.setBackground(Color.red);
                 
                 myPanel.removeAll();
-                 myPanel.add(o);
+                myPanel.add(o);
                 myPanel.revalidate();
                 myPanel.repaint();
+                
+               // publish(StatesApp.gameState);
                 System.out.println("SETTINGS");
                 
                 break;
-            default:
-                System.out.println("notin");
+            
                     
             
                 }
                
-            
-            }catch (Exception e){
-                e.printStackTrace();
+              }
+                
+
+                return null;
             }
-           // T1=null;
-        
+
+            @Override
+            protected void process(List<Integer> chunks) {
+                 Integer value= chunks.get(chunks.size()-1);
+                
+                 if(value==1){
+                     StatesApp.gameState= StatesApp.PLAYIN;
+                 }else if(value == 2){
+                     StatesApp.gameState= StatesApp.SETTINGS;
+                 }
+                
+            }
+            
+           
+        };
+        worker.execute();
+    }
+
     
-        }
 }
-}
+
