@@ -24,6 +24,10 @@ public class UI extends JFrame {
     private JPanel myPanel;
     private static final int ANCHO=400;
     private static final int ALTO=680;
+ 
+    
+   //BOOLEANS  :: Permiten al HILO SWINGwORKER correr infinitamente y 
+// No repintar infinitamente la escena y los botones cada vez
     
     public boolean continua=true;
     public boolean menuPintado=false;
@@ -31,22 +35,25 @@ public class UI extends JFrame {
     public boolean playPintado=false;
     
     
+//ESCENAS :: Las diferentes Escenas pintadas en el Frame 
     public MENU m;
     public PLAYING p;
  
     UI(){
-//        T1= new Thread(this);
+//Inicializamos el FRAME
         setSize(ANCHO, ALTO);
         setBackground(new Color(0x123456));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
+ //INICIALIZAMOS Y AGREGAMOS el panel principal unido directamente al FRAME       
         myPanel=new JPanel ();
         initMainPanel();
         add(myPanel);
        
-        
+ //EMPIEZA EL HILO SWING WORKER  
         start();
+        
+        
         setVisible(true);
     }
 
@@ -97,7 +104,7 @@ public class UI extends JFrame {
                 if(!playPintado){
                 p = new PLAYING();
                 p.setSize(ANCHO, ALTO);
-                p.setBackground(Color.yellow);
+                
                 
                 myPanel.removeAll();
                 myPanel.add(p);
