@@ -25,18 +25,13 @@ public class MainAPP {
     
     //****MAIN****
     public static void main(String[] args) {
-        
-        
         SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run() {
-               
+            public void run() {            
                     instance1= new SplashScreen();
-                    instance2= new Music();
-                
+                    instance2= new Music();                
             }
         });
-        
     }
     //******METHODS*****
     
