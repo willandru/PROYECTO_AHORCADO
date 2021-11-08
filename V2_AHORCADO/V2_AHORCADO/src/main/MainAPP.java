@@ -5,6 +5,12 @@
  */
 package main;
 
+import devices.Music;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.SwingUtilities;
 
 /**
@@ -13,7 +19,8 @@ import javax.swing.SwingUtilities;
  */
 public class MainAPP {
     //****VARIABLES****
-    static SplashScreen instance;
+    static SplashScreen instance1;
+    static Music instance2;
     //UX uxInstance;
     
     //****MAIN****
@@ -23,7 +30,10 @@ public class MainAPP {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-               instance= new SplashScreen();
+               
+                    instance1= new SplashScreen();
+                    instance2= new Music();
+                
             }
         });
         
