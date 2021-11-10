@@ -27,6 +27,7 @@ public class PLAYING extends JPanel implements ActionListener{
     public JPanel p1,p2,p3,p4,p5,p6;
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
+    private JButton []teclado= new JButton[26];
     
     public PLAYING(){
         setLayout(null);
@@ -34,17 +35,70 @@ public class PLAYING extends JPanel implements ActionListener{
         initPanels();
         initButtons();
         
-        addButtons();
+       addButtons();
        addPanels();
        
-       
+       //*****
        p1.add(p5);
         p1.add(p6);
         
         p1.revalidate();
         p1.repaint();
+       ///****
+      p3.setLayout(null);
        
+        initTeclado();
+        addTeclado();
+        
         setVisible(true);  
+    }
+    
+    
+    private void initTeclado(){
+        for(int i=0; i<26; i++){
+            teclado[i]= new JButton();
+            teclado[i].setSize(30, 30); 
+            
+        }
+    }
+    
+    private void addTeclado(){
+        for(int i=0; i<26; i++){
+            int fila=5;
+            int columna=0;
+            int columna2=33;
+            
+            if(i<10){
+                 teclado[i].setLocation(fila, columna);
+                 fila+=35;
+                 
+                 if (i==9){
+                     fila=0;
+                 }
+            }
+            else if(i<20 && i>=10){
+                teclado[i].setLocation(fila, columna2);
+                 fila+=35;
+                 if (i==19){
+                     fila=0;
+                 }
+              
+            }else{
+                //****
+                //***
+                
+                teclado[i].setLocation(fila, columna2);
+                 fila+=35;
+            }
+            
+           
+            
+        }
+        for(int i=0; i<26; i++){
+        
+            p3.add(teclado[i]);
+        }
+        
     }
     
     private void initPanels(){
@@ -61,7 +115,7 @@ public class PLAYING extends JPanel implements ActionListener{
         p2.setBounds(0, 250, WIDTHP, 150);
         p2.setBackground(Color.blue);
         p3.setBounds(0, 400, WIDTHP, 200);
-        p3.setBackground(Color.green);
+        p3.setBackground(Color.darkGray);
         p4.setBounds(0, 600, WIDTHP, 100);
         p4.setBackground(Color.yellow);
         p5.setBounds(140,0, 120, 40);
