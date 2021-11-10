@@ -26,9 +26,12 @@ public class MENU extends JPanel implements ActionListener{
     
   
 
-     public JButton btnPlay, btnSetts, btnQuit;
-     public int numero;
-  
+     private JButton btnPlay, btnSetts, btnQuit;
+     private int numero;
+     private JPanel imagePan;
+     
+     private static final int ANCHO=400;
+    private static final int ALTO=680;
     
     public MENU(){
        
@@ -37,6 +40,8 @@ public class MENU extends JPanel implements ActionListener{
         setBackground(new Color(0x137756));
         initButtons();
         addButtons();
+        initPanel();
+        add(imagePan);
         setVisible(true);
         
     }
@@ -64,6 +69,11 @@ public class MENU extends JPanel implements ActionListener{
     }
     
 
+    public void initPanel(){
+        imagePan= new JPanel();
+        imagePan.setBounds(10, 10, ANCHO-30, 270);
+        imagePan.setBackground(Color.red);
+    }
     public int  getNumero(){
         return numero;
     }

@@ -7,9 +7,6 @@ package main;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
@@ -25,28 +22,38 @@ public class UI extends JFrame {
     private static final int ANCHO=400;
     private static final int ALTO=680;
     
+    public static UI instance;
+ 
+    
+   //BOOLEANS  :: Permiten al HILO SWINGwORKER correr infinitamente y 
+// No repintar infinitamente la escena y los botones cada vez
+    
     public boolean continua=true;
     public boolean menuPintado=false;
     public boolean settsPintado=false;
     public boolean playPintado=false;
     
     
+//ESCENAS :: Las diferentes Escenas pintadas en el Frame 
     public MENU m;
     public PLAYING p;
  
     UI(){
-//        T1= new Thread(this);
+//Inicializamos el FRAME
         setSize(ANCHO, ALTO);
         setBackground(new Color(0x123456));
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
+        setResizable(false);
+ //INICIALIZAMOS Y AGREGAMOS el panel principal unido directamente al FRAME       
         myPanel=new JPanel ();
         initMainPanel();
         add(myPanel);
-       
-        
+      
+ //EMPIEZA EL HILO SWING WORKER  
         start();
+        
+        
         setVisible(true);
     }
 
@@ -64,7 +71,7 @@ public class UI extends JFrame {
             protected Void doInBackground() throws Exception {
                 
                 System.out.println("BEGIN WORKER");
-                MENU m = new MENU();
+                //MENU m = new MENU();
                 
               while(continua){ 
                   Thread.sleep(30);
@@ -97,7 +104,7 @@ public class UI extends JFrame {
                 if(!playPintado){
                 p = new PLAYING();
                 p.setSize(ANCHO, ALTO);
-                p.setBackground(Color.yellow);
+                
                 
                 myPanel.removeAll();
                 myPanel.add(p);
@@ -155,6 +162,14 @@ public class UI extends JFrame {
            
         };
         worker.execute();
+    }
+    
+    public static UI getInstance() {
+        
+        if (instance == null) {
+            instance = new UI();
+        }
+        return instance;
     }
 
     
