@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class SplashScreen extends JFrame implements Runnable{
     
     static SplashScreen instance;
-     private static final int WIDTH_SPLASH = 700;
+    private static final int WIDTH_SPLASH = 700;
     private static final int HEIGTH_SPLASH = 300;
     static UI uiInst;
     private Thread thread1=null; 

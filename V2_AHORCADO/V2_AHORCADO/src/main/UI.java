@@ -71,7 +71,7 @@ public class UI extends JFrame {
             protected Void doInBackground() throws Exception {
                 
                 System.out.println("BEGIN WORKER");
-                MENU m = new MENU();
+                //MENU m = new MENU();
                 
               while(continua){ 
                   Thread.sleep(30);
