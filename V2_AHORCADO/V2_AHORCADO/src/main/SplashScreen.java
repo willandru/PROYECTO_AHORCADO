@@ -6,7 +6,15 @@
 package main;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -16,8 +24,8 @@ import javax.swing.JPanel;
 public class SplashScreen extends JFrame implements Runnable{
     
     static SplashScreen instance;
-    private static final int WIDTH_SPLASH = 700;
-    private static final int HEIGTH_SPLASH = 300;
+    private static final int WIDTH_SPLASH = 634;
+    private static final int HEIGTH_SPLASH = 312;
     static UI uiInst;
     private Thread thread1=null; 
     private JPanel panel;
@@ -65,7 +73,19 @@ public class SplashScreen extends JFrame implements Runnable{
 
         panel= new JPanel();
         panel.setBounds(0, 0, WIDTH_SPLASH, HEIGTH_SPLASH);
-        panel.setBackground(Color.cyan);
+        //panel.setBackground(Color.cyan);
+        
+        BufferedImage myPicture;
+        try {
+            myPicture = ImageIO.read(new File("/home/kaliw/GITHUB/PROYECTO_AHORCADO/V2_AHORCADO/V2_AHORCADO/src/resources/Ss1.png"));
+            JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+            add(picLabel);
+            panel.add(picLabel);
+        } catch (IOException ex) {
+            Logger.getLogger(SplashScreen.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
     
 }

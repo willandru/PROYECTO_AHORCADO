@@ -27,7 +27,7 @@ public class PLAYING extends JPanel implements ActionListener{
     public JPanel p1,p2,p3,p4,p5,p6;
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
-    private JButton []teclado= new JButton[26];
+    private JButton []teclado= new JButton[27];
     
     public PLAYING(){
         setLayout(null);
@@ -55,7 +55,7 @@ public class PLAYING extends JPanel implements ActionListener{
     
     
     private void initTeclado(){
-        for(int i=0; i<26; i++){
+        for(int i=0; i<27; i++){
             teclado[i]= new JButton();
             teclado[i].setSize(30, 30); 
             
@@ -63,38 +63,40 @@ public class PLAYING extends JPanel implements ActionListener{
     }
     
     private void addTeclado(){
-        for(int i=0; i<26; i++){
-            int fila=5;
-            int columna=0;
-            int columna2=33;
+         int columna=15;
+            int fila=40;
+        for(int i=0; i<27; i++){
+           
             
             if(i<10){
-                 teclado[i].setLocation(fila, columna);
-                 fila+=35;
+                 teclado[i].setLocation(columna, fila);
+                 columna+=35;
                  
                  if (i==9){
-                     fila=0;
+                     columna=35;
+                     fila= 90;
                  }
             }
             else if(i<20 && i>=10){
-                teclado[i].setLocation(fila, columna2);
-                 fila+=35;
+                teclado[i].setLocation(columna, fila);
+                 columna+=35;
                  if (i==19){
-                     fila=0;
+                     columna=65;
+                     fila= 140;
                  }
               
             }else{
                 //****
                 //***
                 
-                teclado[i].setLocation(fila, columna2);
-                 fila+=35;
+                teclado[i].setLocation(columna, fila);
+                 columna+=35;
             }
             
            
             
         }
-        for(int i=0; i<26; i++){
+        for(int i=0; i<27; i++){
         
             p3.add(teclado[i]);
         }
