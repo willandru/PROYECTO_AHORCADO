@@ -39,7 +39,7 @@ public class Menu extends JPanel implements ActionListener{
         initButtons();
         addButtons();
        
-        
+    
         setVisible(true);
         
     }
