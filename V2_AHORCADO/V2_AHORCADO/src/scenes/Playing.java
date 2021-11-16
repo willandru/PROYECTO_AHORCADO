@@ -21,7 +21,7 @@ import static main.StatesApp.*;
  *
  * @author kaliw
  */
-public class PLAYING extends JPanel implements ActionListener{
+public class Playing extends JPanel implements ActionListener{
     public JButton goMenu, noSound, options;
     public int number=1;
     public JPanel p1,p2,p3,p4,p5,p6;
@@ -29,7 +29,7 @@ public class PLAYING extends JPanel implements ActionListener{
     private static final int HEIGHTP=680;
     private JButton []teclado= new JButton[27];
     
-    public PLAYING(){
+    public Playing(){
         setLayout(null);
         setBackground(new Color(0x22a666));
         initPanels();

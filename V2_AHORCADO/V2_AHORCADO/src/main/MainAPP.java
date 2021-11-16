@@ -29,7 +29,7 @@ public class MainAPP {
             @Override
             public void run() {            
                     instance1= new SplashScreen();
-                    instance2= new Music();                
+                    //instance2= new Music();                
             }
         });
     }

@@ -35,8 +35,8 @@ public class UI extends JFrame {
     
     
 //ESCENAS :: Las diferentes Escenas pintadas en el Frame 
-    public MENU m;
-    public PLAYING p;
+    public Menu m;
+    public Playing p;
  
     UI(){
 //Inicializamos el FRAME
@@ -71,7 +71,7 @@ public class UI extends JFrame {
             protected Void doInBackground() throws Exception {
                 
                 System.out.println("BEGIN WORKER");
-                //MENU m = new MENU();
+                //MENU m = new Menu();
                 
               while(continua){ 
                   Thread.sleep(30);
@@ -80,7 +80,7 @@ public class UI extends JFrame {
             case MENU:
                
                 if(!menuPintado){
-                    m = new MENU();
+                    m = new Menu();
                 m.setSize(ANCHO, ALTO);
                 //m.setBackground(Color.blue);
                 
@@ -102,7 +102,7 @@ public class UI extends JFrame {
             case PLAYING:
                 
                 if(!playPintado){
-                p = new PLAYING();
+                p = new Playing();
                 p.setSize(ANCHO, ALTO);
                 
                 
@@ -123,7 +123,7 @@ public class UI extends JFrame {
                 if(!settsPintado){
                 JPanel o = new JPanel();
                 o.setSize(ANCHO, ALTO);
-                o.setBackground(Color.red);
+                o.setBackground(Color.green);
                 
                 myPanel.removeAll();
                 myPanel.add(o);
@@ -154,7 +154,7 @@ public class UI extends JFrame {
                  StatesApp value= chunks.get(chunks.size()-1);
                 
                 System.out.println(".process(): "  + value);
-                    // StatesApp.gameState= StatesApp.MENU;
+                    // StatesApp.gameState= StatesApp.Menu;
                  
                 
             }
