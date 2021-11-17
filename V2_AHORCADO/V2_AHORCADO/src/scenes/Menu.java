@@ -45,14 +45,6 @@ public class Menu extends JPanel implements ActionListener{
     }
 
     
-    
-
- 
-    public int  getNumero(){
-        return numero;
-    }
-    
-
 
     private void initButtons() {
 
@@ -121,5 +113,9 @@ public class Menu extends JPanel implements ActionListener{
         
     }
    
+    
+    
+    
+    
     
 }

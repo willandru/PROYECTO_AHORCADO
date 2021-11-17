@@ -7,7 +7,9 @@ package scenes;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import main.StatesApp;
 import static main.StatesApp.MENU;
@@ -53,6 +55,18 @@ public class Settings extends JPanel implements ActionListener{
         Object origen = ae.getSource();
         if(origen == this.btnUploadFile){
             System.out.println("DATADATADATADATADATA");
+            
+            JFileChooser fileOpener = new JFileChooser();
+            fileOpener.setCurrentDirectory(new File("./src"));
+            
+            int ans = fileOpener.showOpenDialog(null);
+            
+            if(ans== JFileChooser.APPROVE_OPTION){
+                File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+                System.out.println(dataFile);
+            }
+            
+            
         }else if(origen == this.btnGoMenu){
             System.out.println("GOMENUGOEMUUUGOGGOGO");
             //StatesApp.gameState=MENU;

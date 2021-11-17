@@ -96,9 +96,8 @@ public class UI extends JFrame {
                 settsPintado=false;
                 
             }
-                System.out.println("NUMBER: "+ m.getNumero());
                 //publish(StatesApp.gameState);
-                System.out.println("MENU holi PUBLISHED");
+                //System.out.println("MENU holi PUBLISHED");
         
                 break;
             case PLAYING:
@@ -116,8 +115,8 @@ public class UI extends JFrame {
                 playPintado=true;
                 menuPintado=false;
                 }
-                 publish(StatesApp.gameState);
-                System.out.println("PLAYING holi PUBLISHED");
+                 //publish(StatesApp.gameState);
+                //System.out.println("PLAYING holi PUBLISHED");
                // System.out.println("");
                 break;
             case SETTINGS:
@@ -137,7 +136,7 @@ public class UI extends JFrame {
                
                 }
                  //System.out.println(StatesApp.gameState);
-                System.out.println("SETTINGS");
+                //System.out.println("SETTINGS");
                 
                 break;
             
