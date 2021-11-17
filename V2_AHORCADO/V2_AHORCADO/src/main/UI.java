@@ -97,7 +97,7 @@ public class UI extends JFrame {
                 
             }
                 System.out.println("NUMBER: "+ m.getNumero());
-                publish(StatesApp.gameState);
+                //publish(StatesApp.gameState);
                 System.out.println("MENU holi PUBLISHED");
         
                 break;
@@ -155,7 +155,7 @@ public class UI extends JFrame {
             protected void process(List<StatesApp> chunks) {
                  StatesApp value= chunks.get(chunks.size()-1);
                 
-                System.out.println(".process(): "  + value);
+                System.out.println("kali.process(): "  + value);
                     // StatesApp.gameState= StatesApp.Menu;
                  
                 
