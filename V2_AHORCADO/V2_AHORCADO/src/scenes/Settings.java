@@ -57,7 +57,7 @@ public class Settings extends JPanel implements ActionListener{
             System.out.println("DATADATADATADATADATA");
             
             JFileChooser fileOpener = new JFileChooser();
-            fileOpener.setCurrentDirectory(new File("./src"));
+            fileOpener.setCurrentDirectory(new File("./src/resources"));
             
             int ans = fileOpener.showOpenDialog(null);
             

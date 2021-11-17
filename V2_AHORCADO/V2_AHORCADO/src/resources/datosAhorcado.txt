@@ -1,0 +1,23 @@
+...DATOS JUEGO AHORCADO....
+
+EASY
+
+LINUX
+cd
+ls
+pwd
+open
+clear
+
+LENGUAJES
+c++
+java
+python
+ruby
+perl
+php
+javaScript
+fortran
+haskell
+
+
