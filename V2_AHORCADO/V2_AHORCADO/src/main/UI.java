@@ -37,6 +37,7 @@ public class UI extends JFrame {
 //ESCENAS :: Las diferentes Escenas pintadas en el Frame 
     public Menu m;
     public Playing p;
+    public Settings s;
  
     UI(){
 //Inicializamos el FRAME
@@ -80,7 +81,7 @@ public class UI extends JFrame {
             case MENU:
                
                 if(!menuPintado){
-                    m = new Menu();
+                m = new Menu();
                 m.setSize(ANCHO, ALTO);
                 //m.setBackground(Color.blue);
                 
@@ -121,12 +122,12 @@ public class UI extends JFrame {
             case SETTINGS:
                 
                 if(!settsPintado){
-                JPanel o = new JPanel();
-                o.setSize(ANCHO, ALTO);
-                o.setBackground(Color.green);
+                s= new Settings();
+                s.setSize(ANCHO, ALTO);
+                s.setBackground(Color.green);
                 
                 myPanel.removeAll();
-                myPanel.add(o);
+                myPanel.add(s);
                 myPanel.revalidate();
                 myPanel.repaint();
                 System.out.println("SETTS painted");
