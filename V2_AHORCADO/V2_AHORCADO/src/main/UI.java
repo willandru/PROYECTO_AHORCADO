@@ -93,6 +93,7 @@ public class UI extends JFrame {
                 System.out.println("Menu painted");
                 menuPintado=true;
                 playPintado=false;
+                settsPintado=false;
                 
             }
                 System.out.println("NUMBER: "+ m.getNumero());
@@ -135,7 +136,7 @@ public class UI extends JFrame {
                 menuPintado=false;
                
                 }
-               // publish(StatesApp.gameState);
+                 //System.out.println(StatesApp.gameState);
                 System.out.println("SETTINGS");
                 
                 break;

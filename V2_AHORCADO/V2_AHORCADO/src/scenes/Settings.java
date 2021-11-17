@@ -56,6 +56,8 @@ public class Settings extends JPanel implements ActionListener{
         }else if(origen == this.btnGoMenu){
             System.out.println("GOMENUGOEMUUUGOGGOGO");
             //StatesApp.gameState=MENU;
+            
+                  StatesApp.gameState=MENU;
         }
     }
     
