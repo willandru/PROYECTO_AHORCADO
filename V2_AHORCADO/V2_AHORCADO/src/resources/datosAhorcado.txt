@@ -4,23 +4,24 @@
 -
 
 LENGUAJES
-
-c++
+c
+Rust
 java
 python
 ruby
 perl
 php
-javaScript
-fortran
+html
+JavaScript
+pascal
 haskell
-BASES DE DATOS
 
+BASES DE DATOS
 NoSQL
 MySQL
 MongoDB
-MATERIAS
 
+MATERIAS
 Calculo
 Probabilidad
 Programacion

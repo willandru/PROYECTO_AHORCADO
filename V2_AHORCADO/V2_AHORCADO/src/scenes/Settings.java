@@ -65,8 +65,10 @@ public class Settings extends JPanel implements ActionListener{
                     
                     Scanner myReader = new Scanner(dataFile);
                     
+                    boolean validLine;
                     boolean isCategory=false;
                     boolean isWord=false;
+                    
                     int numCategories=0;
                     Vector <Integer> vecNumWords = new Vector<>();
                     Vector <String> vecWords = new Vector<>();
@@ -75,13 +77,18 @@ public class Settings extends JPanel implements ActionListener{
                     while (myReader.hasNextLine()) {
                        String data = myReader.nextLine();
                        
-                       boolean validet= isValidLine(data);
-                        System.out.println("Linea Valida: "+ validet);
-                       
-                                         isCategory= isUpper(data); // ENVIAMOS CADA LINEA DEL .txt A UNA FUNCION isUpper();
-                            if(isCategory){
-                                numCategories++;
-                               System.out.println(data);                         
+                       validLine= Pattern.matches("[a-zA-Z ]+", data);
+                        
+ 
+                            if(validLine){
+                                
+                                if(Pattern.matches("[A-Z ]+", data)){
+                                    numCategories++;
+                                    System.out.println("Categoria "+ numCategories + " ; "+ data);
+                                }
+                                else{
+                                    System.out.println("Palabra:  "+ data);  
+                                }               
                             }                   
                     }
                   System.out.println(numCategories);
@@ -96,56 +103,14 @@ public class Settings extends JPanel implements ActionListener{
     
     
     
-    
-    
-    public boolean isValidLine(String line){
-        
-        boolean isValid=false;
-      
-        
-        boolean onlyLetters = Pattern.matches("[a-zA-Z ]+", line);
-        
-        if (onlyLetters){
-               isValid=true;          
-             }else{
-                  isValid=false;
-              }     
-        
-        return isValid;
-           
-        }
+
         
   
+   
     
     
     
     
-    
-    
-    
-   public boolean isUpper(String line){
-       
-       for(int i=0; i< line.length(); i++){
-              if(Character.isLowerCase(line.charAt(i) )){
-               return false;          
-             }               
-           } 
-       return true;
-   }
-    
-    
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
-   
    
    
    
