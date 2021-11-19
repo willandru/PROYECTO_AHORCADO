@@ -1,15 +1,6 @@
-...DATOS JUEGO AHORCADO....
-
-EASY
-
-LINUX
-cd
-ls
-pwd
-open
-clear
 
 LENGUAJES
+
 c++
 java
 python
@@ -21,3 +12,19 @@ fortran
 haskell
 
 
+
+BASES DE DATOS
+
+NoSQL
+MySQL
+MongoDB
+
+
+MATERIAS
+
+Calculo
+Probabilidad
+Programacion
+Fisica
+Artes
+Lectura

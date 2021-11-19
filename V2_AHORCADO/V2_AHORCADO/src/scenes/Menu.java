@@ -35,7 +35,7 @@ public class Menu extends JPanel implements ActionListener{
     
     public Menu(){
         setLayout(null);
-        setBackground(new Color(0x134756));
+        setBackground(new Color(0xa61f22));
         initButtons();
         addButtons();
        

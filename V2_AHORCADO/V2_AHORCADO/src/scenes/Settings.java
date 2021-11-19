@@ -8,11 +8,15 @@ package scenes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import main.StatesApp;
-import static main.StatesApp.MENU;
+import static main.StatesApp.*;
 
 /**
  *
@@ -22,7 +26,7 @@ public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
      
      public Settings(){
-          setLayout(null);
+         setLayout(null);
          inicializarBotones();
          agregarBotones();
          setVisible(true);
@@ -54,7 +58,6 @@ public class Settings extends JPanel implements ActionListener{
 
         Object origen = ae.getSource();
         if(origen == this.btnUploadFile){
-            System.out.println("DATADATADATADATADATA");
             
             JFileChooser fileOpener = new JFileChooser();
             fileOpener.setCurrentDirectory(new File("./src/resources"));
@@ -62,17 +65,74 @@ public class Settings extends JPanel implements ActionListener{
             int ans = fileOpener.showOpenDialog(null);
             
             if(ans== JFileChooser.APPROVE_OPTION){
-                File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-                System.out.println(dataFile);
-            }
+                try {
+                    File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+                    System.out.println(dataFile);
+                    
+                    Scanner myReader = new Scanner(dataFile);
+                    
+                    boolean isCategory=false;
+                    int numCategories=0;
+                    
+                    while (myReader.hasNextLine()) {
+                        
+                        System.out.println("scenes.Settings.actionPerformed()");
+                        
+                        String data = myReader.nextLine();
+                        System.out.println();
+                        if(!data.isBlank()){
+                         isCategory= isUpper(data);
+                        }
+                        if(isCategory){
+                            numCategories++;
+                           System.out.println(data);
+                              
+                        }
+                        
+                       
+                        
+                        
+                    }
+                     System.out.println(numCategories);
+                    myReader.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                }
+}
+            
             
             
         }else if(origen == this.btnGoMenu){
             System.out.println("GOMENUGOEMUUUGOGGOGO");
             //StatesApp.gameState=MENU;
             
-                  StatesApp.gameState=MENU;
+           StatesApp.gameState=MENU;
         }
     }
+    
+    
+   public boolean isUpper(String line){
+       
+      
+       
+       
+       for(int i=0; i< line.length(); i++){
+           
+           if(!line.isBlank()){
+                 if(Character.isLowerCase(line.charAt(i) )){
+               return false;
+           }
+           }
+           
+         
+           
+       }
+       return true;
+       
+   }
+    
+    
+    
+    
     
 }
