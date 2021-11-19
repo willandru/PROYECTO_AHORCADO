@@ -10,8 +10,10 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -24,7 +26,7 @@ import static main.StatesApp.*;
  */
 public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
-     
+     private  JFileChooser fileOpener = new JFileChooser(); 
      public Settings(){
          setLayout(null);
          inicializarBotones();
@@ -32,6 +34,122 @@ public class Settings extends JPanel implements ActionListener{
          setVisible(true);
      }
 
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+
+        Object origen = ae.getSource();
+        if(origen == this.btnUploadFile){
+            
+           
+            fileOpener.setCurrentDirectory(new File("./src/resources"));
+            int ans = fileOpener.showOpenDialog(null);
+            readFile(ans);
+            
+            
+            
+            
+        }else if(origen == this.btnGoMenu){
+            System.out.println("GOMENUGOEMUUUGOGGOGO");
+            //StatesApp.gameState=MENU;
+            
+           StatesApp.gameState=MENU;
+        }
+    }
+    
+    public void readFile(int ans){
+        if(ans== JFileChooser.APPROVE_OPTION){
+                try {
+                    File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+                    System.out.println(dataFile);
+                    
+                    Scanner myReader = new Scanner(dataFile);
+                    
+                    boolean isCategory=false;
+                    boolean isWord=false;
+                    int numCategories=0;
+                    Vector <Integer> vecNumWords = new Vector<>();
+                    Vector <String> vecWords = new Vector<>();
+                    
+                    
+                    while (myReader.hasNextLine()) {
+                       String data = myReader.nextLine();
+                       
+                       boolean validet= isValidLine(data);
+                        System.out.println("Linea Valida: "+ validet);
+                       
+                                         isCategory= isUpper(data); // ENVIAMOS CADA LINEA DEL .txt A UNA FUNCION isUpper();
+                            if(isCategory){
+                                numCategories++;
+                               System.out.println(data);                         
+                            }                   
+                    }
+                  System.out.println(numCategories);
+                  myReader.close();
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+                }
+}
+    }
+    
+    
+    
+    
+    
+    
+    
+    public boolean isValidLine(String line){
+        
+        boolean isValid=false;
+      
+        
+        boolean onlyLetters = Pattern.matches("[a-zA-Z ]+", line);
+        
+        if (onlyLetters){
+               isValid=true;          
+             }else{
+                  isValid=false;
+              }     
+        
+        return isValid;
+           
+        }
+        
+  
+    
+    
+    
+    
+    
+    
+    
+   public boolean isUpper(String line){
+       
+       for(int i=0; i< line.length(); i++){
+              if(Character.isLowerCase(line.charAt(i) )){
+               return false;          
+             }               
+           } 
+       return true;
+   }
+    
+    
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+    
     private void inicializarBotones() {
         btnGoMenu= new JButton("Back");
         btnGoMenu.setBounds(120,450,150,70);
@@ -52,72 +170,5 @@ public class Settings extends JPanel implements ActionListener{
         this.add(btnUploadFile);
         this.add(btnMusic);
     }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-
-        Object origen = ae.getSource();
-        if(origen == this.btnUploadFile){
-            
-            JFileChooser fileOpener = new JFileChooser();
-            fileOpener.setCurrentDirectory(new File("./src/resources"));
-            
-            int ans = fileOpener.showOpenDialog(null);
-            
-            if(ans== JFileChooser.APPROVE_OPTION){
-                try {
-                    File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-                    System.out.println(dataFile);
-                    
-                    Scanner myReader = new Scanner(dataFile);
-                    
-                    boolean isCategory=false;
-                    int numCategories=0;
-                    
-                    while (myReader.hasNextLine()) {
-
-                        String data = myReader.nextLine();
-
-                         isCategory= isUpper(data);
-                        
-                        if(isCategory){
-                            numCategories++;
-                           System.out.println(data);
-                              
-                        }
-                        
-                    }
-                     System.out.println(numCategories);
-                    myReader.close();
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-                }
-}
-            
-            
-            
-        }else if(origen == this.btnGoMenu){
-            System.out.println("GOMENUGOEMUUUGOGGOGO");
-            //StatesApp.gameState=MENU;
-            
-           StatesApp.gameState=MENU;
-        }
-    }
-    
-    
-   public boolean isUpper(String line){
-       
-       for(int i=0; i< line.length(); i++){
-           
-         
-              if(Character.isLowerCase(line.charAt(i) )){
-               return false;          
-             }               
-            } 
-       return true;
-   }
-    
-    
-    
     
 }

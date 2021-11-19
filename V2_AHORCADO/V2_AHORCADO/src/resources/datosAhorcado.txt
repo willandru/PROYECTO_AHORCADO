@@ -1,4 +1,10 @@
+**---PALABRAS JUEGO DEL AHORCADO ---***
+***
+--*
+-
+
 LENGUAJES
+
 c++
 java
 python
@@ -9,10 +15,12 @@ javaScript
 fortran
 haskell
 BASES DE DATOS
+
 NoSQL
 MySQL
 MongoDB
 MATERIAS
+
 Calculo
 Probabilidad
 Programacion
