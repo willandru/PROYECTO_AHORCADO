@@ -75,22 +75,16 @@ public class Settings extends JPanel implements ActionListener{
                     int numCategories=0;
                     
                     while (myReader.hasNextLine()) {
-                        
-                        System.out.println("scenes.Settings.actionPerformed()");
-                        
+
                         String data = myReader.nextLine();
-                        System.out.println();
-                        if(!data.isBlank()){
+
                          isCategory= isUpper(data);
-                        }
+                        
                         if(isCategory){
                             numCategories++;
                            System.out.println(data);
                               
                         }
-                        
-                       
-                        
                         
                     }
                      System.out.println(numCategories);
@@ -113,24 +107,15 @@ public class Settings extends JPanel implements ActionListener{
     
    public boolean isUpper(String line){
        
-      
-       
-       
        for(int i=0; i< line.length(); i++){
            
-           if(!line.isBlank()){
-                 if(Character.isLowerCase(line.charAt(i) )){
-               return false;
-           }
-           }
-           
          
-           
-       }
+              if(Character.isLowerCase(line.charAt(i) )){
+               return false;          
+             }               
+            } 
        return true;
-       
    }
-    
     
     
     

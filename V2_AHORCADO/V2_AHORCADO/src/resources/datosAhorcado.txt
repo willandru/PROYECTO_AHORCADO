@@ -1,6 +1,4 @@
-
 LENGUAJES
-
 c++
 java
 python
@@ -10,18 +8,11 @@ php
 javaScript
 fortran
 haskell
-
-
-
 BASES DE DATOS
-
 NoSQL
 MySQL
 MongoDB
-
-
 MATERIAS
-
 Calculo
 Probabilidad
 Programacion
