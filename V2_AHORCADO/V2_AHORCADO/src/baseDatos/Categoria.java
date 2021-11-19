@@ -13,15 +13,33 @@ import java.util.Vector;
  */
 public class Categoria {
     
-    Palabra palabra= new Palabra();
     
-    Vector <Palabra>  lista;
+    Vector <String>  palabras;
     
-    Categoria(){
-      this.lista= new Vector<>();
+    private String nameCategory;
+    
+    public Categoria(String name){
+      this.palabras= new Vector<>();
+      this.nameCategory= name;
       
-      
-        
     }
+    
+     public Categoria(){
+      
+    }
+    
+    public void addPalabra(String dato){
+        palabras.add(dato);
+    }
+    
+    public void printWords(){
+        System.out.println(palabras);
+    }
+
+    public String getNameCategory() {
+        return nameCategory;
+    }
+    
+    
     
 }

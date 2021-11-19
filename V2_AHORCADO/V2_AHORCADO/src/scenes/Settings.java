@@ -5,6 +5,7 @@
  */
 package scenes;
 
+import baseDatos.Categoria;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -70,9 +71,10 @@ public class Settings extends JPanel implements ActionListener{
                     boolean isWord=false;
                     
                     int numCategories=0;
+                    int numPalabras=0;
                     Vector <Integer> vecNumWords = new Vector<>();
-                    Vector <String> vecWords = new Vector<>();
-                    
+                    Categoria newCategory =new Categoria();
+                    Vector <Categoria> vecCategorias = new Vector<>();
                     
                     while (myReader.hasNextLine()) {
                        String data = myReader.nextLine();
@@ -83,16 +85,29 @@ public class Settings extends JPanel implements ActionListener{
                             if(validLine){
                                 
                                 if(Pattern.matches("[A-Z ]+", data)){
+                                    newCategory= new Categoria(data);
                                     numCategories++;
+                                    numPalabras=0;
+                                    
+                                    vecCategorias.add(newCategory);
                                     System.out.println("Categoria "+ numCategories + " ; "+ data);
                                 }
                                 else{
-                                    System.out.println("Palabra:  "+ data);  
+                                    numPalabras++;
+                                    newCategory.addPalabra(data); //****CUIDADO            CUIDADOO
+                                                   
                                 }               
-                            }                   
+                            }               
                     }
+                    System.out.println(vecCategorias);
                   System.out.println(numCategories);
                   myReader.close();
+                  
+                                     vecCategorias.get(0).printWords();
+
+                   vecCategorias.get(1).printWords();
+                                      vecCategorias.get(2).printWords();
+
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
                 }
