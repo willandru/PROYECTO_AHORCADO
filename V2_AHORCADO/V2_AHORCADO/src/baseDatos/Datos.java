@@ -22,43 +22,100 @@ import scenes.Settings;
 public class Datos implements Runnable{
     
     //Vector <Categoria>
-     private  JFileChooser fileOpener = new JFileChooser(); 
+     private  JFileChooser fileOpener; 
     
-     public Vector <Integer> vecNumWords;  /// WHATTT IS THIS FOOR
-     public Vector <Categoria> vecCategorias ;
+     public Vector <Categoria> vecCategoriasCUSTOM;
+     
+      public Vector <Categoria> vecCategoriasDEFAULTS;
       private int numCategories;
+      
+      
+      
+      
+      private Thread threadDATA=null; 
+      private File defaultWords;
+      
+      public  boolean defaults= true;
+      public  boolean customFIle = false;
+      
+     static Datos instance;
      
      
-     
-     
-    public Datos(){
+      public Datos(){
+          threadDATA = new Thread(this);
+          Vector <Categoria> vecCategoriasCUSTOM = null ;
+          
+          loadDefaults();
+          
+          
+          threadDATA.start();
         
     }
+
+    public static Datos getInstance() {
+        
+        if (instance == null) {
+            instance = new Datos();
+        }
+        return instance;
+    }
     
+     
+     
+   public void loadDefaults(){
+       try{
+       defaultWords= new File("./src/resources/defailtsWords.txt");
+        System.out.println("data defaults: " + defaultWords);
+       }catch(Exception e){
+           
+       }
+       
+   }
     
     
       
     public void readFile(){
+        fileOpener = new JFileChooser();
         
           fileOpener.setCurrentDirectory(new File("./src/resources"));
             int ans = fileOpener.showOpenDialog(null);
         
         if(ans== JFileChooser.APPROVE_OPTION){
-                try {
-                    File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-                    System.out.println(dataFile);
+                
+ 
+          vecCategoriasCUSTOM=saveFile(vecCategoriasCUSTOM);
                     
-                    Scanner myReader = new Scanner(dataFile);
                     
+                    System.out.println(vecCategoriasCUSTOM);
+                  System.out.println(numCategories);
+                
+                  
+                                     vecCategoriasCUSTOM.get(0).printWords();
+                   vecCategoriasCUSTOM.get(1).printWords();
+                                      vecCategoriasCUSTOM.get(2).printWords();
+
+              
+}
+    }
+    
+    
+    public Vector<Categoria> saveFile(Vector<Categoria> cats){
+        
+        
+        if (cats == null){
+            try { 
+            File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+            Scanner myReader = new Scanner(dataFile);
+                 
                     boolean validLine;
                     boolean isCategory=false;
                     boolean isWord=false;
                     
                     numCategories=0;
                     int numPalabras=0;
-                    vecNumWords = new Vector<>();
+                   
                     Categoria newCategory =new Categoria();
-                    vecCategorias = new Vector<>();
+                    cats = new Vector<>();
                     
                     while (myReader.hasNextLine()) {
                        String data = myReader.nextLine();
@@ -73,7 +130,7 @@ public class Datos implements Runnable{
                                     numCategories++;
                                     numPalabras=0;
                                     
-                                    vecCategorias.add(newCategory);
+                                    cats.add(newCategory);
                                     System.out.println("Categoria "+ numCategories + " ; "+ data);
                                 }
                                 else{
@@ -83,41 +140,50 @@ public class Datos implements Runnable{
                                 }               
                             }               
                     }
-                    System.out.println(vecCategorias);
-                  System.out.println(numCategories);
-                  myReader.close();
-                  
-                                     vecCategorias.get(0).printWords();
-                   vecCategorias.get(1).printWords();
-                                      vecCategorias.get(2).printWords();
-
-                } catch (FileNotFoundException ex) {
+                      myReader.close();
+              } catch (FileNotFoundException ex) {
                     Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-                }
-}
+                }        
+        }
+        
+        return cats;
     }
-    
-    
-    
     
     public String randomWord(){
         String palabraRandom;
         Categoria catRandom;
         int categoriaRandom = (int) (Math.random()*numCategories-1+0);
         
-        catRandom= vecCategorias.get(categoriaRandom);
+        catRandom= vecCategoriasCUSTOM.get(categoriaRandom);
         int numPalabras = catRandom.getNumPalabras();
         
         int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
         
         palabraRandom= catRandom.getPalabra(numPalabraRandom);
         
+        System.out.println(palabraRandom);
         return palabraRandom;
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        while(threadDATA !=null){
+            try{
+               // Thread.sleep(600);
+               
+               if(!defaults){
+                   readFile();
+               }
+               
+                
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            threadDATA=null;
+            System.out.println("....JUJU...)");
+        }
+        System.out.println("baseDatos.Datos.run():: JUJU");
     }
     
 }

@@ -29,8 +29,9 @@ import static main.StatesApp.*;
 public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
      private  JFileChooser fileOpener = new JFileChooser(); 
-     private Datos DATOSTEXTO = new Datos();
      
+     static Datos instanceDATA;
+    
      
      
      public Settings(){
@@ -47,10 +48,12 @@ public class Settings extends JPanel implements ActionListener{
         Object origen = ae.getSource();
         if(origen == this.btnUploadFile){
             
-            DATOSTEXTO.readFile();
-            
-           System.out.println(DATOSTEXTO.randomWord());
-            
+            instanceDATA= new Datos();
+            System.out.println("scenes.Settings.actionPerformed()");
+            //instanceDATA.customFIle=true;
+            instanceDATA.defaults=false;
+          
+ 
             
             
         }else if(origen == this.btnGoMenu){
