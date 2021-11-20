@@ -217,9 +217,9 @@ public class Datos implements Runnable{
                 e.printStackTrace();
             }
            
-            System.out.println(StatesApp.fileState);
+            //System.out.println(StatesApp.fileState);
             try {
-                Thread.sleep(2000);
+                Thread.sleep(200);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
             }
