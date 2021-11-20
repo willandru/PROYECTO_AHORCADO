@@ -190,7 +190,7 @@ public class Playing extends JPanel implements ActionListener{
         ImageIcon img;
         BufferedImage sub;
         
-        sub=ig.getSubimage(fotoCol*30, fotoFil*30, 30, 30);
+        sub=ig.getSubimage(fotoCol*33, fotoFil*30, 30, 30);
         img = new ImageIcon(sub);
         return img;
     
@@ -232,12 +232,13 @@ public class Playing extends JPanel implements ActionListener{
             teclado[i].setIcon(imageABC);
               teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 8));
             letra++;
-            
             fotoCol++;
+           
             if(fotoCol==9 || fotoCol == 19){
                 fotoCol=0;
                 fotoFil++;
             }
+             
         }
     }
     
