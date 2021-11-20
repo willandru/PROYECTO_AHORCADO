@@ -6,6 +6,7 @@
 package scenes;
 
 import baseDatos.Categoria;
+import baseDatos.Datos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,6 +29,10 @@ import static main.StatesApp.*;
 public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
      private  JFileChooser fileOpener = new JFileChooser(); 
+     private Datos DATOSTEXTO = new Datos();
+     
+     
+     
      public Settings(){
          setLayout(null);
          inicializarBotones();
@@ -42,10 +47,7 @@ public class Settings extends JPanel implements ActionListener{
         Object origen = ae.getSource();
         if(origen == this.btnUploadFile){
             
-           
-            fileOpener.setCurrentDirectory(new File("./src/resources"));
-            int ans = fileOpener.showOpenDialog(null);
-            readFile(ans);
+            DATOSTEXTO.readFile();
             
             
             
@@ -57,64 +59,7 @@ public class Settings extends JPanel implements ActionListener{
            StatesApp.gameState=MENU;
         }
     }
-    
-    public void readFile(int ans){
-        if(ans== JFileChooser.APPROVE_OPTION){
-                try {
-                    File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-                    System.out.println(dataFile);
-                    
-                    Scanner myReader = new Scanner(dataFile);
-                    
-                    boolean validLine;
-                    boolean isCategory=false;
-                    boolean isWord=false;
-                    
-                    int numCategories=0;
-                    int numPalabras=0;
-                    Vector <Integer> vecNumWords = new Vector<>();
-                    Categoria newCategory =new Categoria();
-                    Vector <Categoria> vecCategorias = new Vector<>();
-                    
-                    while (myReader.hasNextLine()) {
-                       String data = myReader.nextLine();
-                       
-                       validLine= Pattern.matches("[a-zA-Z ]+", data);
-                        
- 
-                            if(validLine){
-                                
-                                if(Pattern.matches("[A-Z ]+", data)){
-                                    newCategory= new Categoria(data);
-                                    numCategories++;
-                                    numPalabras=0;
-                                    
-                                    vecCategorias.add(newCategory);
-                                    System.out.println("Categoria "+ numCategories + " ; "+ data);
-                                }
-                                else{
-                                    numPalabras++;
-                                    newCategory.addPalabra(data); //****CUIDADO            CUIDADOO
-                                                   
-                                }               
-                            }               
-                    }
-                    System.out.println(vecCategorias);
-                  System.out.println(numCategories);
-                  myReader.close();
-                  
-                                     vecCategorias.get(0).printWords();
-
-                   vecCategorias.get(1).printWords();
-                                      vecCategorias.get(2).printWords();
-
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-                }
-}
-    }
-    
-    
+  
     
     
     

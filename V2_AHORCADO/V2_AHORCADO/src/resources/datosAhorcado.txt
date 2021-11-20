@@ -4,7 +4,9 @@
 -
 
 LENGUAJES
+r
 c
+d
 Rust
 java
 python
@@ -28,3 +30,12 @@ Programacion
 Fisica
 Artes
 Lectura
+
+
+COLORES
+
+Azul
+Rojo
+Verde
+Amarillo
+Morado
