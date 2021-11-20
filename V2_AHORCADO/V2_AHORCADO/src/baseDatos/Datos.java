@@ -30,7 +30,9 @@ public class Datos implements Runnable{
      public Vector <Categoria> vecCategoriasCUSTOM;
      
       public Vector <Categoria> vecCategoriasDEFAULTS;
-      private int numCategories;
+      
+      public Vector <Integer> vecNumPalabras;
+      public int numCategories;
       
       
       
@@ -51,14 +53,15 @@ public class Datos implements Runnable{
           vecCategoriasDEFAULTS = null;
           
           
-          
+           System.out.println("HOLALALAL");
          
           
         
                threadDATA.start();
           
-          
-          
+          System.out.println(vecCategoriasDEFAULTS);
+           
+        
          
         
     }
@@ -73,18 +76,21 @@ public class Datos implements Runnable{
     
      
      
-   public void loadDefaults(Vector<Categoria> catDef){
+   public Vector<Categoria> loadDefaults(Vector<Categoria> catDef){
        try{
        defaultWords= new File("./src/resources/defaultsWords.txt");
        
         System.out.println("data defaults: " + defaultWords);
         
-           saveFileContent(catDef, defaultWords);
-        
+           catDef=saveFileContent(catDef, defaultWords);
+           
+           
+          
        }catch(Exception e){
            
        }
        
+       return catDef;
    }
     
     
@@ -103,6 +109,7 @@ public class Datos implements Runnable{
                     
           customLOADED= true;          
           
+          StatesApp.fileState= WAIT;
           
                     System.out.println(vecCategoriasCUSTOM);
                   System.out.println(numCategories);
@@ -114,6 +121,9 @@ public class Datos implements Runnable{
 
               
 }
+        
+         StatesApp.fileState= WAIT;
+        
     }
     
     
@@ -159,6 +169,9 @@ public class Datos implements Runnable{
                             }               
                     }
                       myReader.close();
+                      
+                      System.out.println("Cuantas categoprias: "+ numCategories);
+                      
               } catch (FileNotFoundException ex) {
                     Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
                 }        
@@ -167,22 +180,11 @@ public class Datos implements Runnable{
         return cats;
     }
     
-    public String randomWord(){
-        String palabraRandom;
-        Categoria catRandom;
-        int categoriaRandom = (int) (Math.random()*numCategories-1+0);
-        
-        catRandom= vecCategoriasCUSTOM.get(categoriaRandom);
-        int numPalabras = catRandom.getNumPalabras();
-        
-        int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
-        
-        palabraRandom= catRandom.getPalabra(numPalabraRandom);
-        
-        System.out.println(palabraRandom);
-        return palabraRandom;
-    }
+  
 
+    
+    
+    
     @Override
     public void run() {
         
@@ -194,16 +196,33 @@ public class Datos implements Runnable{
                    case CUSTOM_FILE:
                        if(!customLOADED){
                    sendFileChoosener();
-                   customLOADED=true;
-                   StatesApp.fileState= WAIT;
+                  
+                   
                }
                        break;
                
                    case DEFAULT_FILE:
                        if(!defaultsLOADED){
-                           loadDefaults(vecCategoriasDEFAULTS);
+                           vecCategoriasDEFAULTS=loadDefaults(vecCategoriasDEFAULTS);
                            defaultsLOADED= true;
+                           
+                           
+                            System.out.println(vecCategoriasCUSTOM);
+                  System.out.println(numCategories);
+                
+                  
+                                     vecCategoriasDEFAULTS.get(0).printWords();
+                   vecCategoriasDEFAULTS.get(1).printWords();
+                                      vecCategoriasDEFAULTS.get(2).printWords();
+                                      
+                                      
+                                     
+
+                                      
+                                      
+                                      
                        }
+                       //System.out.println("Default DATA loaded)");
                        
                        break;
                        
@@ -217,9 +236,9 @@ public class Datos implements Runnable{
                 e.printStackTrace();
             }
            
-            //System.out.println(StatesApp.fileState);
+           // System.out.println(StatesApp.fileState);
             try {
-                Thread.sleep(200);
+                Thread.sleep(500);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -227,5 +246,18 @@ public class Datos implements Runnable{
         }
         System.out.println("end of the thread DATOS");
     }
+
+    public Vector<Categoria> getVecCategoriasDEFAULTS() {
+        return vecCategoriasDEFAULTS;
+    }
+
+    public Vector<Categoria> getVecCategoriasCUSTOM() {
+        return vecCategoriasCUSTOM;
+    }
+    
+    
+    
+    
+    
     
 }

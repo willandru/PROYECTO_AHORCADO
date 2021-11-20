@@ -31,11 +31,18 @@ public class MainAPP {
             @Override
             public void run() {            
                     instance1= new SplashScreen();
-                    //instance2= new Music();    
+                    instance2= new Music();    
                     instance3= new Datos();
             }
         });
     }
     //******METHODS*****
+
+    public static Datos getInstance3() {
+        return instance3;
+    }
+    
+    
+    
     
 }

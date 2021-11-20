@@ -27,7 +27,7 @@ import static main.StatesApp.*;
  * @author kaliw
  */
 public class Settings extends JPanel implements ActionListener{
-     private JButton btnGoMenu, btnUploadFile, btnMusic;
+     private JButton btnGoMenu, btnUploadFile, btnMusic, btnDefaults;
      private  JFileChooser fileOpener = new JFileChooser(); 
      
 
@@ -56,6 +56,10 @@ public class Settings extends JPanel implements ActionListener{
             System.out.println("GOMENUGOEMUUUGOGGOGO");
             //StatesApp.gameState=MENU;
            StatesApp.gameState=MENU;
+        }else if(origen == this.btnDefaults){
+            System.out.println("SET DEFAULTS");
+            //StatesApp.gameState=MENU;
+           StatesApp.fileState=DEFAULT_FILE;
         }
     }
   
@@ -80,12 +84,16 @@ public class Settings extends JPanel implements ActionListener{
         btnGoMenu.addActionListener(this);
         
         btnUploadFile = new JButton("UPLOAD FILE");
-        btnUploadFile.setBounds(120,150,150,70);
+        btnUploadFile.setBounds(120,150,150,60);
         btnUploadFile.addActionListener(this);
         
         btnMusic = new JButton("MUSIC");
         btnMusic.setBounds(120,300,150,70);
         btnMusic.addActionListener(this);
+        
+        btnDefaults= new JButton("Set Defaults");
+        btnDefaults.setBounds(120,230,150,40);
+        btnDefaults.addActionListener(this);
    
     }
 
@@ -93,6 +101,7 @@ public class Settings extends JPanel implements ActionListener{
         this.add(btnGoMenu);
         this.add(btnUploadFile);
         this.add(btnMusic);
+        this.add(btnDefaults);
     }
     
 }
