@@ -5,6 +5,7 @@
  */
 package main;
 
+import baseDatos.Datos;
 import devices.Music;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ public class MainAPP {
     //****VARIABLES****
     static SplashScreen instance1;
     static Music instance2;
+    static Datos instance3;
     //UX uxInstance;
     
     //****MAIN****
@@ -29,7 +31,8 @@ public class MainAPP {
             @Override
             public void run() {            
                     instance1= new SplashScreen();
-                    //instance2= new Music();                
+                    //instance2= new Music();    
+                    instance3= new Datos();
             }
         });
     }

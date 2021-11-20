@@ -35,7 +35,7 @@ public class Menu extends JPanel implements ActionListener{
     
     public Menu(){
         setLayout(null);
-        setBackground(new Color(0x134756));
+        setBackground(new Color(0xa61f22));
         initButtons();
         addButtons();
        
@@ -45,14 +45,6 @@ public class Menu extends JPanel implements ActionListener{
     }
 
     
-    
-
- 
-    public int  getNumero(){
-        return numero;
-    }
-    
-
 
     private void initButtons() {
 
@@ -69,7 +61,7 @@ public class Menu extends JPanel implements ActionListener{
         btnSetts.setBounds(70,400,250,70);
         
         btnQuit=new JButton("QUIT");
-        btnQuit.setBounds(160,490,100,70);
+        btnQuit.setBounds(150,490,100,70);
         
        
 
@@ -121,5 +113,9 @@ public class Menu extends JPanel implements ActionListener{
         
     }
    
+    
+    
+    
+    
     
 }

@@ -5,12 +5,22 @@
  */
 package scenes;
 
+import baseDatos.Categoria;
+import baseDatos.Datos;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import main.StatesApp;
-import static main.StatesApp.MENU;
+import static main.StatesApp.*;
 
 /**
  *
@@ -18,14 +28,52 @@ import static main.StatesApp.MENU;
  */
 public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
+     private  JFileChooser fileOpener = new JFileChooser(); 
+     
+
      
      public Settings(){
-          setLayout(null);
+         setLayout(null);
          inicializarBotones();
          agregarBotones();
          setVisible(true);
      }
 
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+
+        Object origen = ae.getSource();
+        if(origen == this.btnUploadFile){
+            
+            StatesApp.fileState=CUSTOM_FILE;
+            System.out.println("UPDATED");
+          
+ 
+            
+            
+        }else if(origen == this.btnGoMenu){
+            System.out.println("GOMENUGOEMUUUGOGGOGO");
+            //StatesApp.gameState=MENU;
+           StatesApp.gameState=MENU;
+        }
+    }
+  
+    
+    
+    
+
+        
+  
+   
+    
+    
+    
+    
+   
+   
+   
+    
     private void inicializarBotones() {
         btnGoMenu= new JButton("Back");
         btnGoMenu.setBounds(120,450,150,70);
@@ -45,20 +93,6 @@ public class Settings extends JPanel implements ActionListener{
         this.add(btnGoMenu);
         this.add(btnUploadFile);
         this.add(btnMusic);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-
-        Object origen = ae.getSource();
-        if(origen == this.btnUploadFile){
-            System.out.println("DATADATADATADATADATA");
-        }else if(origen == this.btnGoMenu){
-            System.out.println("GOMENUGOEMUUUGOGGOGO");
-            //StatesApp.gameState=MENU;
-            
-                  StatesApp.gameState=MENU;
-        }
     }
     
 }
