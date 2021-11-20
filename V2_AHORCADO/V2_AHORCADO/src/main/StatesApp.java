@@ -10,10 +10,13 @@ package main;
  * @author kaliw
  */
 public enum StatesApp {
-     PLAYING,    MENU,    SETTINGS, QUIT;
+     PLAYING,    MENU,    SETTINGS, QUIT, CUSTOM_FILE, DEFAULT_FILE , WAIT;
+     
     public static StatesApp gameState = MENU;
     
-    public static void SetStatesApp(StatesApp state){
-        gameState= state;
-    }
+    public static StatesApp fileState = DEFAULT_FILE;
+    
+    //public static void SetStatesApp(StatesApp state){
+      //  gameState= state;
+    //}
 }

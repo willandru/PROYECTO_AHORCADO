@@ -30,9 +30,7 @@ public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
      private  JFileChooser fileOpener = new JFileChooser(); 
      
-     static Datos instanceDATA;
-    
-     
+
      
      public Settings(){
          setLayout(null);
@@ -48,10 +46,8 @@ public class Settings extends JPanel implements ActionListener{
         Object origen = ae.getSource();
         if(origen == this.btnUploadFile){
             
-            instanceDATA= new Datos();
-            System.out.println("scenes.Settings.actionPerformed()");
-            //instanceDATA.customFIle=true;
-            instanceDATA.defaults=false;
+            StatesApp.fileState=CUSTOM_FILE;
+            System.out.println("UPDATED");
           
  
             

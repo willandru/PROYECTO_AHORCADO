@@ -15,6 +15,9 @@ import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import scenes.Settings;
 
+import main.StatesApp;
+import static main.StatesApp.*;
+
 /**
  *
  * @author kaliw
@@ -35,20 +38,28 @@ public class Datos implements Runnable{
       private Thread threadDATA=null; 
       private File defaultWords;
       
-      public  boolean defaults= true;
-      public  boolean customFIle = false;
+      public  boolean customLOADED= false;
+      public boolean defaultsLOADED=false;
+   
       
      static Datos instance;
      
      
       public Datos(){
           threadDATA = new Thread(this);
-         vecCategoriasCUSTOM = null ;
+        
           vecCategoriasDEFAULTS = null;
-          loadDefaults(vecCategoriasDEFAULTS);
           
           
-          threadDATA.start();
+          
+         
+          
+        
+               threadDATA.start();
+          
+          
+          
+         
         
     }
 
@@ -78,18 +89,21 @@ public class Datos implements Runnable{
     
     
       
-    public void readFile(){
+    public void sendFileChoosener(){
+       
         fileOpener = new JFileChooser();
         
           fileOpener.setCurrentDirectory(new File("./src/resources"));
             int ans = fileOpener.showOpenDialog(null);
         
         if(ans== JFileChooser.APPROVE_OPTION){
-                
+                  vecCategoriasCUSTOM = null ;
             File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
           vecCategoriasCUSTOM=saveFileContent(vecCategoriasCUSTOM, dataFile);
                     
-                    
+          customLOADED= true;          
+          
+          
                     System.out.println(vecCategoriasCUSTOM);
                   System.out.println(numCategories);
                 
@@ -175,19 +189,43 @@ public class Datos implements Runnable{
         while(threadDATA !=null){
             try{
                // Thread.sleep(600);
+               switch(StatesApp.fileState){
+                   
+                   case CUSTOM_FILE:
+                       if(!customLOADED){
+                   sendFileChoosener();
+                   customLOADED=true;
+                   StatesApp.fileState= WAIT;
+               }
+                       break;
                
-               if(!defaults){
-                   readFile();
+                   case DEFAULT_FILE:
+                       if(!defaultsLOADED){
+                           loadDefaults(vecCategoriasDEFAULTS);
+                           defaultsLOADED= true;
+                       }
+                       
+                       break;
+                       
+                   case WAIT:
+                       customLOADED=false;
+                       break;
                }
                
                 
             }catch (Exception e){
                 e.printStackTrace();
             }
-            threadDATA=null;
-            System.out.println("....JUJU...)");
+           
+            System.out.println(StatesApp.fileState);
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
         }
-        System.out.println("baseDatos.Datos.run():: JUJU");
+        System.out.println("end of the thread DATOS");
     }
     
 }
