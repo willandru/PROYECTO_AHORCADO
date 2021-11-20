@@ -1,0 +1,32 @@
+---JUEGO DEL AHORCADO----
+--PALABRAS POR DEFECTO---
+
+ANIMALES
+pinguino
+aguila
+escorpion
+tigre
+conejo
+ardilla
+
+FUTBOLISTAS
+
+Neymar
+Ospina
+Ronaldinho
+Messi
+Pele
+Cristiano
+Pique
+James
+
+
+ESTILOS DE MUSICA
+
+pop
+rock
+salsa
+vallenato
+merengue
+regaeton
+jazz

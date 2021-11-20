@@ -1,30 +1,41 @@
+**---PALABRAS JUEGO DEL AHORCADO ---***
+***
+--*
+-
 
 LENGUAJES
-
-c++
+r
+c
+d
+Rust
 java
 python
 ruby
 perl
 php
-javaScript
-fortran
+html
+JavaScript
+pascal
 haskell
 
-
-
 BASES DE DATOS
-
 NoSQL
 MySQL
 MongoDB
 
-
 MATERIAS
-
 Calculo
 Probabilidad
 Programacion
 Fisica
 Artes
 Lectura
+
+
+COLORES
+
+Azul
+Rojo
+Verde
+Amarillo
+Morado

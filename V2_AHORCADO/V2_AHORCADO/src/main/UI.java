@@ -76,7 +76,7 @@ public class UI extends JFrame {
                 
               while(continua){ 
                   Thread.sleep(30);
-                switch(StatesApp.gameState){
+            switch(StatesApp.gameState){
               
             case MENU:
                

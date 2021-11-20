@@ -29,6 +29,13 @@ public class Playing extends JPanel implements ActionListener{
     private static final int HEIGHTP=680;
     private JButton []teclado= new JButton[27];
     
+    private String randomWord;
+    
+    
+    
+    
+    private JPanel panelCategory;
+    
     public Playing(){
         setLayout(null);
         setBackground(new Color(0x22a666));
@@ -41,12 +48,16 @@ public class Playing extends JPanel implements ActionListener{
        //*****
        p1.add(p5);
         p1.add(p6);
-        
+        p1.add(panelCategory);
         p1.revalidate();
         p1.repaint();
        ///****
-      p3.setLayout(null);
        
+       //randomWord=getRandomWord()
+       
+       
+       //********
+      p3.setLayout(null);
         initTeclado();
         addTeclado();
         
@@ -110,7 +121,11 @@ public class Playing extends JPanel implements ActionListener{
         p4= new JPanel();
         p5= new JPanel();
         p6= new JPanel();
-    
+        
+        panelCategory= new JPanel();
+        panelCategory.setBounds(250, 200, 140,50);
+        panelCategory.setBackground(Color.black);
+        
         
         p1.setBounds(0, 0, WIDTHP, 250);
         p1.setBackground(Color.red);
