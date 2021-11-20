@@ -29,9 +29,8 @@ import static main.StatesApp.*;
 public class Settings extends JPanel implements ActionListener{
      private JButton btnGoMenu, btnUploadFile, btnMusic;
      private  JFileChooser fileOpener = new JFileChooser(); 
-     private Datos DATOSTEXTO = new Datos();
      
-     
+
      
      public Settings(){
          setLayout(null);
@@ -47,10 +46,10 @@ public class Settings extends JPanel implements ActionListener{
         Object origen = ae.getSource();
         if(origen == this.btnUploadFile){
             
-            DATOSTEXTO.readFile();
-            
-           System.out.println(DATOSTEXTO.randomWord());
-            
+            StatesApp.fileState=CUSTOM_FILE;
+            System.out.println("UPDATED");
+          
+ 
             
             
         }else if(origen == this.btnGoMenu){

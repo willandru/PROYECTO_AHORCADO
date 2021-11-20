@@ -1,0 +1,21 @@
+RANDOM WORDS
+
+
+ public String randomWord(){
+ 
+ 
+        String palabraRandom;
+        Categoria catRandom;
+        int categoriaRandom = (int) (Math.random()*numCategories-1+0);
+        
+        catRandom= vecCategorias.get(categoriaRandom);
+        int numPalabras = catRandom.getNumPalabras();
+        
+        int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
+        
+        palabraRandom= catRandom.getPalabra(numPalabraRandom);
+        
+        return palabraRandom;
+        
+        
+    }

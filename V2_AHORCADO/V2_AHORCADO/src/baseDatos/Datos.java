@@ -15,6 +15,9 @@ import java.util.regex.Pattern;
 import javax.swing.JFileChooser;
 import scenes.Settings;
 
+import main.StatesApp;
+import static main.StatesApp.*;
+
 /**
  *
  * @author kaliw
@@ -22,43 +25,115 @@ import scenes.Settings;
 public class Datos implements Runnable{
     
     //Vector <Categoria>
-     private  JFileChooser fileOpener = new JFileChooser(); 
+     private  JFileChooser fileOpener; 
     
-     public Vector <Integer> vecNumWords;  /// WHATTT IS THIS FOOR
-     public Vector <Categoria> vecCategorias ;
+     public Vector <Categoria> vecCategoriasCUSTOM;
+     
+      public Vector <Categoria> vecCategoriasDEFAULTS;
       private int numCategories;
+      
+      
+      
+      
+      private Thread threadDATA=null; 
+      private File defaultWords;
+      
+      public  boolean customLOADED= false;
+      public boolean defaultsLOADED=false;
+   
+      
+     static Datos instance;
      
      
-     
-     
-    public Datos(){
+      public Datos(){
+          threadDATA = new Thread(this);
+        
+          vecCategoriasDEFAULTS = null;
+          
+          
+          
+         
+          
+        
+               threadDATA.start();
+          
+          
+          
+         
         
     }
+
+    public static Datos getInstance() {
+        
+        if (instance == null) {
+            instance = new Datos();
+        }
+        return instance;
+    }
     
+     
+     
+   public void loadDefaults(Vector<Categoria> catDef){
+       try{
+       defaultWords= new File("./src/resources/defaultsWords.txt");
+       
+        System.out.println("data defaults: " + defaultWords);
+        
+           saveFileContent(catDef, defaultWords);
+        
+       }catch(Exception e){
+           
+       }
+       
+   }
     
     
       
-    public void readFile(){
+    public void sendFileChoosener(){
+       
+        fileOpener = new JFileChooser();
         
           fileOpener.setCurrentDirectory(new File("./src/resources"));
             int ans = fileOpener.showOpenDialog(null);
         
         if(ans== JFileChooser.APPROVE_OPTION){
-                try {
-                    File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-                    System.out.println(dataFile);
+                  vecCategoriasCUSTOM = null ;
+            File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+          vecCategoriasCUSTOM=saveFileContent(vecCategoriasCUSTOM, dataFile);
                     
-                    Scanner myReader = new Scanner(dataFile);
-                    
+          customLOADED= true;          
+          
+          
+                    System.out.println(vecCategoriasCUSTOM);
+                  System.out.println(numCategories);
+                
+                  
+                                     vecCategoriasCUSTOM.get(0).printWords();
+                   vecCategoriasCUSTOM.get(1).printWords();
+                                      vecCategoriasCUSTOM.get(2).printWords();
+
+              
+}
+    }
+    
+    
+    public Vector<Categoria> saveFileContent(Vector<Categoria> cats, File file){
+        
+        
+        if (cats == null){
+            try { 
+            
+            Scanner myReader = new Scanner(file);
+                 
                     boolean validLine;
                     boolean isCategory=false;
                     boolean isWord=false;
                     
                     numCategories=0;
                     int numPalabras=0;
-                    vecNumWords = new Vector<>();
+                   
                     Categoria newCategory =new Categoria();
-                    vecCategorias = new Vector<>();
+                    cats = new Vector<>();
                     
                     while (myReader.hasNextLine()) {
                        String data = myReader.nextLine();
@@ -73,7 +148,7 @@ public class Datos implements Runnable{
                                     numCategories++;
                                     numPalabras=0;
                                     
-                                    vecCategorias.add(newCategory);
+                                    cats.add(newCategory);
                                     System.out.println("Categoria "+ numCategories + " ; "+ data);
                                 }
                                 else{
@@ -83,41 +158,74 @@ public class Datos implements Runnable{
                                 }               
                             }               
                     }
-                    System.out.println(vecCategorias);
-                  System.out.println(numCategories);
-                  myReader.close();
-                  
-                                     vecCategorias.get(0).printWords();
-                   vecCategorias.get(1).printWords();
-                                      vecCategorias.get(2).printWords();
-
-                } catch (FileNotFoundException ex) {
+                      myReader.close();
+              } catch (FileNotFoundException ex) {
                     Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
-                }
-}
+                }        
+        }
+        
+        return cats;
     }
-    
-    
-    
     
     public String randomWord(){
         String palabraRandom;
         Categoria catRandom;
         int categoriaRandom = (int) (Math.random()*numCategories-1+0);
         
-        catRandom= vecCategorias.get(categoriaRandom);
+        catRandom= vecCategoriasCUSTOM.get(categoriaRandom);
         int numPalabras = catRandom.getNumPalabras();
         
         int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
         
         palabraRandom= catRandom.getPalabra(numPalabraRandom);
         
+        System.out.println(palabraRandom);
         return palabraRandom;
     }
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        while(threadDATA !=null){
+            try{
+               // Thread.sleep(600);
+               switch(StatesApp.fileState){
+                   
+                   case CUSTOM_FILE:
+                       if(!customLOADED){
+                   sendFileChoosener();
+                   customLOADED=true;
+                   StatesApp.fileState= WAIT;
+               }
+                       break;
+               
+                   case DEFAULT_FILE:
+                       if(!defaultsLOADED){
+                           loadDefaults(vecCategoriasDEFAULTS);
+                           defaultsLOADED= true;
+                       }
+                       
+                       break;
+                       
+                   case WAIT:
+                       customLOADED=false;
+                       break;
+               }
+               
+                
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+           
+            //System.out.println(StatesApp.fileState);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Datos.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+        System.out.println("end of the thread DATOS");
     }
     
 }
