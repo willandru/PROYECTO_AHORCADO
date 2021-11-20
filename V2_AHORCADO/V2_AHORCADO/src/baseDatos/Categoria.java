@@ -40,6 +40,18 @@ public class Categoria {
         return nameCategory;
     }
     
+    public int getNumPalabras(){
+        return palabras.size();
+        
+    }
+
+    public Vector<String> getPalabras() {
+        return palabras;
+    }
+    
+    public String getPalabra(int indice){
+        return palabras.get(indice);
+    }
     
     
 }

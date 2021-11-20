@@ -49,6 +49,7 @@ public class Settings extends JPanel implements ActionListener{
             
             DATOSTEXTO.readFile();
             
+           System.out.println(DATOSTEXTO.randomWord());
             
             
             

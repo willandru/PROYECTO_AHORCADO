@@ -24,8 +24,13 @@ public class Datos {
     //Vector <Categoria>
      private  JFileChooser fileOpener = new JFileChooser(); 
     
-     public Vector <Integer> vecNumWords;
+     public Vector <Integer> vecNumWords;  /// WHATTT IS THIS FOOR
      public Vector <Categoria> vecCategorias ;
+      private int numCategories;
+     
+     
+     
+     
     public Datos(){
         
     }
@@ -49,7 +54,7 @@ public class Datos {
                     boolean isCategory=false;
                     boolean isWord=false;
                     
-                    int numCategories=0;
+                    numCategories=0;
                     int numPalabras=0;
                     vecNumWords = new Vector<>();
                     Categoria newCategory =new Categoria();
@@ -93,5 +98,21 @@ public class Datos {
     }
     
     
+    
+    
+    public String randomWord(){
+        String palabraRandom;
+        Categoria catRandom;
+        int categoriaRandom = (int) (Math.random()*numCategories-1+0);
+        
+        catRandom= vecCategorias.get(categoriaRandom);
+        int numPalabras = catRandom.getNumPalabras();
+        
+        int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
+        
+        palabraRandom= catRandom.getPalabra(numPalabraRandom);
+        
+        return palabraRandom;
+    }
     
 }
