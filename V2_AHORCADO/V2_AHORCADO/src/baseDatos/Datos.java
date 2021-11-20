@@ -43,9 +43,9 @@ public class Datos implements Runnable{
      
       public Datos(){
           threadDATA = new Thread(this);
-          Vector <Categoria> vecCategoriasCUSTOM = null ;
-          
-          loadDefaults();
+         vecCategoriasCUSTOM = null ;
+          vecCategoriasDEFAULTS = null;
+          loadDefaults(vecCategoriasDEFAULTS);
           
           
           threadDATA.start();
@@ -62,10 +62,14 @@ public class Datos implements Runnable{
     
      
      
-   public void loadDefaults(){
+   public void loadDefaults(Vector<Categoria> catDef){
        try{
-       defaultWords= new File("./src/resources/defailtsWords.txt");
+       defaultWords= new File("./src/resources/defaultsWords.txt");
+       
         System.out.println("data defaults: " + defaultWords);
+        
+           saveFileContent(catDef, defaultWords);
+        
        }catch(Exception e){
            
        }
@@ -82,8 +86,8 @@ public class Datos implements Runnable{
         
         if(ans== JFileChooser.APPROVE_OPTION){
                 
- 
-          vecCategoriasCUSTOM=saveFile(vecCategoriasCUSTOM);
+            File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+          vecCategoriasCUSTOM=saveFileContent(vecCategoriasCUSTOM, dataFile);
                     
                     
                     System.out.println(vecCategoriasCUSTOM);
@@ -99,13 +103,13 @@ public class Datos implements Runnable{
     }
     
     
-    public Vector<Categoria> saveFile(Vector<Categoria> cats){
+    public Vector<Categoria> saveFileContent(Vector<Categoria> cats, File file){
         
         
         if (cats == null){
             try { 
-            File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-            Scanner myReader = new Scanner(dataFile);
+            
+            Scanner myReader = new Scanner(file);
                  
                     boolean validLine;
                     boolean isCategory=false;
