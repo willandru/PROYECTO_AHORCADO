@@ -37,5 +37,12 @@ public class MainAPP {
         });
     }
     //******METHODS*****
+
+    public static Datos getInstance3() {
+        return instance3;
+    }
+    
+    
+    
     
 }

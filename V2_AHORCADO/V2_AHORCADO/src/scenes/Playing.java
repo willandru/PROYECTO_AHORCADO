@@ -5,14 +5,19 @@
  */
 package scenes;
 
+import baseDatos.Categoria;
+import baseDatos.Datos;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import main.MainAPP;
 
 import main.StatesApp;
 import static main.StatesApp.*;
@@ -31,10 +36,11 @@ public class Playing extends JPanel implements ActionListener{
     
     private String randomWord;
     
-    
+    private  Datos datosJUGAR = MainAPP.getInstance3();
     
     
     private JPanel panelCategory;
+    private JTextField[] rayas;
     
     public Playing(){
         setLayout(null);
@@ -55,16 +61,90 @@ public class Playing extends JPanel implements ActionListener{
        
        //randomWord=getRandomWord()
        
-       
        //********
       p3.setLayout(null);
         initTeclado();
         addTeclado();
         
+        
+        
+         p2.setLayout(null);
+         drawRandomWord();
+        
+        p2.revalidate();
+        p2.repaint();
+        
+        
+      
+        
         setVisible(true);  
     }
     
+      public String randomWord(Vector<Categoria> catsJugando){
+        String palabraRandom;
+        Categoria catRandom;
+        int numCatsJugando= catsJugando.size();
+        int categoriaRandom = (int) (Math.random()*numCatsJugando-1+0);
+        
+        catRandom= catsJugando.get(categoriaRandom);
+        int numPalabras = catRandom.getNumPalabras();
+        
+        int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
+        
+        palabraRandom= catRandom.getPalabra(numPalabraRandom);
+        
+        System.out.println(palabraRandom);
+        return palabraRandom;
+    }
     
+    private void drawRandomWord(){
+        
+       String word=null;
+        Vector <Categoria> cateToPlay=null;
+        int numeroLetras=0;
+        
+        switch(StatesApp.fileState){
+            
+            case WAIT:
+               cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
+                word=  randomWord(cateToPlay);
+              
+                numeroLetras=word.length();
+                addJtext(numeroLetras);
+                
+                
+                
+                break;
+             
+            case DEFAULT_FILE:
+                 cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
+                word=  randomWord(cateToPlay);
+                
+                numeroLetras=word.length();
+                addJtext(numeroLetras);
+                
+                break;
+            
+        }
+        
+        System.out.println("RANDOM:: " +word);
+        
+    }
+    
+    private void addJtext(int n){
+        rayas= new JTextField[n];
+        int fila=1;
+        for (int i=0; i<n; i++){
+            rayas[i]= new JTextField();
+            rayas[i].setBounds(20*fila, 50, 30, 30);
+            rayas[i].setText("H");
+            rayas[i].setEditable(false);
+            rayas[i].setBackground(new Color (0,0,0,0));
+            fila+=2;
+            p2.add(rayas[i]);
+        }
+        
+    }
     private void initTeclado(){
         for(int i=0; i<27; i++){
             teclado[i]= new JButton();
