@@ -19,7 +19,7 @@ import scenes.Settings;
  *
  * @author kaliw
  */
-public class Datos {
+public class Datos implements Runnable{
     
     //Vector <Categoria>
      private  JFileChooser fileOpener = new JFileChooser(); 
@@ -113,6 +113,11 @@ public class Datos {
         palabraRandom= catRandom.getPalabra(numPalabraRandom);
         
         return palabraRandom;
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }
