@@ -7,14 +7,21 @@ package scenes;
 
 import baseDatos.Categoria;
 import baseDatos.Datos;
+
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import main.MainAPP;
@@ -41,7 +48,11 @@ public class Playing extends JPanel implements ActionListener{
     
     private JPanel panelCategory;
     private JTextField[] rayas;
+    private JLabel[] labelRayas;
     
+    private ImageIcon imageABC;
+    private    ImageIcon imageRaya;
+
     public Playing(){
         setLayout(null);
         setBackground(new Color(0x22a666));
@@ -110,7 +121,7 @@ public class Playing extends JPanel implements ActionListener{
                 word=  randomWord(cateToPlay);
               
                 numeroLetras=word.length();
-                addJtext(numeroLetras);
+                addJtextandJLabel(numeroLetras);
                 
                 
                 
@@ -121,35 +132,112 @@ public class Playing extends JPanel implements ActionListener{
                 word=  randomWord(cateToPlay);
                 
                 numeroLetras=word.length();
-                addJtext(numeroLetras);
+                addJtextandJLabel(numeroLetras);
                 
                 break;
             
         }
         
         System.out.println("RANDOM:: " +word);
-        
+       
     }
     
-    private void addJtext(int n){
-        rayas= new JTextField[n];
+    private void addJtextandJLabel(int n){
+        rayas= new JTextField[n];  
+        labelRayas= new JLabel[n];
+        
+        
+        int columna=1;
         int fila=1;
+         imageRaya= new ImageIcon("./src/resources/RAYA_AHORCADO2.png");
+         
+   
+              
+         
+         
         for (int i=0; i<n; i++){
+            
+         
+           
+            
             rayas[i]= new JTextField();
-            rayas[i].setBounds(20*fila, 50, 30, 30);
+            
+            labelRayas[i]= new JLabel(imageRaya);
+            labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
+            rayas[i].setBounds(20*columna, fila*50, 30, 30);
             rayas[i].setText("H");
             rayas[i].setEditable(false);
             rayas[i].setBackground(new Color (0,0,0,0));
-            fila+=2;
+            columna+=2;
+            //fotoCol++;
+            
+            
+            p2.add(labelRayas[i]);
             p2.add(rayas[i]);
+            if(i== 8){
+                columna=1;
+                fila=2;
+                //fotoCol=0;
+                //fotoFil=1;
+            }
+            
         }
         
     }
+    
+    private ImageIcon getIcon(int fotoCol, int fotoFil, BufferedImage ig) {
+         
+        ImageIcon img;
+        BufferedImage sub;
+        
+        sub=ig.getSubimage(fotoCol*30, fotoFil*30, 30, 30);
+        img = new ImageIcon(sub);
+        return img;
+    
+
+    }
+    
+    public BufferedImage loadSpreadSheet(File path){
+         BufferedImage ig= null;
+        //InputStream is = Playing.class.getClassLoader().getResourceAsStream("./src/resources/spriteABC.png");
+        try {
+            ig = ImageIO.read(path);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return ig;
+    }
+    
     private void initTeclado(){
+        char digit;
+        String num;
+        int letra=65;
+        
+        
+        int fotoCol=0;
+        int fotoFil=0;
+        File path;
+        
+         path= new File("./src/resources/spriteABC.png");
+         BufferedImage buffImg = loadSpreadSheet(path);
+        
+        
         for(int i=0; i<27; i++){
-            teclado[i]= new JButton();
-            teclado[i].setSize(30, 30); 
+             imageABC= getIcon(fotoCol, fotoFil, buffImg);
             
+            teclado[i]= new JButton();
+            teclado[i].setSize(33, 30); 
+           // digit= (char) letra;
+           // num= String.valueOf(digit);
+            teclado[i].setIcon(imageABC);
+              teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 8));
+            letra++;
+            
+            fotoCol++;
+            if(fotoCol==9 || fotoCol == 19){
+                fotoCol=0;
+                fotoFil++;
+            }
         }
     }
     
@@ -210,7 +298,7 @@ public class Playing extends JPanel implements ActionListener{
         p1.setBounds(0, 0, WIDTHP, 250);
         p1.setBackground(Color.red);
         p2.setBounds(0, 250, WIDTHP, 150);
-        p2.setBackground(Color.blue);
+        p2.setBackground(Color.white);
         p3.setBounds(0, 400, WIDTHP, 200);
         p3.setBackground(Color.darkGray);
         p4.setBounds(0, 600, WIDTHP, 100);
@@ -284,6 +372,8 @@ public class Playing extends JPanel implements ActionListener{
     public int getNumber() {
             return number;
     }
+
+    
     
     
     

@@ -3,6 +3,7 @@
 
 ANIMALES
 pinguino
+tiburon
 aguila
 escorpion
 tigre
