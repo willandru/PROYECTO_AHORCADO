@@ -81,8 +81,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         initPanels();
         initButtons();
         
-       addButtons();
-       addPanels();
+        addButtons();
+        addPanels();
        
         gameThread= new Thread(this);
        //*****
@@ -95,7 +95,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
        
        
        //********
-      p3.setLayout(null);
+        p3.setLayout(null);
       
         initTeclado();
         addTeclado();
@@ -530,8 +530,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             setVariablesOfWord();
             
         }
-        //StatesApp.playingState=NOT_DONE;
-        itsDone= itsDone(letrasLLenadas);
+        StatesApp.playingState=NOT_DONE;
+       
         if(itsDone){
             StatesApp.playingState=DONE;
            
