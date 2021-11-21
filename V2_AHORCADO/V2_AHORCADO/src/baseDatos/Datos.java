@@ -163,7 +163,8 @@ public class Datos implements Runnable{
                                 }
                                 else{
                                     numPalabras++;
-                                    newCategory.addPalabra(data); //****CUIDADO            CUIDADOO
+                                    
+                                    newCategory.addPalabra(data.toUpperCase()); //****CUIDADO            CUIDADOO
                                                    
                                 }               
                             }               

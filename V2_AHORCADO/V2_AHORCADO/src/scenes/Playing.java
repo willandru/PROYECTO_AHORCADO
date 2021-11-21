@@ -237,7 +237,7 @@ public class Playing extends JPanel implements ActionListener{
     private void initTeclado(){
         char digit;
         String num;
-        int letra=97;
+        int letra=65;
         
         
         int fotoCol=0;
@@ -428,9 +428,10 @@ public class Playing extends JPanel implements ActionListener{
          for(int i=0; i<numeroLetrasRandom; i++){
              
              System.out.println("scene::: "+ String.valueOf(palabra.charAt(i))+ " :: "+ txt);
-                if (String.valueOf(palabra.charAt(i)) ==  txt ){
+                if (String.valueOf(palabra.charAt(i)).equals(txt) ){
                      go= true;
-                 indiceDeLetra=i;
+                     System.out.println("BIIITCHHH");
+                     indiceDeLetra=i;
                     
                 }
             }
