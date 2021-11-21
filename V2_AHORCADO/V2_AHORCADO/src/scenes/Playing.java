@@ -100,7 +100,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         initTeclado();
         addTeclado();
         
-        
+       
         
         
         
@@ -146,6 +146,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         switch(StatesApp.fileState){
             
             case WAIT:
+                cateToPlay= new Vector<Categoria>();
                cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
                 word=  randomWord(cateToPlay);
               
@@ -157,6 +158,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 break;
              
             case DEFAULT_FILE:
+                cateToPlay= new Vector<Categoria>();
                  cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
                 word=  randomWord(cateToPlay);
                 
@@ -522,7 +524,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         while(gameThread != null){
         
         if(StatesApp.playingState==DONE){
-            initP2();
+            
             palabra=drawRandomWord();
             p2.revalidate();
             p2.repaint();

@@ -114,6 +114,7 @@ public class UI extends JFrame {
                 System.out.println("PLAYIN painted");
                 playPintado=true;
                 menuPintado=false;
+                settsPintado=false;
                 }
                  //publish(StatesApp.gameState);
                 //System.out.println("PLAYING holi PUBLISHED");
@@ -133,6 +134,7 @@ public class UI extends JFrame {
                 System.out.println("SETTS painted");
                 settsPintado=true;
                 menuPintado=false;
+                playPintado=false;
                
                 }
                  //System.out.println(StatesApp.gameState);
