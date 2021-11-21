@@ -34,25 +34,31 @@ import static main.StatesApp.*;
  * @author kaliw
  */
 public class Playing extends JPanel implements ActionListener{
-    public JButton goMenu, noSound, options;
+    
+    
+    public JButton goMenu, btnHELP, options;
     public int number=1;
     public JPanel p1,p2,p3,p4,p5,p6;
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
     private JButton []teclado= new JButton[27];
-    
-    private String randomWord;
-    
-    private  Datos datosJUGAR = MainAPP.getInstance3();
-    
-    
+    private String randomWord;  
     private JPanel panelCategory;
     private JTextField[] rayas;
     private JLabel[] labelRayas;
-    
     private ImageIcon imageABC;
     private    ImageIcon imageRaya;
-
+    
+     private  Datos datosJUGAR = MainAPP.getInstance3();  
+    
+    private int letraAlAzar;
+    
+    private int numVidas;
+    
+    private boolean ayudaLeftt=true;
+    
+    private String palabra;
+    
     public Playing(){
         setLayout(null);
         setBackground(new Color(0x22a666));
@@ -70,7 +76,6 @@ public class Playing extends JPanel implements ActionListener{
         p1.repaint();
        ///****
        
-       //randomWord=getRandomWord()
        
        //********
       p3.setLayout(null);
@@ -79,19 +84,28 @@ public class Playing extends JPanel implements ActionListener{
         
         
         
-         p2.setLayout(null);
-         drawRandomWord();
-        
+        p2.setLayout(null);
+        palabra=drawRandomWord();
         p2.revalidate();
         p2.repaint();
         
+        // *******
+            // STARTS HERE
+        //********
+        
+        
+            //EL USUARIO SELECIONA UNA TECLA segun la categoria
+            
+            // siempre SE JUEGA CON randomWord()
+            
+            
+        
         
       
-        
         setVisible(true);  
     }
     
-      public String randomWord(Vector<Categoria> catsJugando){
+    public String randomWord(Vector<Categoria> catsJugando){
         String palabraRandom;
         Categoria catRandom;
         int numCatsJugando= catsJugando.size();
@@ -108,7 +122,7 @@ public class Playing extends JPanel implements ActionListener{
         return palabraRandom;
     }
     
-    private void drawRandomWord(){
+    private String drawRandomWord(){
         
        String word=null;
         Vector <Categoria> cateToPlay=null;
@@ -139,7 +153,7 @@ public class Playing extends JPanel implements ActionListener{
         }
         
         System.out.println("RANDOM:: " +word);
-       
+       return word;
     }
     
     private void addJtextandJLabel(int n){
@@ -226,11 +240,12 @@ public class Playing extends JPanel implements ActionListener{
              imageABC= getIcon(fotoCol, fotoFil, buffImg);
             
             teclado[i]= new JButton();
-            teclado[i].setSize(33, 30); 
-           // digit= (char) letra;
-           // num= String.valueOf(digit);
-            teclado[i].setIcon(imageABC);
-              teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 8));
+            teclado[i].setSize(35, 35); 
+            digit= (char) letra;
+            num= String.valueOf(digit);
+           // teclado[i].setIcon(imageABC);
+           teclado[i].setText(num);
+              teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 5));
             letra++;
             fotoCol++;
            
@@ -326,14 +341,14 @@ public class Playing extends JPanel implements ActionListener{
 
     private void addButtons() {
         p4.add(goMenu);
-        p4.add(noSound);
+        p4.add(btnHELP);
         p4.add(options);
         }
 
     private void initButtons() {
         
         goMenu = new JButton("HOME");
-        noSound= new JButton("SOUND");
+        btnHELP= new JButton("AYUDA");
         options= new JButton("OPTIONS");
         
 
@@ -342,10 +357,10 @@ public class Playing extends JPanel implements ActionListener{
         goMenu.setBackground(new Color(222,22,123));
         goMenu.setBorder(null);
         
-        noSound.setBounds(170,35,60,30);
-        noSound.addActionListener(this);
-        noSound.setBackground(new Color(111,222,111));
-        noSound.setBorder(null);
+        btnHELP.setBounds(170,35,60,30);
+        btnHELP.addActionListener(this);
+        btnHELP.setBackground(new Color(111,222,111));
+        btnHELP.setBorder(null);
         
         options.setBounds(170,35,60,30);
         options.addActionListener(this);
@@ -362,8 +377,14 @@ public class Playing extends JPanel implements ActionListener{
                   StatesApp.gameState=MENU;
                   System.out.println("GO TO menu");
 
-               }else if(origen == this.noSound){
+               }else if(origen == this.btnHELP){
                    p1.setBackground(new Color(0x911111));
+                   //TODO_ ----> ayuda: revelar una letra al azar
+                   
+                   // NECESITO TENER; REVISAR LA PALABRA, TOMAR UNA LETRA AL AZAR, LLENAR EL CAMPO,CORREPSONDIENTE.
+                   // BOOLEAN para dar 1 sola oportunidad (o 2,3)
+                        //revelarLetra();
+                   
                }
                 else if(origen == this.options){
                    p1.setBackground(new Color(0x91a211));

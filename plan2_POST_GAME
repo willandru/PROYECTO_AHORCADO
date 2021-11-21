@@ -1,0 +1,41 @@
+HACER EL JUEGO:
+
+- PINTAR UNA PALABRA ALEATORIA: LISTO
+
+- NUMERO DE VIDAS: : int #
+
+- LOS BOTONES CAMBIAN DE COLOR (ROJO/VERDE) DESPUES DE SER OPRIMIDOS / O SE CAMBIA DE IMAGEN 
+
+- EL NUMERO DE VIDAS REPRESENTA EL NUMERO DE IMAGENES A MOSTRAR DEL AHORCADO
+
+- SE DEBE PODER MOSTRAR LA PALABRA (UNA AYUDA) ---> UN BOTON DE AYUDA: REVELA UNA LETRA ALEATORIAMENTE
+
+- SE ACTUALIZA EL JTEXT
+
+- SE MIRA LAS PALABRA COMO UN VECTOR DE char
+
+- ::::
+	- El usuario escoge una letra:
+	( segun la categoria que ve) 
+	( sin ver la categoria)
+	- Si la letra esta en la palabra :
+	Se recorre la palabra para verificar en que poscicineos esta la letra: A medida que se va verificando se va actualizando el JText, asi como el JButon, asi como la imagen del AHorcado, asi como el numero de vidas o o intentos.
+	
+	- SI la letra esta en la palabra: continua con el mismo numero de vidas, el boton se pone verde, se ubica en cada JText la letra el numero de veces que corresponda ---> esto se hace de una vexz dentro del for
+	NO SE PINTA UNA NUEVA IMAGEN EN LA PANTALLA
+	
+	
+	
+- SI la letra NO esta en la palabra:
+
+SE PONE EL BOTON ROJO, Se descuenta 1 vida, SE PINTA UNA NUEVA IMAGEN EN LA PANTALLA
+
+
+: HASTA que el nuiemro de vidas sea 0
+
+SE DEBE MOSTRAR UNA PANTALLA QUE DIGA 
+
+	PERDIDA
+			DERROTA
+			
+			----------------******~~~~~~~~~~~~~~~~~
