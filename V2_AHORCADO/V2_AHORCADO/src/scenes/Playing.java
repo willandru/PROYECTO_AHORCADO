@@ -101,7 +101,12 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         addTeclado();
         
        
-        this.p2=initP2(p2);
+    
+         p2.setLayout(null);
+         //drawRandomWord();
+        
+        p2.revalidate();
+        p2.repaint();
         
         
         
@@ -121,16 +126,6 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     }
     
     
-    public JPanel initP2(JPanel p){
-        
-         p= new JPanel();
-         p.setLayout(null);
-         p.setBounds(0, 250, WIDTHP, 150);
-        p.setBackground(Color.white);
-        this.add(p);
-        
-        return p;
-    }
     
     
     public String randomWord(Vector<Categoria> catsJugando){
@@ -210,7 +205,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             rayas[i]= new JTextField();
             //TODO 
             System.out.println("ss:)"+ imageRaya);
-            
+            System.out.println("num rayas" + n);
             
             labelRayas[i]= new JLabel(imageRaya);
             labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
@@ -343,7 +338,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private void initPanels(){
         p1= new JPanel();
-        //p2= new JPanel();
+        p2= new JPanel();
         p3= new JPanel();
         p4= new JPanel();
         p5= new JPanel();
@@ -356,8 +351,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         
         p1.setBounds(0, 0, WIDTHP, 250);
         p1.setBackground(Color.red);
-        //p2.setBounds(0, 250, WIDTHP, 150);
-        //p2.setBackground(Color.white);
+        p2.setBounds(0, 250, WIDTHP, 150);
+        p2.setBackground(Color.white);
         p3.setBounds(0, 400, WIDTHP, 200);
         p3.setBackground(Color.darkGray);
         p4.setBounds(0, 600, WIDTHP, 100);
@@ -375,7 +370,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private void addPanels(){
         this.add(p1);
-        //this.add(p2);
+        this.add(p2);
         this.add(p3);
         this.add(p4);
         this.add(p5);
@@ -448,17 +443,26 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                        
                         System.out.println("CUCHAUUU " + txt);
                }
+                    
+                    System.out.println("ORGINEE");
                 }
                 
     }
     
-    public boolean itsDone(boolean[] array){
-        for (boolean b : array) {
+    public boolean itsDone(){
+        
+        if(letrasLLenadas != null){
+            for (boolean b : letrasLLenadas) {
         if (!b) {
            return false;
         }
     }
-    return true;
+            return true;
+        }else{
+            return false;
+        }
+        
+    
     }
     
     public boolean verificarLetra(String txt ){
@@ -535,7 +539,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
     @Override
     public void run() {
-        boolean itsDone=false;
+        boolean itsDone=itsDone();
         
         while(gameThread != null){
         
@@ -546,9 +550,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p2.repaint();
             numeroLetrasRandom= palabra.length();
             setVariablesOfWord();
-            
+            StatesApp.playingState=NOT_DONE;
         }
-        StatesApp.playingState=NOT_DONE;
+        
        
         if(itsDone){
             StatesApp.playingState=DONE;
