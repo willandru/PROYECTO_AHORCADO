@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,7 +35,7 @@ import static main.StatesApp.*;
  *
  * @author kaliw
  */
-public class Playing extends JPanel implements ActionListener{
+public class Playing extends JPanel implements ActionListener, Runnable{
     
     
     public JButton goMenu, btnHELP, options;
@@ -68,6 +70,10 @@ public class Playing extends JPanel implements ActionListener{
     
     private int indiceDeLetra;
     
+    private Thread gameThread;
+    
+   // private boolean DONE=false;
+    
     
     public Playing(){
         setLayout(null);
@@ -78,8 +84,9 @@ public class Playing extends JPanel implements ActionListener{
        addButtons();
        addPanels();
        
+        gameThread= new Thread(this);
        //*****
-       p1.add(p5);
+        p1.add(p5);
         p1.add(p6);
         p1.add(panelCategory);
         p1.revalidate();
@@ -89,22 +96,18 @@ public class Playing extends JPanel implements ActionListener{
        
        //********
       p3.setLayout(null);
+      
         initTeclado();
         addTeclado();
         
         
         
-        p2.setLayout(null);
-        palabra=drawRandomWord();
-        p2.revalidate();
-        p2.repaint();
         
-        // *******
-            // STARTS HERE
-        //********
-         numeroLetrasRandom= palabra.length();
         
-            setVariablesOfWord();
+        
+        
+        gameThread.start();
+        
         
             //EL USUARIO SELECIONA UNA TECLA segun la categoria
             
@@ -311,9 +314,18 @@ public class Playing extends JPanel implements ActionListener{
         
     }
     
+    public void initP2(){
+        
+         p2= new JPanel();
+         p2.setLayout(null);
+         p2.setBounds(0, 250, WIDTHP, 150);
+        p2.setBackground(Color.white);
+        this.add(p2);
+    }
+    
     private void initPanels(){
         p1= new JPanel();
-        p2= new JPanel();
+        //p2= new JPanel();
         p3= new JPanel();
         p4= new JPanel();
         p5= new JPanel();
@@ -326,8 +338,8 @@ public class Playing extends JPanel implements ActionListener{
         
         p1.setBounds(0, 0, WIDTHP, 250);
         p1.setBackground(Color.red);
-        p2.setBounds(0, 250, WIDTHP, 150);
-        p2.setBackground(Color.white);
+        //p2.setBounds(0, 250, WIDTHP, 150);
+        //p2.setBackground(Color.white);
         p3.setBounds(0, 400, WIDTHP, 200);
         p3.setBackground(Color.darkGray);
         p4.setBounds(0, 600, WIDTHP, 100);
@@ -345,7 +357,7 @@ public class Playing extends JPanel implements ActionListener{
     
     private void addPanels(){
         this.add(p1);
-        this.add(p2);
+        //this.add(p2);
         this.add(p3);
         this.add(p4);
         this.add(p5);
@@ -396,7 +408,7 @@ public class Playing extends JPanel implements ActionListener{
                    
                    // NECESITO TENER; REVISAR LA PALABRA, TOMAR UNA LETRA AL AZAR, LLENAR EL CAMPO,CORREPSONDIENTE.
                    // BOOLEAN para dar 1 sola oportunidad (o 2,3)
-                   if (ayudaLeftt){
+                   if (ayudaLeftt && StatesApp.playingState== NOT_DONE){
                         ayudarConLetra();
                         
                    }
@@ -421,6 +433,16 @@ public class Playing extends JPanel implements ActionListener{
                 }
                 
     }
+    
+    public boolean itsDone(boolean[] array){
+        for (boolean b : array) {
+        if (!b) {
+           return false;
+        }
+    }
+    return true;
+    }
+    
     public boolean verificarLetra(String txt){
         
         boolean go= false;
@@ -445,17 +467,22 @@ public class Playing extends JPanel implements ActionListener{
 
     private void ayudarConLetra() {
         
-         
+        boolean go=false;
        
         letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
         
-        letrasLLenadas[letraAlAzar]= true;
-        
+       while(!go){
+            if(!letrasLLenadas[letraAlAzar]){
             String l= String.valueOf(palabra.charAt(letraAlAzar));
-            
-            
-           
             addLetterToText(l,letraAlAzar);
+            go=true;
+        }else{
+                 letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
+            }
+    }
+        
+        
+        
                 
                 
                 // TOCA MIRAR SI LA LETRA SE REPITE O NO Y PONERLA EN DONDE CORRESPONDA
@@ -474,55 +501,62 @@ public class Playing extends JPanel implements ActionListener{
                 if (palabra.charAt(i) ==  palabra.charAt(indice) ){
                     
                     rayas[i].setText(l);
-                
+                    letrasLLenadas[i]=true;
                     
                 }
             }
         
     }
     private void setVariablesOfWord() {
-
-         
-        
         letrasLLenadas= new boolean[numeroLetrasRandom];
         
         for (int i=0; i<numeroLetrasRandom; i++){
             letrasLLenadas[i]= false;
         }
-        
+    }
 
+    @Override
+    public void run() {
+        boolean itsDone=false;
+        
+        while(gameThread != null){
+        
+        if(StatesApp.playingState==DONE){
+            initP2();
+            palabra=drawRandomWord();
+            p2.revalidate();
+            p2.repaint();
+            numeroLetrasRandom= palabra.length();
+            setVariablesOfWord();
+            
+        }
+        //StatesApp.playingState=NOT_DONE;
+        itsDone= itsDone(letrasLLenadas);
+        if(itsDone){
+            StatesApp.playingState=DONE;
+           
+        }
+        
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println(StatesApp.playingState);
+    }
+        
+       
+        
+        // *******
+            // STARTS HERE
+        //********
+         
     }
 
   
 
-    private void initRemainigLettersVector(){
-         letrasLLenadas= new boolean[numeroLetrasRandom];
-        
-        for (int i=0; i<numeroLetrasRandom; i++){
-            letrasLLenadas[i]= false;
-        }
-    }
-
-    private void setLettersTrue(char letter ){
-        for(int i=0; i<numeroLetrasRandom; i++){
-                if (palabra.charAt(i) ==  letter ){
-                     letrasLLenadas[i]= true;
-                   
-                
-                    
-                }
-            }
-    }
-     private void setText(char letter ){
-        for(int i=0; i<numeroLetrasRandom; i++){
-                if (palabra.charAt(i) ==  letter ){
-                     letrasLLenadas[i]= true;
-                   rayas[i].setText(String.valueOf(letter));
-                
-                    
-                }
-            }
-    }
+    
+    
     
     
 }
