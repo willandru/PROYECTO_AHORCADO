@@ -41,7 +41,10 @@ public class Playing extends JPanel implements ActionListener{
     public JPanel p1,p2,p3,p4,p5,p6;
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
-    private JButton []teclado= new JButton[27];
+    
+    private static final int NUM_BOTTONS=27;
+    
+    private JButton []teclado= new JButton[NUM_BOTTONS];
     private String randomWord;  
     private JPanel panelCategory;
     private JTextField[] rayas;
@@ -53,11 +56,18 @@ public class Playing extends JPanel implements ActionListener{
     
     private int letraAlAzar;
     
-    private int numVidas;
+    private int numVidas=3;
     
     private boolean ayudaLeftt=true;
     
     private String palabra;
+    
+    private boolean [] letrasLLenadas;
+    
+    private int  numeroLetrasRandom=0;
+    
+    private int indiceDeLetra;
+    
     
     public Playing(){
         setLayout(null);
@@ -92,7 +102,9 @@ public class Playing extends JPanel implements ActionListener{
         // *******
             // STARTS HERE
         //********
+         numeroLetrasRandom= palabra.length();
         
+            setVariablesOfWord();
         
             //EL USUARIO SELECIONA UNA TECLA segun la categoria
             
@@ -179,7 +191,7 @@ public class Playing extends JPanel implements ActionListener{
             labelRayas[i]= new JLabel(imageRaya);
             labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
             rayas[i].setBounds(20*columna, fila*50, 30, 30);
-            rayas[i].setText("H");
+            rayas[i].setText(" ");
             rayas[i].setEditable(false);
             rayas[i].setBackground(new Color (0,0,0,0));
             columna+=2;
@@ -225,7 +237,7 @@ public class Playing extends JPanel implements ActionListener{
     private void initTeclado(){
         char digit;
         String num;
-        int letra=65;
+        int letra=97;
         
         
         int fotoCol=0;
@@ -240,6 +252,7 @@ public class Playing extends JPanel implements ActionListener{
              imageABC= getIcon(fotoCol, fotoFil, buffImg);
             
             teclado[i]= new JButton();
+            teclado[i].addActionListener(this);
             teclado[i].setSize(35, 35); 
             digit= (char) letra;
             num= String.valueOf(digit);
@@ -383,20 +396,132 @@ public class Playing extends JPanel implements ActionListener{
                    
                    // NECESITO TENER; REVISAR LA PALABRA, TOMAR UNA LETRA AL AZAR, LLENAR EL CAMPO,CORREPSONDIENTE.
                    // BOOLEAN para dar 1 sola oportunidad (o 2,3)
-                        //revelarLetra();
+                   if (ayudaLeftt){
+                        ayudarConLetra();
+                        
+                   }
+                      
                    
                }
                 else if(origen == this.options){
                    p1.setBackground(new Color(0x91a211));
                }
+                for(int i=0; i<NUM_BOTTONS; i++){
+                    if(origen == teclado[i]){
+                   String txt=null;
+                   txt = teclado[i].getText();
+                   boolean pasa=verificarLetra(txt);
+                   if(pasa){
+                        addLetterToText(txt,indiceDeLetra);
+                   }
+                    
+                       
+                        System.out.println("CUCHAUUU " + txt);
+               }
+                }
+                
+    }
+    public boolean verificarLetra(String txt){
+        
+        boolean go= false;
+        
+         for(int i=0; i<numeroLetrasRandom; i++){
+             
+             System.out.println("scene::: "+ String.valueOf(palabra.charAt(i))+ " :: "+ txt);
+                if (String.valueOf(palabra.charAt(i)) ==  txt ){
+                     go= true;
+                 indiceDeLetra=i;
+                    
+                }
+            }
+        
+        return go;
     }
 
     public int getNumber() {
             return number;
     }
 
-    
-    
+    private void ayudarConLetra() {
+        
+         
+       
+        letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
+        
+        letrasLLenadas[letraAlAzar]= true;
+        
+            String l= String.valueOf(palabra.charAt(letraAlAzar));
+            
+            
+           
+            addLetterToText(l,letraAlAzar);
+                
+                
+                // TOCA MIRAR SI LA LETRA SE REPITE O NO Y PONERLA EN DONDE CORRESPONDA
+                
+                //TOCA SABER QUE LETRAS YA SE PUSIERON Y QUE LETRAS NO SE HAN PUESTO
+        
+      
+    }
+
+    private void  addLetterToText(String l, int indice){
+         for(int i=0; i<numeroLetrasRandom; i++){
+             System.out.println("p: "+ l);
+               System.out.println("d: "+ palabra.charAt(i));
+               System.out.println("d: "+ palabra.charAt(indice));
+             
+                if (palabra.charAt(i) ==  palabra.charAt(indice) ){
+                    
+                    rayas[i].setText(l);
+                
+                    
+                }
+            }
+        
+    }
+    private void setVariablesOfWord() {
+
+         
+        
+        letrasLLenadas= new boolean[numeroLetrasRandom];
+        
+        for (int i=0; i<numeroLetrasRandom; i++){
+            letrasLLenadas[i]= false;
+        }
+        
+
+    }
+
+  
+
+    private void initRemainigLettersVector(){
+         letrasLLenadas= new boolean[numeroLetrasRandom];
+        
+        for (int i=0; i<numeroLetrasRandom; i++){
+            letrasLLenadas[i]= false;
+        }
+    }
+
+    private void setLettersTrue(char letter ){
+        for(int i=0; i<numeroLetrasRandom; i++){
+                if (palabra.charAt(i) ==  letter ){
+                     letrasLLenadas[i]= true;
+                   
+                
+                    
+                }
+            }
+    }
+     private void setText(char letter ){
+        for(int i=0; i<numeroLetrasRandom; i++){
+                if (palabra.charAt(i) ==  letter ){
+                     letrasLLenadas[i]= true;
+                   rayas[i].setText(String.valueOf(letter));
+                
+                    
+                }
+            }
+    }
     
     
 }
