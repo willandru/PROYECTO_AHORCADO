@@ -188,10 +188,12 @@ public class Datos implements Runnable{
     
     @Override
     public void run() {
-        
+        System.out.println("baseDatos.Datos.run()"+2);
         while(threadDATA !=null){
             try{
                // Thread.sleep(600);
+                System.out.println("baseDatos.Datos.run()"+5);
+                System.out.println("baseDatos.Datos.run()"+ StatesApp.fileState);
                switch(StatesApp.fileState){
                    
                    case CUSTOM_FILE:
@@ -215,12 +217,7 @@ public class Datos implements Runnable{
                                      vecCategoriasDEFAULTS.get(0).printWords();
                    vecCategoriasDEFAULTS.get(1).printWords();
                                       vecCategoriasDEFAULTS.get(2).printWords();
-                                      
-                                      
-                                     
-
-                                      
-                                      
+                                                                                      
                                       
                        }
                        //System.out.println("Default DATA loaded)");
@@ -229,6 +226,14 @@ public class Datos implements Runnable{
                        
                    case WAIT:
                        customLOADED=false;
+                       
+                       if(!defaultsLOADED){
+                           vecCategoriasDEFAULTS=loadDefaults(vecCategoriasDEFAULTS);
+                           defaultsLOADED= true;
+                            System.out.println("baseDatos.Datos.run()" + 3);
+                       }
+                       System.out.println("baseDatos.Datos.run()" + 1);
+                       
                        break;
                }
                

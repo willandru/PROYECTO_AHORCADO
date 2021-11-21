@@ -101,7 +101,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         addTeclado();
         
        
-        
+        this.p2=initP2(p2);
         
         
         
@@ -119,6 +119,19 @@ public class Playing extends JPanel implements ActionListener, Runnable{
       
         setVisible(true);  
     }
+    
+    
+    public JPanel initP2(JPanel p){
+        
+         p= new JPanel();
+         p.setLayout(null);
+         p.setBounds(0, 250, WIDTHP, 150);
+        p.setBackground(Color.white);
+        this.add(p);
+        
+        return p;
+    }
+    
     
     public String randomWord(Vector<Categoria> catsJugando){
         String palabraRandom;
@@ -140,7 +153,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     private String drawRandomWord(){
         
        String word=null;
-        Vector <Categoria> cateToPlay=null;
+        Vector <Categoria> cateToPlay=null; //wathhh
         int numeroLetras=0;
         
         switch(StatesApp.fileState){
@@ -148,6 +161,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             case WAIT:
                 cateToPlay= new Vector<Categoria>();
                cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
+               //TODO
+                System.out.println("s:" + cateToPlay.toString());
                 word=  randomWord(cateToPlay);
               
                 numeroLetras=word.length();
@@ -161,7 +176,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 cateToPlay= new Vector<Categoria>();
                  cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
                 word=  randomWord(cateToPlay);
-                
+                System.out.println("s:" + cateToPlay.toString());
+                System.out.println("s:" + word);
                 numeroLetras=word.length();
                 addJtextandJLabel(numeroLetras);
                 
@@ -192,6 +208,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
            
             
             rayas[i]= new JTextField();
+            //TODO 
+            System.out.println("ss:)"+ imageRaya);
+            
             
             labelRayas[i]= new JLabel(imageRaya);
             labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
@@ -201,6 +220,10 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             rayas[i].setBackground(new Color (0,0,0,0));
             columna+=2;
             //fotoCol++;
+            
+            System.out.println("scenes.Playing.addJtextandJLabel()");
+            
+            
             
             
             p2.add(labelRayas[i]);
@@ -316,14 +339,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         
     }
     
-    public void initP2(){
-        
-         p2= new JPanel();
-         p2.setLayout(null);
-         p2.setBounds(0, 250, WIDTHP, 150);
-        p2.setBackground(Color.white);
-        this.add(p2);
-    }
+    
     
     private void initPanels(){
         p1= new JPanel();
@@ -424,7 +440,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                     if(origen == teclado[i]){
                    String txt=null;
                    txt = teclado[i].getText();
-                   boolean pasa=verificarLetra(txt);
+                   boolean pasa= verificarLetra(txt);
                    if(pasa){
                         addLetterToText(txt,indiceDeLetra);
                    }
@@ -445,7 +461,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     return true;
     }
     
-    public boolean verificarLetra(String txt){
+    public boolean verificarLetra(String txt ){
         
         boolean go= false;
         
@@ -467,7 +483,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             return number;
     }
 
-    private void ayudarConLetra() {
+    private void ayudarConLetra( ) {
         
         boolean go=false;
        
