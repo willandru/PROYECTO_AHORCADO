@@ -507,7 +507,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             numeroLetrasRandom= numeroLetras;
             setVariablesOfWord();
             StatesApp.playingState=NOT_DONE;
-             System.err.println("   TABLERO PINTADO -----");
+            System.err.println("   TABLERO PINTADO -----");
         }
 
         if(itsDone){
