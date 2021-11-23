@@ -78,12 +78,17 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private JTextField textCategory;
     
-    private  Vector <Categoria> cateToPlay;
+    private  Vector <Categoria> cateToPlay=null;
+    
+    private int numeroLetras;
     
    // private boolean DONE=false;
     
     
     public Playing(){
+       
+        System.err.println("CONSTRUCTOR PLAYING");
+        
         setLayout(null);
         setBackground(new Color(0x22a666));
         initPanels();
@@ -161,7 +166,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         
        String word=null;
         //wathhh
-        int numeroLetras=0;
+        numeroLetras=0;
         
         switch(StatesApp.fileState){
             
@@ -421,6 +426,11 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         }else{
                  letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
             }
+            
+            if(itsDone()){
+                System.out.println("THE WORD HAS BEEN COMPLETED");
+                break;
+            }
     }    
                 
                 // TOCA MIRAR SI LA LETRA SE REPITE O NO Y PONERLA EN DONDE CORRESPONDA
@@ -431,17 +441,12 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
     private void  addLetterToText(String l, int indice){
          for(int i=0; i<numeroLetrasRandom; i++){
-             System.out.println("p: "+ l);
-               System.out.println("d: "+ palabra.charAt(i));
-               System.out.println("d: "+ palabra.charAt(indice));
-             
                 if (palabra.charAt(i) ==  palabra.charAt(indice) ){              
                     letraText[i].setText(l);
-                    letrasLLenadas[i]=true;
-                    
+                    letrasLLenadas[i]=true;  
                 }
             }
-        
+        System.out.println("LETRA : '"+l+ "' AGREGADA");
     } 
     
     public boolean itsDone(){
@@ -487,47 +492,6 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             return number;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent ae) {
-            Object origen = ae.getSource();
-                if(origen == this.goMenu){
-                    number=0;
-                  StatesApp.gameState=MENU;
-                  System.out.println("GO TO menu");
-
-               }else if(origen == this.btnHELP){
-                   p1.setBackground(new Color(0x911111));
-                   //TODO_ ----> ayuda: revelar una letra al azar
-                   
-                   // NECESITO TENER; REVISAR LA PALABRA, TOMAR UNA LETRA AL AZAR, LLENAR EL CAMPO,CORREPSONDIENTE.
-                   // BOOLEAN para dar 1 sola oportunidad (o 2,3)
-                   if (ayudaLeftt && StatesApp.playingState== NOT_DONE){
-                        ayudarConLetra();
-                        
-                   }
-                      
-                   
-               }
-                else if(origen == this.options){
-                   p1.setBackground(new Color(0x91a211));
-               }
-                for(int i=0; i<NUM_BOTTONS; i++){
-                    if(origen == teclado[i]){
-                   String txt=null;
-                   txt = teclado[i].getText();
-                   boolean pasa= verificarLetra(txt);
-                   if(pasa){
-                        addLetterToText(txt,indiceDeLetra);
-                   }
-                    
-                       
-                        System.out.println("CUCHAUUU " + txt);
-               }
-                    
-                    System.out.println("ORGINEE");
-                }
-                
-    }
     
     @Override
     public void run() {
@@ -540,26 +504,30 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             palabra=drawRandomWord();
             p2.revalidate();
             p2.repaint();
-            numeroLetrasRandom= palabra.length();
+            numeroLetrasRandom= numeroLetras;
             setVariablesOfWord();
             StatesApp.playingState=NOT_DONE;
+             System.err.println("   TABLERO PINTADO -----");
         }
-        
-       
+
         if(itsDone){
             StatesApp.playingState=DONE;
+            System.out.println("THE WORD HAS BEEN COMPLETED #2");
            
         }
         
+            System.out.println("STATE : "+ StatesApp.playingState);
+            System.out.println("running on PLAYING");
+            
+            
             try {
-                Thread.sleep(1000);
+                Thread.sleep(200);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println(StatesApp.playingState);
+            
     }
-        
-       
+
         
         // *******
             // STARTS HERE
@@ -567,7 +535,49 @@ public class Playing extends JPanel implements ActionListener, Runnable{
          
     }
 
-  
+  @Override
+    public void actionPerformed(ActionEvent ae) {
+            Object origen = ae.getSource();
+                if(origen == this.goMenu){
+                    number=0;
+                    gameThread=null;
+                    
+                  StatesApp.gameState=MENU;
+                 
+                  System.out.println("action MENU,  (from PLAYING)");
+
+               }else if(origen == this.btnHELP){
+                   p1.setBackground(new Color(0x911111));
+                   //TODO_ ----> ayuda: revelar una letra al azar
+                   
+                   // NECESITO TENER; REVISAR LA PALABRA, TOMAR UNA LETRA AL AZAR, LLENAR EL CAMPO,CORREPSONDIENTE.
+                   // BOOLEAN para dar 1 sola oportunidad (o 2,3)
+                   if (ayudaLeftt && StatesApp.playingState== NOT_DONE){
+                        ayudarConLetra();
+                        
+                   }
+                      
+                   System.out.println("action HELP (from PLAYING)");
+               }
+                else if(origen == this.options){
+                   p1.setBackground(new Color(0x91a211));
+               }
+                for(int i=0; i<NUM_BOTTONS; i++){
+                    if(origen == teclado[i]){
+                   String txt=null;
+                   txt = teclado[i].getText();
+                   boolean pasa= verificarLetra(txt);
+                   if(pasa){
+                        addLetterToText(txt,indiceDeLetra);
+                   }
+                        System.out.println("LETRA OPRIMIDA: "+ txt);
+                        System.out.println("action TECLADO (from PLAYING)");
+               }
+
+                }
+                
+    }
+    
 
     
     

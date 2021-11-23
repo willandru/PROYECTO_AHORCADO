@@ -54,7 +54,7 @@ public class Datos implements Runnable{
           vecCategoriasDEFAULTS = null;
           
           
-           System.out.println("->CONSTRUCTOR: Base de DATOS");
+           System.err.println("->CONSTRUCTOR: Base de DATOS");
          
           
         

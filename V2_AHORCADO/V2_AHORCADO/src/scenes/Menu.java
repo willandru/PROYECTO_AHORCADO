@@ -34,6 +34,8 @@ public class Menu extends JPanel implements ActionListener{
     private static final int ALTO=680;
     
     public Menu(){
+        System.err.println("CONSTRUCTOR : MENU");
+        
         setLayout(null);
         setBackground(new Color(0xa61f22));
         initButtons();
@@ -99,12 +101,12 @@ public class Menu extends JPanel implements ActionListener{
              numero=1;
            StatesApp.gameState=PLAYING;
            StatesApp.playingState=DONE;
-           System.out.println("actiion PLAYING");
+           System.out.println("action PLAYING (from MENU)");
             
         } else if(origen == this.btnSetts){
             numero=2;
             StatesApp.gameState=SETTINGS;
-            System.out.println("actiion SETTINGS");
+            System.out.println("actiion SETTINGS (from MENU)");
             System.out.println("state: "+ StatesApp.gameState);
 
             
