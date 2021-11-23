@@ -40,6 +40,8 @@ public class UI extends JFrame {
     public Settings s;
  
     UI(){
+        
+        System.err.println("CONSTRUCTOR : UI");
 //Inicializamos el FRAME
         setSize(ANCHO, ALTO);
         setBackground(new Color(0x123456));
@@ -114,6 +116,7 @@ public class UI extends JFrame {
                 System.out.println("PLAYIN painted");
                 playPintado=true;
                 menuPintado=false;
+                settsPintado=false;
                 }
                  //publish(StatesApp.gameState);
                 //System.out.println("PLAYING holi PUBLISHED");
@@ -133,6 +136,7 @@ public class UI extends JFrame {
                 System.out.println("SETTS painted");
                 settsPintado=true;
                 menuPintado=false;
+                playPintado=false;
                
                 }
                  //System.out.println(StatesApp.gameState);
