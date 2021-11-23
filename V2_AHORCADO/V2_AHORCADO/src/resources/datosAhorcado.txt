@@ -7,6 +7,7 @@ LENGUAJES
 r
 c
 d
+go
 Rust
 java
 python
