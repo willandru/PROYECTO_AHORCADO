@@ -33,7 +33,8 @@ public class Datos implements Runnable{
       
       public Vector <Integer> vecNumPalabras;
       public int numCategories;
-      
+      public  int numPalabras=0;
+      public  int numTotPalabras=0;
       
       
       
@@ -53,13 +54,13 @@ public class Datos implements Runnable{
           vecCategoriasDEFAULTS = null;
           
           
-           System.out.println("HOLALALAL");
+           System.out.println("->CONSTRUCTOR: Base de DATOS");
          
           
         
                threadDATA.start();
           
-          System.out.println(vecCategoriasDEFAULTS);
+          System.out.println("Vector categorias DEFAULTS: " +vecCategoriasDEFAULTS);
            
         
          
@@ -80,7 +81,7 @@ public class Datos implements Runnable{
        try{
        defaultWords= new File("./src/resources/defaultsWords.txt");
        
-        System.out.println("data defaults: " + defaultWords);
+        System.out.println("PATH FILE DEFAULTS: " + defaultWords);
         
            catDef=saveFileContent(catDef, defaultWords);
            
@@ -111,13 +112,14 @@ public class Datos implements Runnable{
           
           StatesApp.fileState= WAIT;
           
-                    System.out.println(vecCategoriasCUSTOM);
-                  System.out.println(numCategories);
+                    System.out.println("CUSTOM FILE : LOADED");
+                  System.out.println("CATEGORIAS: " + numCategories);
+                  System.out.println("PALABRAS TOTALES: "+ numTotPalabras);
                 
-                  
-                                     vecCategoriasCUSTOM.get(0).printWords();
-                   vecCategoriasCUSTOM.get(1).printWords();
-                                      vecCategoriasCUSTOM.get(2).printWords();
+                 for (int i=0; i<numCategories; i++){
+                     vecCategoriasCUSTOM.get(i).printWords();
+                 }
+                               
 
               
 }
@@ -128,6 +130,7 @@ public class Datos implements Runnable{
     
     
     public Vector<Categoria> saveFileContent(Vector<Categoria> cats, File file){
+        System.out.println("saveFileContent () BASE DE DATOS,...LEYENDO Y GUARDANDO DATOS . . .");
         
         
         if (cats == null){
@@ -140,7 +143,8 @@ public class Datos implements Runnable{
                     boolean isWord=false;
                     
                     numCategories=0;
-                    int numPalabras=0;
+                    numPalabras=0;
+                    numTotPalabras=0;
                    
                     Categoria newCategory =new Categoria();
                     cats = new Vector<>();
@@ -159,20 +163,21 @@ public class Datos implements Runnable{
                                     numPalabras=0;
                                     
                                     cats.add(newCategory);
-                                    System.out.println("Categoria "+ numCategories + " ; "+ data);
+                                    System.out.println("CATEGORIAS LEIDAS "+ numCategories + " ; "+ data);
+                                    System.out.println("Numero de Palabras Categoria: "+ numPalabras);
                                 }
                                 else{
                                     numPalabras++;
-                                    
-                                    newCategory.addPalabra(data.toUpperCase()); //****CUIDADO            CUIDADOO
-                                                   
+                                    numTotPalabras++;
+                                    System.out.println("Palabras Encontradas: "+ numPalabras);
+                                    newCategory.addPalabra(data.toUpperCase()); //****CUIDADO            CUIDADOO                 
                                 }               
                             }               
                     }
                       myReader.close();
                       
-                      System.out.println("Cuantas categoprias: "+ numCategories);
-                      
+                      System.out.println("NUEMRO DE CATEGORIAS LEIDAS: "+ numCategories);
+                      System.out.println("Numero PALABRAS en TOTAL: "+ numTotPalabras);
               } catch (FileNotFoundException ex) {
                     Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
                 }        
@@ -188,51 +193,52 @@ public class Datos implements Runnable{
     
     @Override
     public void run() {
-        System.out.println("baseDatos.Datos.run()"+2);
+        System.out.println("HILO BASE DATOS: inica");
         while(threadDATA !=null){
             try{
                // Thread.sleep(600);
-                System.out.println("baseDatos.Datos.run()"+5);
-                System.out.println("baseDatos.Datos.run()"+ StatesApp.fileState);
-               switch(StatesApp.fileState){
-                   
+                System.out.println("HILO BASE DATOS: while loop BEGINS");
+                System.out.println("FILE_STATE: " + StatesApp.fileState);
+                
+                
+                switch(StatesApp.fileState){
+                    
                    case CUSTOM_FILE:
-                       if(!customLOADED){
-                   sendFileChoosener();
-                  
-                   
-               }
+                           if(!customLOADED){
+                               sendFileChoosener();
+                            }
                        break;
                
                    case DEFAULT_FILE:
                        if(!defaultsLOADED){
+                           
                            vecCategoriasDEFAULTS=loadDefaults(vecCategoriasDEFAULTS);
                            defaultsLOADED= true;
                            
-                           
-                            System.out.println(vecCategoriasCUSTOM);
-                  System.out.println(numCategories);
+                            System.out.println("..DEFAULTS LOADED..");
+                            System.out.println("CATEGORIAS: "+numCategories);
+                            System.out.println("PALABRAS TOTALES: "+ numTotPalabras);
                 
-                  
-                                     vecCategoriasDEFAULTS.get(0).printWords();
-                   vecCategoriasDEFAULTS.get(1).printWords();
-                                      vecCategoriasDEFAULTS.get(2).printWords();
-                                                                                      
-                                      
+                           
+                                for (int i=0; i<numCategories; i++){
+                         vecCategoriasDEFAULTS.get(i).printWords();
+                                  }
+                                                                                          
                        }
                        //System.out.println("Default DATA loaded)");
                        
                        break;
                        
                    case WAIT:
+                       
                        customLOADED=false;
                        
                        if(!defaultsLOADED){
                            vecCategoriasDEFAULTS=loadDefaults(vecCategoriasDEFAULTS);
                            defaultsLOADED= true;
-                            System.out.println("baseDatos.Datos.run()" + 3);
+                            System.out.println("baseDatos.Datos.run()::: DEFAULTS LOADED" + 3);
                        }
-                       System.out.println("baseDatos.Datos.run()" + 1);
+                       System.out.println("waiting...");
                        
                        break;
                }

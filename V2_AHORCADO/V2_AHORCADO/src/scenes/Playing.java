@@ -49,7 +49,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     private JButton []teclado= new JButton[NUM_BOTTONS];
     private String randomWord;  
     private JPanel panelCategory;
-    private JTextField[] rayas;
+    private JTextField[] letraText;
     private JLabel[] labelRayas;
     private ImageIcon imageABC;
     private    ImageIcon imageRaya;
@@ -71,6 +71,14 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     private int indiceDeLetra;
     
     private Thread gameThread;
+    
+    
+    
+    // *********** 
+    
+    private JTextField textCategory;
+    
+    private  Vector <Categoria> cateToPlay;
     
    // private boolean DONE=false;
     
@@ -125,286 +133,358 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         setVisible(true);  
     }
     
-    
-    
-    
+
     public String randomWord(Vector<Categoria> catsJugando){
         String palabraRandom;
         Categoria catRandom;
         int numCatsJugando= catsJugando.size();
-        int categoriaRandom = (int) (Math.random()*numCatsJugando-1+0);
         
+        System.out.println("NUMERO DE CATEGORIAS: "+ numCatsJugando);
+        
+        int categoriaRandom = (int) (Math.random()*(numCatsJugando)+0);
+        System.out.println("NUMERO DE ALETORIO: "+ categoriaRandom);
         catRandom= catsJugando.get(categoriaRandom);
         int numPalabras = catRandom.getNumPalabras();
         
-        int numPalabraRandom = (int) (Math.random()*numPalabras-1+0);
+        int numPalabraRandom = (int) (Math.random()*(numPalabras-1)+0);
         
         palabraRandom= catRandom.getPalabra(numPalabraRandom);
         
+        System.out.println(catRandom.getNameCategory());
         System.out.println(palabraRandom);
         return palabraRandom;
     }
     
     private String drawRandomWord(){
         
+        System.out.println("DRAW_RANDOM_WORD()-->PLAYING");
+        
        String word=null;
-        Vector <Categoria> cateToPlay=null; //wathhh
+        //wathhh
         int numeroLetras=0;
         
         switch(StatesApp.fileState){
             
             case WAIT:
                 cateToPlay= new Vector<Categoria>();
-               cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
-               //TODO
-                System.out.println("s:" + cateToPlay.toString());
+                cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
+                System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
                 word=  randomWord(cateToPlay);
-              
+                System.out.println("PALABRA PARA JUGAR:" + word);
                 numeroLetras=word.length();
+                System.out.println("LETRAS:" + numeroLetras);
                 addJtextandJLabel(numeroLetras);
-                
-                
-                
                 break;
-             
+                
             case DEFAULT_FILE:
                 cateToPlay= new Vector<Categoria>();
-                 cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
-                word=  randomWord(cateToPlay);
-                System.out.println("s:" + cateToPlay.toString());
-                System.out.println("s:" + word);
+                cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
+                System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
+                word=  randomWord(cateToPlay);  
+                System.out.println("PALABRA PARA JUGAR:" + word);
                 numeroLetras=word.length();
                 addJtextandJLabel(numeroLetras);
-                
                 break;
             
         }
         
-        System.out.println("RANDOM:: " +word);
+        System.out.println("RANDOM:DIBUJADA:SALIENDO metodo DRAW_RANDOM_WORD()-->PLAYING" +word);
        return word;
     }
     
     private void addJtextandJLabel(int n){
-        rayas= new JTextField[n];  
+        letraText= new JTextField[n];  
         labelRayas= new JLabel[n];
         
         
         int columna=1;
         int fila=1;
+        
+        
          imageRaya= new ImageIcon("./src/resources/RAYA_AHORCADO2.png");
-         
-   
-              
-         
-         
+         System.out.println("IMAGE LOADED:)"+ imageRaya);
+         System.out.println("----PINTANDO LAS RAYAS -----");
+         System.out.println("NUMERO LETRAS: "+ n);
+
         for (int i=0; i<n; i++){
-            
-         
-           
-            
-            rayas[i]= new JTextField();
-            //TODO 
-            System.out.println("ss:)"+ imageRaya);
-            System.out.println("num rayas" + n);
-            
+
+            letraText[i]= new JTextField();
             labelRayas[i]= new JLabel(imageRaya);
+            
             labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
-            rayas[i].setBounds(20*columna, fila*50, 30, 30);
-            rayas[i].setText(" ");
-            rayas[i].setEditable(false);
-            rayas[i].setBackground(new Color (0,0,0,0));
+             letraText[i].setBounds(20*columna, fila*50, 30, 30);
+            
+            letraText[i].setText(" ");
+            letraText[i].setEditable(false);
+            letraText[i].setBackground(new Color (0,0,0,0));
             columna+=2;
             //fotoCol++;
-            
-            System.out.println("scenes.Playing.addJtextandJLabel()");
-            
-            
-            
+
             
             p2.add(labelRayas[i]);
-            p2.add(rayas[i]);
+            p2.add(letraText[i]);
+            System.out.println(" Cantindad RAYAS DIBUJADAS Y AGREAGADSA: "+ n);
+            
             if(i== 8){
                 columna=1;
                 fila=2;
-                //fotoCol=0;
-                //fotoFil=1;
             }
             
         }
         
+        
+        System.out.println("--------RAYAS Y CAJAS DIBUJADAS ---------");
     }
     
-    private ImageIcon getIcon(int fotoCol, int fotoFil, BufferedImage ig) {
-         
-        ImageIcon img;
-        BufferedImage sub;
-        
-        sub=ig.getSubimage(fotoCol*33, fotoFil*30, 30, 30);
-        img = new ImageIcon(sub);
-        return img;
-    
+            private ImageIcon getIcon(int fotoCol, int fotoFil, BufferedImage ig) {
 
-    }
-    
-    public BufferedImage loadSpreadSheet(File path){
-         BufferedImage ig= null;
-        //InputStream is = Playing.class.getClassLoader().getResourceAsStream("./src/resources/spriteABC.png");
-        try {
-            ig = ImageIO.read(path);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        return ig;
-    }
-    
-    private void initTeclado(){
-        char digit;
-        String num;
-        int letra=65;
-        
-        
-        int fotoCol=0;
-        int fotoFil=0;
-        File path;
-        
-         path= new File("./src/resources/spriteABC.png");
-         BufferedImage buffImg = loadSpreadSheet(path);
-        
-        
-        for(int i=0; i<27; i++){
-             imageABC= getIcon(fotoCol, fotoFil, buffImg);
-            
-            teclado[i]= new JButton();
-            teclado[i].addActionListener(this);
-            teclado[i].setSize(35, 35); 
-            digit= (char) letra;
-            num= String.valueOf(digit);
-           // teclado[i].setIcon(imageABC);
-           teclado[i].setText(num);
-              teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 5));
-            letra++;
-            fotoCol++;
-           
-            if(fotoCol==9 || fotoCol == 19){
-                fotoCol=0;
-                fotoFil++;
+                ImageIcon img;
+                BufferedImage sub;
+
+                sub=ig.getSubimage(fotoCol*33, fotoFil*30, 30, 30);
+                img = new ImageIcon(sub);
+                return img;
+
+
             }
-             
-        }
-    }
-    
-    private void addTeclado(){
-         int columna=15;
-            int fila=40;
-        for(int i=0; i<27; i++){
-           
-            
-            if(i<10){
-                 teclado[i].setLocation(columna, fila);
-                 columna+=35;
-                 
-                 if (i==9){
-                     columna=35;
-                     fila= 90;
-                 }
+
+            public BufferedImage loadSpreadSheet(File path){
+                 BufferedImage ig= null;
+                //InputStream is = Playing.class.getClassLoader().getResourceAsStream("./src/resources/spriteABC.png");
+                try {
+                    ig = ImageIO.read(path);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return ig;
             }
-            else if(i<20 && i>=10){
-                teclado[i].setLocation(columna, fila);
-                 columna+=35;
-                 if (i==19){
-                     columna=65;
-                     fila= 140;
-                 }
-              
-            }else{
-                //****
-                //***
+    
+        private void initTeclado(){
+            char digit;
+            String num;
+            int letra=65;
+
+
+            int fotoCol=0;
+            int fotoFil=0;
+            File path;
+
+             path= new File("./src/resources/spriteABC.png");
+             BufferedImage buffImg = loadSpreadSheet(path);
+
+
+            for(int i=0; i<27; i++){
+                 imageABC= getIcon(fotoCol, fotoFil, buffImg);
+
+                teclado[i]= new JButton();
+                teclado[i].addActionListener(this);
+                teclado[i].setSize(35, 35); 
+                digit= (char) letra;
+                num= String.valueOf(digit);
+               // teclado[i].setIcon(imageABC);
+               teclado[i].setText(num);
+                  teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 5));
+                letra++;
+                fotoCol++;
+
+                if(fotoCol==9 || fotoCol == 19){
+                    fotoCol=0;
+                    fotoFil++;
+                }
+
+            }
+        }
+
+        private void addTeclado(){
+             int columna=15;
+                int fila=40;
+            for(int i=0; i<27; i++){
+
+
+                if(i<10){
+                     teclado[i].setLocation(columna, fila);
+                     columna+=35;
+
+                     if (i==9){
+                         columna=35;
+                         fila= 90;
+                     }
+                }
+                else if(i<20 && i>=10){
+                    teclado[i].setLocation(columna, fila);
+                     columna+=35;
+                     if (i==19){
+                         columna=65;
+                         fila= 140;
+                     }
+
+                }else{
+                    //****
+                    //***
+
+                    teclado[i].setLocation(columna, fila);
+                     columna+=35;
+                }
+
+
+
+            }
+            for(int i=0; i<27; i++){
+
+                p3.add(teclado[i]);
+            }
+
+        }
+
+        private void initPanels(){
+            p1= new JPanel();
+            p2= new JPanel();
+            p3= new JPanel();
+            p4= new JPanel();
+            p5= new JPanel();
+            p6= new JPanel();
+
+            panelCategory= new JPanel();
+            panelCategory.setBounds(250, 200, 140,50);
+            panelCategory.setBackground(Color.gray);
+
+
+            p1.setBounds(0, 0, WIDTHP, 250);
+            p1.setBackground(Color.black);
+            p2.setBounds(0, 250, WIDTHP, 150);
+            p2.setBackground(Color.white);
+            p3.setBounds(0, 400, WIDTHP, 200);
+            p3.setBackground(Color.darkGray);
+            p4.setBounds(0, 600, WIDTHP, 100);
+            p4.setBackground(Color.yellow);
+            p5.setBounds(140,0, 120, 40);
+            p5.setBackground(Color.blue);
+            p6.setBounds(320,50, 80, 35);
+            p6.setBackground(Color.blue);
+
+            p1.setLayout(null);
+
+
+
+        }
+
+        private void addPanels(){
+            this.add(p1);
+            this.add(p2);
+            this.add(p3);
+            this.add(p4);
+            this.add(p5);
+            this.add(p6);
+        }
+
+        private void addButtons() {
+            p4.add(goMenu);
+            p4.add(btnHELP);
+            p4.add(options);
+            }
+
+        private void initButtons() {
+
+            goMenu = new JButton("HOME");
+            btnHELP= new JButton("AYUDA");
+            options= new JButton("OPTIONS");
+
+
+            goMenu.setBounds(70,35,60,30);
+            goMenu.addActionListener(this);
+            goMenu.setBackground(new Color(222,22,123));
+            goMenu.setBorder(null);
+
+            btnHELP.setBounds(170,35,60,30);
+            btnHELP.addActionListener(this);
+            btnHELP.setBackground(new Color(111,222,111));
+            btnHELP.setBorder(null);
+
+            options.setBounds(170,35,60,30);
+            options.addActionListener(this);
+            options.setBackground(new Color(111,2,231));
+            options.setBorder(null);
+
+        }
+    
+    private void ayudarConLetra( ) {
+        
+        boolean go=false;
+       
+        letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
+        
+       while(!go){
+            if(!letrasLLenadas[letraAlAzar]){
+            String l= String.valueOf(palabra.charAt(letraAlAzar));
+            addLetterToText(l,letraAlAzar);
+            go=true;
+        }else{
+                 letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
+            }
+    }    
                 
-                teclado[i].setLocation(columna, fila);
-                 columna+=35;
+                // TOCA MIRAR SI LA LETRA SE REPITE O NO Y PONERLA EN DONDE CORRESPONDA
+                
+                //TOCA SABER QUE LETRAS YA SE PUSIERON Y QUE LETRAS NO SE HAN PUESTO
+
+    }
+
+    private void  addLetterToText(String l, int indice){
+         for(int i=0; i<numeroLetrasRandom; i++){
+             System.out.println("p: "+ l);
+               System.out.println("d: "+ palabra.charAt(i));
+               System.out.println("d: "+ palabra.charAt(indice));
+             
+                if (palabra.charAt(i) ==  palabra.charAt(indice) ){              
+                    letraText[i].setText(l);
+                    letrasLLenadas[i]=true;
+                    
+                }
             }
-            
-           
-            
-        }
-        for(int i=0; i<27; i++){
         
-            p3.add(teclado[i]);
+    } 
+    
+    public boolean itsDone(){
+       if(letrasLLenadas != null){
+            for (boolean b : letrasLLenadas) {
+        if (!b) {
+           return false;
         }
-        
+    }
+            return true;
+        }else{
+            return false;
+        }
     }
     
-    
-    
-    private void initPanels(){
-        p1= new JPanel();
-        p2= new JPanel();
-        p3= new JPanel();
-        p4= new JPanel();
-        p5= new JPanel();
-        p6= new JPanel();
+    public boolean verificarLetra(String txt ){
         
-        panelCategory= new JPanel();
-        panelCategory.setBounds(250, 200, 140,50);
-        panelCategory.setBackground(Color.black);
+        boolean go= false;
         
+         for(int i=0; i<numeroLetrasRandom; i++){
+             
+             System.out.println("scene::: "+ String.valueOf(palabra.charAt(i))+ " :: "+ txt);
+                if (String.valueOf(palabra.charAt(i)).equals(txt) ){
+                     go= true;
+                     System.out.println("BIIITCHHH");
+                     indiceDeLetra=i;
+                    
+                }
+            }
         
-        p1.setBounds(0, 0, WIDTHP, 250);
-        p1.setBackground(Color.red);
-        p2.setBounds(0, 250, WIDTHP, 150);
-        p2.setBackground(Color.white);
-        p3.setBounds(0, 400, WIDTHP, 200);
-        p3.setBackground(Color.darkGray);
-        p4.setBounds(0, 600, WIDTHP, 100);
-        p4.setBackground(Color.yellow);
-        p5.setBounds(140,0, 120, 40);
-        p5.setBackground(Color.black);
-        p6.setBounds(320,50, 80, 35);
-        p6.setBackground(Color.black);
-        
-        p1.setLayout(null);
-        
-        
-        
+        return go;
     }
-    
-    private void addPanels(){
-        this.add(p1);
-        this.add(p2);
-        this.add(p3);
-        this.add(p4);
-        this.add(p5);
-        this.add(p6);
-    }
-
-    private void addButtons() {
-        p4.add(goMenu);
-        p4.add(btnHELP);
-        p4.add(options);
+     
+    private void setVariablesOfWord() {
+        letrasLLenadas= new boolean[numeroLetrasRandom];
+        
+        for (int i=0; i<numeroLetrasRandom; i++){
+            letrasLLenadas[i]= false;
         }
-
-    private void initButtons() {
-        
-        goMenu = new JButton("HOME");
-        btnHELP= new JButton("AYUDA");
-        options= new JButton("OPTIONS");
-        
-
-        goMenu.setBounds(70,35,60,30);
-        goMenu.addActionListener(this);
-        goMenu.setBackground(new Color(222,22,123));
-        goMenu.setBorder(null);
-        
-        btnHELP.setBounds(170,35,60,30);
-        btnHELP.addActionListener(this);
-        btnHELP.setBackground(new Color(111,222,111));
-        btnHELP.setBorder(null);
-        
-        options.setBounds(170,35,60,30);
-        options.addActionListener(this);
-        options.setBackground(new Color(111,2,231));
-        options.setBorder(null);
-        
+    }
+   
+    public int getNumber() {
+            return number;
     }
 
     @Override
@@ -449,94 +529,6 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 
     }
     
-    public boolean itsDone(){
-        
-        if(letrasLLenadas != null){
-            for (boolean b : letrasLLenadas) {
-        if (!b) {
-           return false;
-        }
-    }
-            return true;
-        }else{
-            return false;
-        }
-        
-    
-    }
-    
-    public boolean verificarLetra(String txt ){
-        
-        boolean go= false;
-        
-         for(int i=0; i<numeroLetrasRandom; i++){
-             
-             System.out.println("scene::: "+ String.valueOf(palabra.charAt(i))+ " :: "+ txt);
-                if (String.valueOf(palabra.charAt(i)).equals(txt) ){
-                     go= true;
-                     System.out.println("BIIITCHHH");
-                     indiceDeLetra=i;
-                    
-                }
-            }
-        
-        return go;
-    }
-
-    public int getNumber() {
-            return number;
-    }
-
-    private void ayudarConLetra( ) {
-        
-        boolean go=false;
-       
-        letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
-        
-       while(!go){
-            if(!letrasLLenadas[letraAlAzar]){
-            String l= String.valueOf(palabra.charAt(letraAlAzar));
-            addLetterToText(l,letraAlAzar);
-            go=true;
-        }else{
-                 letraAlAzar=(int) (Math.random()*numeroLetrasRandom+0);
-            }
-    }
-        
-        
-        
-                
-                
-                // TOCA MIRAR SI LA LETRA SE REPITE O NO Y PONERLA EN DONDE CORRESPONDA
-                
-                //TOCA SABER QUE LETRAS YA SE PUSIERON Y QUE LETRAS NO SE HAN PUESTO
-        
-      
-    }
-
-    private void  addLetterToText(String l, int indice){
-         for(int i=0; i<numeroLetrasRandom; i++){
-             System.out.println("p: "+ l);
-               System.out.println("d: "+ palabra.charAt(i));
-               System.out.println("d: "+ palabra.charAt(indice));
-             
-                if (palabra.charAt(i) ==  palabra.charAt(indice) ){
-                    
-                    rayas[i].setText(l);
-                    letrasLLenadas[i]=true;
-                    
-                }
-            }
-        
-    }
-    private void setVariablesOfWord() {
-        letrasLLenadas= new boolean[numeroLetrasRandom];
-        
-        for (int i=0; i<numeroLetrasRandom; i++){
-            letrasLLenadas[i]= false;
-        }
-    }
-
     @Override
     public void run() {
         boolean itsDone=itsDone();

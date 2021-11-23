@@ -40,6 +40,8 @@ public class UI extends JFrame {
     public Settings s;
  
     UI(){
+        
+        System.err.println("CONSTRUCTOR : UI");
 //Inicializamos el FRAME
         setSize(ANCHO, ALTO);
         setBackground(new Color(0x123456));
