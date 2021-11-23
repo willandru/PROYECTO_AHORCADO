@@ -40,7 +40,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     public JButton goMenu, btnHELP, options;
     public int number=1;
-    public JPanel p1,p2,p3,p4,p5,p6;
+    public JPanel p1,p2,p3,p4,p5,p6, panelImagenAhorcado;
+    private JLabel imgAhorcado;
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
     
@@ -58,7 +59,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private int letraAlAzar;
     
-    private int numVidas=3;
+    private int numVidas=6;
     
     private boolean ayudaLeftt=true;
     
@@ -241,12 +242,21 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         System.out.println("--------RAYAS Y CAJAS DIBUJADAS ---------");
     }
     
-            private ImageIcon getIcon(int fotoCol, int fotoFil, BufferedImage ig) {
+            private ImageIcon getIconDEFAULT(int fotoCol, int fotoFil, BufferedImage ig) {
 
                 ImageIcon img;
                 BufferedImage sub;
+                sub=ig.getSubimage(fotoCol*32, fotoFil*30, 30, 30);
+                img = new ImageIcon(sub);
+                return img;
 
-                sub=ig.getSubimage(fotoCol*33, fotoFil*30, 30, 30);
+
+            }
+            private ImageIcon getIconBLACK(int fotoCol, int fotoFil, BufferedImage ig) {
+
+                ImageIcon img;
+                BufferedImage sub;
+                sub=ig.getSubimage(fotoCol*32, fotoFil*30, 30, 30);
                 img = new ImageIcon(sub);
                 return img;
 
@@ -272,27 +282,29 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
             int fotoCol=0;
             int fotoFil=0;
-            File path;
+            File pathD;
 
-             path= new File("./src/resources/spriteABC.png");
-             BufferedImage buffImg = loadSpreadSheet(path);
+             pathD= new File("./src/resources/spriteABC.png");
+            // pathB= new File("./src/resources/spriteABC.png");
+             BufferedImage buffImg = loadSpreadSheet(pathD);
 
 
             for(int i=0; i<27; i++){
-                 imageABC= getIcon(fotoCol, fotoFil, buffImg);
+                 imageABC= getIconDEFAULT(fotoCol, fotoFil, buffImg);
 
                 teclado[i]= new JButton();
                 teclado[i].addActionListener(this);
                 teclado[i].setSize(35, 35); 
                 digit= (char) letra;
                 num= String.valueOf(digit);
-               // teclado[i].setIcon(imageABC);
-               teclado[i].setText(num);
-                  teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 5));
+                teclado[i].setIcon(imageABC);
+                teclado[i].setText(num);
+               
+                  teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 0));
                 letra++;
                 fotoCol++;
 
-                if(fotoCol==9 || fotoCol == 19){
+                if(fotoCol==10 || fotoCol == 19){
                     fotoCol=0;
                     fotoFil++;
                 }
@@ -343,6 +355,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
         private void initPanels(){
             p1= new JPanel();
+            panelImagenAhorcado= new JPanel();
             p2= new JPanel();
             p3= new JPanel();
             p4= new JPanel();
@@ -350,12 +363,14 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p6= new JPanel();
 
             panelCategory= new JPanel();
-            panelCategory.setBounds(250, 200, 140,50);
+            panelCategory.setBounds(250, 215, 140,35);
             panelCategory.setBackground(Color.gray);
 
 
             p1.setBounds(0, 0, WIDTHP, 250);
             p1.setBackground(Color.black);
+            panelImagenAhorcado.setBounds(35, 47, 250, 150);
+            panelImagenAhorcado.setBackground(Color.white);
             p2.setBounds(0, 250, WIDTHP, 150);
             p2.setBackground(Color.white);
             p3.setBounds(0, 400, WIDTHP, 200);
@@ -367,6 +382,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p6.setBounds(320,50, 80, 35);
             p6.setBackground(Color.blue);
 
+            p1.add(panelImagenAhorcado);
+            
             p1.setLayout(null);
 
 
@@ -464,20 +481,22 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     public boolean verificarLetra(String txt ){
         
-        boolean go= false;
+        boolean letraValida= false;
         
          for(int i=0; i<numeroLetrasRandom; i++){
              
-             System.out.println("scene::: "+ String.valueOf(palabra.charAt(i))+ " :: "+ txt);
+             System.out.println("VERIFICANDO LETRA EN LA PALABRA ");
                 if (String.valueOf(palabra.charAt(i)).equals(txt) ){
-                     go= true;
-                     System.out.println("BIIITCHHH");
+                     letraValida= true;          
                      indiceDeLetra=i;
                     
+                    
                 }
+                
+               
             }
         
-        return go;
+        return letraValida;
     }
      
     private void setVariablesOfWord() {
@@ -569,6 +588,13 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                    boolean pasa= verificarLetra(txt);
                    if(pasa){
                         addLetterToText(txt,indiceDeLetra);
+                   }
+                   else{
+                       numVidas--;
+                       System.err.println("NUm vidas:"+ numVidas);
+                       if(numVidas==0){
+                           StatesApp.gameState=MENU;
+                       }
                    }
                         System.out.println("LETRA OPRIMIDA: "+ txt);
                         System.out.println("action TECLADO (from PLAYING)");
