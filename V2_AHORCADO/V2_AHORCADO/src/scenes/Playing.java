@@ -102,6 +102,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private ImageIcon i1, i2, i3, i4, i5, i6;
     
+    private boolean b1,b2,b3,b4,b5,b6 = false;
+    
+    
     public Playing(){
        
         System.err.println("CONSTRUCTOR PLAYING");
@@ -121,7 +124,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         setBackground(new Color(0x22a666));
         initPanels();
         
-        initPanelAhorcado();
+       // initPanelAhorcado();
         initA();
         
         initButtons();
@@ -177,12 +180,13 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             buffA= loadSpreadSheet(fileA);
             iconA= getIconAHORCADO(2, 1, buffA);
             
-                i1 = getIconAHORCADO(0, 0, buffA);
-                i2 = getIconAHORCADO(1, 0, buffA);
-                i3 = getIconAHORCADO(2, 0, buffA);         
-                i4 = getIconAHORCADO(0, 1, buffA);
-                i5 = getIconAHORCADO(1, 1, buffA);
-                i6 = getIconAHORCADO(2, 1, buffA);
+            imageAhorcado = new ImageIcon[6];
+                imageAhorcado[0] = getIconAHORCADO(0, 0, buffA);
+                imageAhorcado[1] = getIconAHORCADO(1, 0, buffA);
+                imageAhorcado[2] = getIconAHORCADO(2, 0, buffA);         
+                imageAhorcado[3] = getIconAHORCADO(0, 1, buffA);
+                imageAhorcado[4] = getIconAHORCADO(1, 1, buffA);
+                imageAhorcado[5] = getIconAHORCADO(2, 1, buffA);
             
       
     }
@@ -220,30 +224,28 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p6.setBounds(320,50, 80, 35);
             p6.setBackground(Color.blue);
             
-            panelImagenAhorcado= new JPanel();    
-            panelImagenAhorcado.setBounds(35, 47, 220, 150);
-            panelImagenAhorcado.setBackground(Color.white);
+            
             
             
             
             initA();
             
-            labelA= new JLabel(i3);
+             p1.setLayout(null);
+            
            
-            panelImagenAhorcado.add(this.labelA);
-            p1.add(panelImagenAhorcado);
-            
-            p1.setLayout(null);
-            
-            
-
-                     
-            
 
         }
-           private void initPanelAhorcado(){
+           private void initPanelAhorcado(int n){
                
-           
+            labelA= new JLabel(imageAhorcado[n]);
+            panelImagenAhorcado= new JPanel();    
+            panelImagenAhorcado.setBounds(35, 47, 220, 150);
+            panelImagenAhorcado.setBackground(Color.white);
+            panelImagenAhorcado.add(labelA);
+            p1.add(panelImagenAhorcado);
+            p1.revalidate();
+            p1.repaint();
+            
             
            }
           private void initImages(){
@@ -650,10 +652,59 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             System.out.println("running on PLAYING");
             
             
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
+            
+            switch(numVidas){
+                
+                case 6:
+                    if(!b6){
+                        initPanelAhorcado(0);
+                        b6=true;
+                    }
+                    
+                    break;
+                case 5:
+                   
+                    if(!b5){
+                         p1.remove(panelImagenAhorcado);
+                initPanelAhorcado(1);
+                        b5=true;
+                    }
+                    break;
+                case 4:
+                    
+                    if(!b4){
+                        p1.remove(panelImagenAhorcado);
+                initPanelAhorcado(2);
+                        b4=true;
+                    }
+                    break;
+                case 3:
+                    
+                    if(!b3){
+                        p1.remove(panelImagenAhorcado);
+                initPanelAhorcado(3);
+                        b3=true;
+                    }
+                    break;
+                case 2:
+                    
+                    if(!b2){
+                       p1.remove(panelImagenAhorcado);
+                initPanelAhorcado(4);
+                        b2=true;
+                    }
+                    break;
+                case 1:
+                    
+                    if(!b1){
+                        p1.remove(panelImagenAhorcado);
+                        initPanelAhorcado(5);
+                        b1=true;
+                    }
+                    break;
+                
+                
+                
             }
             
     }
@@ -703,7 +754,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                    else{
                        numVidas--;
                        
-                       
+                     
                   
 
                        
