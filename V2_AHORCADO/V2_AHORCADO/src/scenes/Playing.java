@@ -219,7 +219,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p3.setBackground(Color.darkGray);
             p4.setBounds(0, 600, WIDTHP, 100);
             p4.setBackground(Color.yellow);
-            p5.setBounds(140,0, 120, 40);
+            p5.setBounds(140,0, 50, 40);
             p5.setBackground(Color.blue);
             p6.setBounds(320,50, 80, 35);
             p6.setBackground(Color.blue);
