@@ -41,18 +41,19 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     public JButton goMenu, btnHELP, options;
     public int number=1;
     public JPanel p1,p2,p3,p4,p5,p6, panelImagenAhorcado;
-    private JLabel imgAhorcado;
+
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
     
     private static final int NUM_BOTTONS=27;
     
     private JButton []teclado= new JButton[NUM_BOTTONS];
-    private String randomWord;  
+    //private String randomWord;  
     private JPanel panelCategory;
     private JTextField[] letraText;
     private JLabel[] labelRayas;
     private ImageIcon imageABC;
+
     private    ImageIcon imageRaya;
     
      private  Datos datosJUGAR = MainAPP.getInstance3();  
@@ -83,12 +84,33 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private int numeroLetras;
     
+    
    // private boolean DONE=false;
     
+    
+    private File pathAhorcado;
+    private BufferedImage buffImgAhor;
+    
+    
+        private JLabel[] imgLabelAhorcado;
+    
+    
+            private ImageIcon[] imageAhorcado;
     
     public Playing(){
        
         System.err.println("CONSTRUCTOR PLAYING");
+        
+        
+        pathAhorcado= new File("./src/resources/ahorcado.jpg");  
+        buffImgAhor = loadSpreadSheet(pathAhorcado);
+        //initImages();
+        
+        
+        //intPanelAhorcado();
+        
+       // addImageAhorcado(0);
+        
         
         setLayout(null);
         setBackground(new Color(0x22a666));
@@ -102,7 +124,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
        //*****
         p1.add(p5);
         p1.add(p6);
-        p1.add(panelCategory);
+        p2.add(panelCategory);
         p1.revalidate();
         p1.repaint();
        ///****
@@ -139,110 +161,129 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         setVisible(true);  
     }
     
+           private void initPanels(){
+            
 
-    public String randomWord(Vector<Categoria> catsJugando){
-        String palabraRandom;
-        Categoria catRandom;
-        int numCatsJugando= catsJugando.size();
-        
-        System.out.println("NUMERO DE CATEGORIAS: "+ numCatsJugando);
-        
-        int categoriaRandom = (int) (Math.random()*(numCatsJugando)+0);
-        System.out.println("NUMERO DE ALETORIO: "+ categoriaRandom);
-        catRandom= catsJugando.get(categoriaRandom);
-        int numPalabras = catRandom.getNumPalabras();
-        
-        int numPalabraRandom = (int) (Math.random()*(numPalabras-1)+0);
-        
-        palabraRandom= catRandom.getPalabra(numPalabraRandom);
-        
-        System.out.println(catRandom.getNameCategory());
-        System.out.println(palabraRandom);
-        return palabraRandom;
-    }
-    
-    private String drawRandomWord(){
-        
-        System.out.println("DRAW_RANDOM_WORD()-->PLAYING");
-        
-       String word=null;
-        //wathhh
-        numeroLetras=0;
-        
-        switch(StatesApp.fileState){
+            p1= new JPanel();
+            p2= new JPanel();
+            p3= new JPanel();
+            p4= new JPanel();
+            p5= new JPanel();
+            p6= new JPanel();
+
+            panelCategory= new JPanel();
+            panelCategory.setBounds(250, 0, 140,35);
+            panelCategory.setBackground(Color.gray);
+
+
+            p1.setBounds(0, 0, WIDTHP, 250);
+            p1.setBackground(Color.black);
+           
+            p2.setBounds(0, 250, WIDTHP, 150);
+            p2.setBackground(Color.white);
             
-            case WAIT:
-                cateToPlay= new Vector<Categoria>();
-                cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
-                System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
-                word=  randomWord(cateToPlay);
-                System.out.println("PALABRA PARA JUGAR:" + word);
-                numeroLetras=word.length();
-                System.out.println("LETRAS:" + numeroLetras);
-                addJtextandJLabel(numeroLetras);
-                break;
-                
-            case DEFAULT_FILE:
-                cateToPlay= new Vector<Categoria>();
-                cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
-                System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
-                word=  randomWord(cateToPlay);  
-                System.out.println("PALABRA PARA JUGAR:" + word);
-                numeroLetras=word.length();
-                addJtextandJLabel(numeroLetras);
-                break;
             
+            
+            p3.setBounds(0, 400, WIDTHP, 200);
+            p3.setBackground(Color.darkGray);
+            p4.setBounds(0, 600, WIDTHP, 100);
+            p4.setBackground(Color.yellow);
+            p5.setBounds(140,0, 120, 40);
+            p5.setBackground(Color.blue);
+            p6.setBounds(320,50, 80, 35);
+            p6.setBackground(Color.blue);
+
+           
+            
+            p1.setLayout(null);
+
+                     
+            
+
         }
-        
-        System.out.println("RANDOM:DIBUJADA:SALIENDO metodo DRAW_RANDOM_WORD()-->PLAYING" +word);
-       return word;
-    }
-    
-    private void addJtextandJLabel(int n){
-        letraText= new JTextField[n];  
-        labelRayas= new JLabel[n];
-        
-        
-        int columna=1;
-        int fila=1;
-        
-        
-         imageRaya= new ImageIcon("./src/resources/RAYA_AHORCADO2.png");
-         System.out.println("IMAGE LOADED:)"+ imageRaya);
-         System.out.println("----PINTANDO LAS RAYAS -----");
-         System.out.println("NUMERO LETRAS: "+ n);
+           private void intPanelAhorcado(){
+               
+            panelImagenAhorcado= new JPanel();    
+            panelImagenAhorcado.setBounds(35, 47, 250, 150);
+            panelImagenAhorcado.setBackground(Color.white);
+            
+           }
+          private void initImages(){
+              int n=6;
+              imgLabelAhorcado = new JLabel[n];
+              
+               imageAhorcado[0]= getIconAHORCADO(0, 0, buffImgAhor);   
+               imageAhorcado[1]= getIconAHORCADO(0, 1, buffImgAhor);   
+                imageAhorcado[2]= getIconAHORCADO(0, 2, buffImgAhor);   
+                 imageAhorcado[3]= getIconAHORCADO(1, 0, buffImgAhor);   
+                  imageAhorcado[4]= getIconAHORCADO(1, 1, buffImgAhor);   
+                   imageAhorcado[5]= getIconAHORCADO(1, 2, buffImgAhor);   
+                   
+              for(int i=0; i<n; i++){
+              imgLabelAhorcado[i]= new JLabel(imageAhorcado[i]);
+          }     
+          }
+           
+           private void addImageAhorcado(int n){
+             panelImagenAhorcado.add(imgLabelAhorcado[n]);
+             p1.add(panelImagenAhorcado);
+           }
 
-        for (int i=0; i<n; i++){
+        private void addPanels(){
+            this.add(p1);
+            this.add(p2);
+            this.add(p3);
+            this.add(p4);
+            this.add(p5);
+            this.add(p6);
+            
+             
+        }
 
-            letraText[i]= new JTextField();
-            labelRayas[i]= new JLabel(imageRaya);
-            
-            labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
-             letraText[i].setBounds(20*columna, fila*50, 30, 30);
-            
-            letraText[i].setText(" ");
-            letraText[i].setEditable(false);
-            letraText[i].setBackground(new Color (0,0,0,0));
-            columna+=2;
-            //fotoCol++;
-
-            
-            p2.add(labelRayas[i]);
-            p2.add(letraText[i]);
-            System.out.println(" Cantindad RAYAS DIBUJADAS Y AGREAGADSA: "+ n);
-            
-            if(i== 8){
-                columna=1;
-                fila=2;
+        private void addButtons() {
+            p4.add(goMenu);
+            p4.add(btnHELP);
+            p4.add(options);
             }
+
+        private void initButtons() {
+
+            goMenu = new JButton("HOME");
+            btnHELP= new JButton("AYUDA");
+            options= new JButton("OPTIONS");
+
+
+            goMenu.setBounds(70,35,60,30);
+            goMenu.addActionListener(this);
+            goMenu.setBackground(new Color(222,22,123));
+            goMenu.setBorder(null);
+
+            btnHELP.setBounds(170,35,60,30);
+            btnHELP.addActionListener(this);
+            btnHELP.setBackground(new Color(111,222,111));
+            btnHELP.setBorder(null);
+
+            options.setBounds(170,35,60,30);
+            options.addActionListener(this);
+            options.setBackground(new Color(111,2,231));
+            options.setBorder(null);
+
+        }
+    
+        private ImageIcon getIconAHORCADO(int x, int y, BufferedImage bf){
+            
+            ImageIcon im;
+            
+            BufferedImage subImage;
+            
+            subImage= bf.getSubimage(x*190, y*170, 200, 180);
+            
+            im= new ImageIcon(subImage);
+            
+            return im;
             
         }
-        
-        
-        System.out.println("--------RAYAS Y CAJAS DIBUJADAS ---------");
-    }
-    
-            private ImageIcon getIconDEFAULT(int fotoCol, int fotoFil, BufferedImage ig) {
+         private ImageIcon getIconDEFAULT(int fotoCol, int fotoFil, BufferedImage ig) {
 
                 ImageIcon img;
                 BufferedImage sub;
@@ -353,82 +394,114 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
         }
 
-        private void initPanels(){
-            p1= new JPanel();
-            panelImagenAhorcado= new JPanel();
-            p2= new JPanel();
-            p3= new JPanel();
-            p4= new JPanel();
-            p5= new JPanel();
-            p6= new JPanel();
-
-            panelCategory= new JPanel();
-            panelCategory.setBounds(250, 215, 140,35);
-            panelCategory.setBackground(Color.gray);
-
-
-            p1.setBounds(0, 0, WIDTHP, 250);
-            p1.setBackground(Color.black);
-            panelImagenAhorcado.setBounds(35, 47, 250, 150);
-            panelImagenAhorcado.setBackground(Color.white);
-            p2.setBounds(0, 250, WIDTHP, 150);
-            p2.setBackground(Color.white);
-            p3.setBounds(0, 400, WIDTHP, 200);
-            p3.setBackground(Color.darkGray);
-            p4.setBounds(0, 600, WIDTHP, 100);
-            p4.setBackground(Color.yellow);
-            p5.setBounds(140,0, 120, 40);
-            p5.setBackground(Color.blue);
-            p6.setBounds(320,50, 80, 35);
-            p6.setBackground(Color.blue);
-
-            p1.add(panelImagenAhorcado);
-            
-            p1.setLayout(null);
-
-
-
-        }
-
-        private void addPanels(){
-            this.add(p1);
-            this.add(p2);
-            this.add(p3);
-            this.add(p4);
-            this.add(p5);
-            this.add(p6);
-        }
-
-        private void addButtons() {
-            p4.add(goMenu);
-            p4.add(btnHELP);
-            p4.add(options);
-            }
-
-        private void initButtons() {
-
-            goMenu = new JButton("HOME");
-            btnHELP= new JButton("AYUDA");
-            options= new JButton("OPTIONS");
-
-
-            goMenu.setBounds(70,35,60,30);
-            goMenu.addActionListener(this);
-            goMenu.setBackground(new Color(222,22,123));
-            goMenu.setBorder(null);
-
-            btnHELP.setBounds(170,35,60,30);
-            btnHELP.addActionListener(this);
-            btnHELP.setBackground(new Color(111,222,111));
-            btnHELP.setBorder(null);
-
-            options.setBounds(170,35,60,30);
-            options.addActionListener(this);
-            options.setBackground(new Color(111,2,231));
-            options.setBorder(null);
-
-        }
+ 
     
+    
+
+    public String randomWord(Vector<Categoria> catsJugando){
+        String palabraRandom;
+        Categoria catRandom;
+        int numCatsJugando= catsJugando.size();
+        
+        System.out.println("NUMERO DE CATEGORIAS: "+ numCatsJugando);
+        
+        int categoriaRandom = (int) (Math.random()*(numCatsJugando)+0);
+        System.out.println("NUMERO DE ALETORIO: "+ categoriaRandom);
+        catRandom= catsJugando.get(categoriaRandom);
+        int numPalabras = catRandom.getNumPalabras();
+        
+        int numPalabraRandom = (int) (Math.random()*(numPalabras-1)+0);
+        
+        palabraRandom= catRandom.getPalabra(numPalabraRandom);
+        
+        System.out.println(catRandom.getNameCategory());
+        System.out.println(palabraRandom);
+        return palabraRandom;
+    }
+    
+    private String drawRandomWord(){
+        
+        System.out.println("DRAW_RANDOM_WORD()-->PLAYING");
+        
+       String word=null;
+        //wathhh
+        numeroLetras=0;
+        
+        switch(StatesApp.fileState){
+            
+            case WAIT:
+                cateToPlay= new Vector<Categoria>();
+                cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
+                System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
+                word=  randomWord(cateToPlay);
+                System.out.println("PALABRA PARA JUGAR:" + word);
+                numeroLetras=word.length();
+                System.out.println("LETRAS:" + numeroLetras);
+                addJtextandJLabel(numeroLetras);
+                break;
+                
+            case DEFAULT_FILE:
+                cateToPlay= new Vector<Categoria>();
+                cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
+                System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
+                word=  randomWord(cateToPlay);  
+                System.out.println("PALABRA PARA JUGAR:" + word);
+                numeroLetras=word.length();
+                addJtextandJLabel(numeroLetras);
+                break;
+            
+        }
+        
+        System.out.println("RANDOM:DIBUJADA:SALIENDO metodo DRAW_RANDOM_WORD()-->PLAYING" +word);
+       return word;
+    }
+    
+    private void addJtextandJLabel(int n){
+        letraText= new JTextField[n];  
+        labelRayas= new JLabel[n];
+        
+        
+        int columna=1;
+        int fila=1;
+        
+        
+         imageRaya= new ImageIcon("./src/resources/RAYA_AHORCADO2.png"); 
+// TODO
+         System.out.println("IMAGE LOADED:)"+ imageRaya);
+         System.out.println("----PINTANDO LAS RAYAS -----");
+         System.out.println("NUMERO LETRAS: "+ n);
+
+        for (int i=0; i<n; i++){
+
+            letraText[i]= new JTextField();
+            labelRayas[i]= new JLabel(imageRaya);
+            
+            labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
+             letraText[i].setBounds(20*columna, fila*50, 30, 30);
+            
+            letraText[i].setText(" ");
+            letraText[i].setEditable(false);
+            letraText[i].setBackground(new Color (0,0,0,0));
+            columna+=2;
+            //fotoCol++;
+
+            
+            p2.add(labelRayas[i]);
+            p2.add(letraText[i]);
+            System.out.println(" Cantindad RAYAS DIBUJADAS Y AGREAGADSA: "+ n);
+            
+            if(i== 8){
+                columna=1;
+                fila=2;
+            }
+            
+        }
+        
+        
+        System.out.println("--------RAYAS Y CAJAS DIBUJADAS ---------");
+    }
+    
+           
     private void ayudarConLetra( ) {
         
         boolean go=false;
@@ -591,6 +664,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                    }
                    else{
                        numVidas--;
+                       
+
+                       
                        System.err.println("NUm vidas:"+ numVidas);
                        if(numVidas==0){
                            StatesApp.gameState=MENU;
