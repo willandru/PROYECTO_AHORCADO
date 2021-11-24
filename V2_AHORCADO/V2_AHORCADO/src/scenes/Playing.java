@@ -78,10 +78,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     // *********** 
     
-    private JTextField textCategory;
-    
+    private JTextField textCategory;    
     private  Vector <Categoria> cateToPlay=null;
-    
     private int numeroLetras;
     
     
@@ -92,10 +90,17 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     private BufferedImage buffImgAhor;
     
     
-        private JLabel[] imgLabelAhorcado;
+    private File fileA;
+    private BufferedImage buffA;
+    private JLabel labelA;
+    private ImageIcon iconA;
+    //private JPanel panelA;
+    private Thread threadA;
     
+    private JLabel[] imgLabelAhorcado;
+    private ImageIcon[] imageAhorcado;
     
-            private ImageIcon[] imageAhorcado;
+    private ImageIcon i1, i2, i3, i4, i5, i6;
     
     public Playing(){
        
@@ -115,6 +120,10 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         setLayout(null);
         setBackground(new Color(0x22a666));
         initPanels();
+        
+        initPanelAhorcado();
+        initA();
+        
         initButtons();
         
         addButtons();
@@ -161,6 +170,24 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         setVisible(true);  
     }
     
+    
+    
+    private void initA(){
+            fileA = new File("./src/resources/ahorcado.jpg");
+            buffA= loadSpreadSheet(fileA);
+            iconA= getIconAHORCADO(2, 1, buffA);
+            
+                i1 = getIconAHORCADO(0, 0, buffA);
+                i2 = getIconAHORCADO(1, 0, buffA);
+                i3 = getIconAHORCADO(2, 0, buffA);         
+                i4 = getIconAHORCADO(0, 1, buffA);
+                i5 = getIconAHORCADO(1, 1, buffA);
+                i6 = getIconAHORCADO(2, 1, buffA);
+            
+      
+    }
+    
+    
            private void initPanels(){
             
 
@@ -192,20 +219,31 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p5.setBackground(Color.blue);
             p6.setBounds(320,50, 80, 35);
             p6.setBackground(Color.blue);
-
+            
+            panelImagenAhorcado= new JPanel();    
+            panelImagenAhorcado.setBounds(35, 47, 220, 150);
+            panelImagenAhorcado.setBackground(Color.white);
+            
+            
+            
+            initA();
+            
+            labelA= new JLabel(i3);
            
+            panelImagenAhorcado.add(this.labelA);
+            p1.add(panelImagenAhorcado);
             
             p1.setLayout(null);
+            
+            
 
                      
             
 
         }
-           private void intPanelAhorcado(){
+           private void initPanelAhorcado(){
                
-            panelImagenAhorcado= new JPanel();    
-            panelImagenAhorcado.setBounds(35, 47, 250, 150);
-            panelImagenAhorcado.setBackground(Color.white);
+           
             
            }
           private void initImages(){
@@ -276,7 +314,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             BufferedImage subImage;
             
-            subImage= bf.getSubimage(x*190, y*170, 200, 180);
+            subImage= bf.getSubimage(x*190, y*210, 220, 150);
             
             im= new ImageIcon(subImage);
             
@@ -665,6 +703,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                    else{
                        numVidas--;
                        
+                       
+                  
 
                        
                        System.err.println("NUm vidas:"+ numVidas);
