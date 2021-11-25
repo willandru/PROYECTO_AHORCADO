@@ -100,7 +100,7 @@ public class Menu extends JPanel implements ActionListener{
          if(origen == this.btnClasssic){
              numero=1;
            StatesApp.gameState=PLAYING;
-           StatesApp.playingState=DONE;
+           //StatesApp.playingState=DONE;
            System.out.println("action PLAYING (from MENU)");
             
         } else if(origen == this.btnSetts){

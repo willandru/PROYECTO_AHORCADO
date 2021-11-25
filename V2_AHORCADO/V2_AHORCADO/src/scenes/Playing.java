@@ -9,7 +9,9 @@ import baseDatos.Categoria;
 import baseDatos.Datos;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -604,6 +607,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         switch(StatesApp.fileState){
             
             case WAIT:
+                 System.out.println("IM IDIOT WAIT");
                 cateToPlay= new Vector<Categoria>();
                 cateToPlay= datosJUGAR.getVecCategoriasCUSTOM();
                 System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
@@ -615,6 +619,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 break;
                 
             case DEFAULT_FILE:
+                 System.out.println("IM IDIOT BT DEFAULT");
                 cateToPlay= new Vector<Categoria>();
                 cateToPlay= datosJUGAR.getVecCategoriasDEFAULTS();
                 System.out.println("CATEGORIA PARA JUGAR:" + cateToPlay.toString());
@@ -624,6 +629,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 addJtextandJLabel(numeroLetras);
                 break;
             
+                
+               
         }
         
         System.out.println("RANDOM:DIBUJADA:SALIENDO metodo DRAW_RANDOM_WORD()-->PLAYING" +word);
@@ -796,6 +803,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             StatesApp.playingState=NOT_DONE;
             System.err.println("   TABLERO PINTADO -----");
         }
+        else if(StatesApp.playingState==LOST){
+            
+            System.out.println("U ARE LOSER");
+            
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
+            }
+             StatesApp.gameState=MENU;
+             StatesApp.playingState=NOT_DONE;
+        }
 
         if(itsDone){
             StatesApp.playingState=DONE;
@@ -806,7 +825,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             System.out.println("STATE : "+ StatesApp.playingState);
             System.out.println("running on PLAYING");
             
-            
+          
             
             switch(numVidas){
                 
@@ -870,6 +889,12 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 
             }
             
+            
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
+            }
     }
 
         
@@ -934,7 +959,37 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                        
                        System.err.println("NUm vidas:"+ numVidas);
                        if(numVidas==0){
-                           StatesApp.gameState=MENU;
+                           
+                           setGlass();
+                           
+                          
+                           Container glassPane= (Container) getRootPane().getGlassPane();
+                           
+                           JButton b= new JButton("PERDISTE");
+                           b.setBounds(150,300,100,100);
+                           glassPane.add(b);
+                           
+                           
+                           JLabel J = new JLabel(getIconButton(1));
+                           J.setBounds(100,100,50,50);
+                           glassPane.add(J);
+                           
+                           JTextField T= new JTextField(palabra);
+                           T.setBounds(150,550,100,100);
+                           Color c= new Color (0,0,0,0);
+                           T.setBorder(null);
+                           T.setBackground(c);
+                           glassPane.add(T);
+                           
+                                   glassPane.setVisible(true);
+                                   System.out.println("VISIBLEE");
+                           
+                        
+                                    StatesApp.playingState=LOST;
+                           
+                           
+                           
+                           
                        }
                    }
                         System.out.println("LETRA OPRIMIDA: "+ txt);
@@ -945,7 +1000,24 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 
     }
     
-
+private void setGlass(){
+     getRootPane().setGlassPane(new JComponent() {
+                               @Override
+                               protected void paintComponent(Graphics g) {
+                                   System.out.println("KKKKKKKKK");
+                                   g.setColor(new Color (0,0,0,150));
+                                   g.fillRect(0, 0, WIDTHP, HEIGHTP);
+                                   super.paintComponent(g);
+                                   
+                                   
+                                   
+                               }
+                           
+                          
+                               
+                               
+                           });
+}
     
     
     

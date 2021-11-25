@@ -7,9 +7,12 @@ package main;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingWorker;
+import static main.StatesApp.DONE;
 import scenes.*;
 
 /**
@@ -83,6 +86,8 @@ public class UI extends JFrame {
             case MENU:
                
                 if(!menuPintado){
+                    rootPane.getGlassPane().setVisible(false);
+                    //StatesApp.playingState=DONE;
                 m = new Menu();
                 m.setSize(ANCHO, ALTO);
                 //m.setBackground(Color.blue);
@@ -117,10 +122,12 @@ public class UI extends JFrame {
                 playPintado=true;
                 menuPintado=false;
                 settsPintado=false;
+                StatesApp.playingState=DONE;
                 }
                  //publish(StatesApp.gameState);
                 //System.out.println("PLAYING holi PUBLISHED");
                // System.out.println("");
+                
                 break;
             case SETTINGS:
                 
@@ -149,7 +156,11 @@ public class UI extends JFrame {
                 }
                
               }
-                
+                try {
+                Thread.sleep(100);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
                 return null;
             }
