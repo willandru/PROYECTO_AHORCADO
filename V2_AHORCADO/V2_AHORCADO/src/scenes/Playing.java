@@ -127,6 +127,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private boolean wasHelp, nextLevel=false;
     
+    private int numeroIntentos=0;
+    
     public Playing(){
        
         System.err.println("CONSTRUCTOR PLAYING");
@@ -233,14 +235,15 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             
             panelIntentos = new JPanel();
-            panelIntentos.setBounds(300, 0, 70, 30);
-            panelIntentos.setBackground(Color.red);
+            panelIntentos.setBounds(300, 0, 100, 30);
+            panelIntentos.setBackground(Color.white);
+            panelIntentos.setLayout(null);
             
             
             panelLabels =  new JPanel();
             panelLabels.setBounds(0,565,WIDTHP, 30);
             panelLabels.setLayout(null);
-                    
+            panelLabels.setBackground(Color.white);
             
             
             
@@ -261,10 +264,10 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p3.setBackground(Color.white);
             p4.setBounds(0, 595, WIDTHP, 55);
             p4.setBackground(Color.white);
-            p5.setBounds(0,0, 70, 40);
-            p5.setBackground(new Color(111,222,111));
+            p5.setBounds(0,0, 100, 40);
+            p5.setBackground(Color.white);
             p6.setBounds(15,0, 50, 50);
-            p6.setBackground(Color.blue);
+            p6.setBackground(Color.white);
             p6.setLayout(null);
             
             
@@ -278,11 +281,21 @@ public class Playing extends JPanel implements ActionListener, Runnable{
              
              
              
-             labelVIdas= new JLabel(String.valueOf(numVidas));
-             labelVIdas.setBounds(35, 0, 50, 30);
+             labelCategoria= new JLabel(namCateg);
+             labelCategoria.setBounds(0,0,140,35);
              
              
-            labelCategoria= new JLabel();
+             labelVIdas= new JLabel("Vidas: "+String.valueOf(numVidas));
+             labelVIdas.setBounds(3, 0, 100, 30);
+             
+             
+            labelIntentos= new JLabel("INTENTOS: "+String.valueOf(numeroIntentos));
+            labelIntentos.setBounds(0, 0, 100, 30);
+            
+           // labelIntentos= new J
+           
+            labelNivel= new JLabel("NIVEL: "+ String.valueOf(nivel));
+            labelNivel.setBounds(0, 0, 100, 40);
             
            
 
@@ -335,6 +348,11 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             panelLabels.add(labelVIdas);
             
             panelCategory.add(labelCategoria);
+            
+            panelIntentos.add(labelIntentos);
+            
+            p5.add(labelNivel);
+            
            //this.add(p5);
             //this.add(p6);
             
@@ -364,22 +382,22 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             giveWord.setBounds(col*2+15,0,size,size);
             giveWord.addActionListener(this);
-            giveWord.setBackground(new Color(222,150,123));
+            giveWord.setBackground(Color.white);
             giveWord.setBorder(null);
 
             goHome.setBounds(col*4+15,0,size,size);
             goHome.addActionListener(this);
-            goHome.setBackground(new Color(222,22,123));
+            goHome.setBackground(Color.white);
             goHome.setBorder(null);
 
             giveLetter.setBounds(col*1+15,0,size,size);
             giveLetter.addActionListener(this);
-            giveLetter.setBackground(new Color(111,222,111));
+            giveLetter.setBackground(Color.white);
             giveLetter.setBorder(null);
 
             changeWord.setBounds(col*3+15,0,size,size);
             changeWord.addActionListener(this);
-            changeWord.setBackground(new Color(121,222,223));
+            changeWord.setBackground(Color.white);
             changeWord.setBorder(null);
             
             
@@ -389,10 +407,21 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                  ImageIcon iconVida= getIconButton(1);
               
                  labelIconVida= new JLabel(iconVida);
+                 labelIconVida.setBackground(null);
                  
                  labelIconVida.setBounds(0, 0, 50, 50);
-           
                  
+                 
+                  ImageIcon iconL= getIconButton(2);
+                 giveLetter.setIcon(iconL);
+                 
+                  ImageIcon iconW= getIconButton(3);
+                 giveWord.setIcon(iconW);
+                 
+                  ImageIcon iconP= getIconButton(4);
+                 changeWord.setIcon(iconP);
+                 
+                
                  
             
 
@@ -421,6 +450,39 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             }
          
          
+         private ImageIcon getIconPerfil(int n){
+             ImageIcon im ;
+             File path;
+             BufferedImage buff;
+             
+             switch (n){
+                case 1:
+                    
+                    path= new File("./src/resources/Recurso 6.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    
+                    
+                    break;
+                                       
+                 case 2:
+                    path= new File("./src/resources/Recurso 7.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;       
+             default:
+                          path= new File("./src/resources/RAYA_AHORCADO.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                       break;
+                    
+            }
+            
+            
+             return im;
+             
+         }
+         
          private ImageIcon getIconButton(int n){
              
              ImageIcon im ;
@@ -432,7 +494,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             switch (n){
                 case 1:
                     
-                    path= new File("./src/resources/Recurso 3.png");
+                    path= new File("./src/resources/Recurso 8.png");
               buff= loadSpreadSheet(path);
              im= new ImageIcon(buff);
                     
@@ -440,7 +502,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                     break;
                                        
                  case 2:
-                    path= new File("./src/resources/Ss1.png");
+                    path= new File("./src/resources/Recurso 9.png");
               buff= loadSpreadSheet(path);
              im= new ImageIcon(buff);
                     break;       
@@ -448,7 +510,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                     
                     
                    case 3:
-                    path= new File("./src/resources/ahorcado.jpg");
+                    path= new File("./src/resources/Recurso 10.png");
               buff= loadSpreadSheet(path);
              im= new ImageIcon(buff);
                     break;    
@@ -456,7 +518,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                     
                     
                   case 4:
-                    path= new File("./src/resources/RAYA_AHORCADO2.png");
+                    path= new File("./src/resources/Recurso 11.png");
               buff= loadSpreadSheet(path);
              im= new ImageIcon(buff);
                     break;
@@ -856,7 +918,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             System.out.println("U ARE LOSER");
             
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -866,7 +928,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             System.out.println("U ARE A WINNER");
             
             try {
-                Thread.sleep(2000);
+                Thread.sleep(5000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -895,11 +957,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 setGlass();
                            nivel++;
                           
+                           labelNivel.setText("NIVEL: "+ String.valueOf(nivel));
+                           
                            glassPane= (Container) getRootPane().getGlassPane();
                            
-                           JButton b= new JButton("GANASTE");
-                           b.setBounds(150,300,100,100);
-                           glassPane.add(b);
+                         
+                           
+                             JLabel J = new JLabel(getIconPerfil(1));
+                           J.setBounds(10,10,347,522);
+                           glassPane.add(J);
+                           
+                           
+                           
                            
                             glassPane.setVisible(true);
                             StatesApp.playingState=NEW_LEVEL;
@@ -1038,15 +1107,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                         addLetterToText(txt,indiceDeLetra);
                         teclado[i].setText("*");
                         teclado[i].setIcon(tecladoBlue[i]);
+                        numeroIntentos++;
+                        labelIntentos.setText("INTENTOS: "+String.valueOf(numeroIntentos));
                    }
                    else{
                        numVidas--;
                        teclado[i].setText("*");
                        teclado[i].setIcon(tecladoRed[i]);
                        label=String.valueOf(numVidas);
-                       labelVIdas.setText(label);
+                       labelVIdas.setText("VIDAS: "+label);
                    
-                  
+                  numeroIntentos++;
+                        labelIntentos.setText("INTENTOS: "+String.valueOf(numeroIntentos));
 
                        
                        System.err.println("NUm vidas:"+ numVidas);
@@ -1058,19 +1130,21 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                            Container glassPane= (Container) getRootPane().getGlassPane();
                            
                            JButton b= new JButton("PERDISTE");
-                           b.setBounds(150,300,100,100);
-                           glassPane.add(b);
+                           b.setBounds(300,600,20,20);
+                          // glassPane.add(b);
                            
                            
-                           JLabel J = new JLabel(getIconButton(1));
-                           J.setBounds(100,100,50,50);
+                           JLabel J = new JLabel(getIconPerfil(2));
+                           J.setBounds(10,10,347,522);
                            glassPane.add(J);
                            
                            JTextField T= new JTextField(palabra);
-                           T.setBounds(150,550,100,100);
+                           T.setBounds(50,520,300,100);
+                           T.setFont(new Font("Sans Serif", Font.PLAIN, 40));
+                           T.setForeground(Color.white);
                            Color c= new Color (0,0,0,0);
                            T.setBorder(null);
-                           T.setBackground(c);
+                          T.setBackground(c);
                            glassPane.add(T);
                            
                                    glassPane.setVisible(true);
