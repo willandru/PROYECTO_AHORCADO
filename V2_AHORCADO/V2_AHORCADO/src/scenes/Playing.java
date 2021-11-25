@@ -48,14 +48,21 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
     
-    private static final int NUM_BOTTONS=27;
+    private static final int NUM_BOTTONS=26;
     
     private JButton []teclado= new JButton[NUM_BOTTONS];
+    
+    private ImageIcon [] tecladoBlue= new ImageIcon[NUM_BOTTONS];
+    private ImageIcon [] tecladoRed= new ImageIcon[NUM_BOTTONS];
+    
     //private String randomWord;  
     private JPanel panelCategory;
     private JTextField[] letraText;
     private JLabel[] labelRayas;
+    
     private ImageIcon imageABC;
+    private ImageIcon imageBlue;
+    private ImageIcon imageRed;
 
     private    ImageIcon imageRaya;
     
@@ -221,7 +228,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             panelDatos= new JPanel();
             
             panelDatos.setBounds(0, 250, WIDTHP, 40);
-            panelDatos.setBackground(new Color(0x123456));
+            panelDatos.setBackground(Color.white);
             
             
             
@@ -239,7 +246,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             panelCategory= new JPanel();
             panelCategory.setBounds(130, 0, 140,35);
-            panelCategory.setBackground(Color.gray);
+            panelCategory.setBackground(Color.white);
 
 
             p1.setBounds(0, 0, WIDTHP, 250);
@@ -251,9 +258,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             
             p3.setBounds(0, 400, WIDTHP, 165);
-            p3.setBackground(Color.darkGray);
+            p3.setBackground(Color.white);
             p4.setBounds(0, 595, WIDTHP, 55);
-            p4.setBackground(Color.yellow);
+            p4.setBackground(Color.white);
             p5.setBounds(0,0, 70, 40);
             p5.setBackground(new Color(111,222,111));
             p6.setBounds(15,0, 50, 50);
@@ -408,7 +415,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
                 ImageIcon img;
                 BufferedImage sub;
-                sub=ig.getSubimage(fotoCol*32, fotoFil*30, 30, 30);
+                sub=ig.getSubimage(fotoCol*35, fotoFil*35, 35, 35);
                 img = new ImageIcon(sub);
                 return img;
             }
@@ -505,39 +512,73 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             int fotoCol=0;
             int fotoFil=0;
             File pathD;
+            File pathB;
+            File pathR;
 
-             pathD= new File("./src/resources/spriteABC.png");
+             pathD= new File("./src/resources/TecBlack.png");
             // pathB= new File("./src/resources/spriteABC.png");
              BufferedImage buffImg = loadSpreadSheet(pathD);
 
 
-            for(int i=0; i<27; i++){
-                 imageABC= getIconDEFAULT(fotoCol, fotoFil, buffImg);
-
+              pathB= new File("./src/resources/tecBlue.png");
+            // pathB= new File("./src/resources/spriteABC.png");
+             BufferedImage buffImgBlue = loadSpreadSheet(pathB);
+             
+             
+              pathR= new File("./src/resources/tecRed.png");
+            // pathB= new File("./src/resources/spriteABC.png");
+             BufferedImage buffImgRed = loadSpreadSheet(pathR);
+             
+             
+            for(int i=0; i<NUM_BOTTONS; i++){
+                
+                 imageBlue= getIconDEFAULT(fotoCol, fotoFil, buffImgBlue);
+                 imageRed= getIconDEFAULT(fotoCol, fotoFil, buffImgRed);
+                 
+                
+                 
                 teclado[i]= new JButton();
                 teclado[i].addActionListener(this);
                 teclado[i].setSize(35, 35); 
+                 teclado[i].setBorderPainted(false); 
+                  //teclado[i].setOpaque(false);
+                teclado[i].setContentAreaFilled(false);
+                //button.setBorderPainted(false);
+                 
+                tecladoBlue[i]= imageBlue;
+                 tecladoRed[i]= imageRed;
+               
+                
                 digit= (char) letra;
                 num= String.valueOf(digit);
+                
+                 imageABC= getIconDEFAULT(fotoCol, fotoFil, buffImg);
                 teclado[i].setIcon(imageABC);
+                
                 teclado[i].setText(num);
-               
-                  teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 0));
+                teclado[i].setFont(new Font("Sans Serif", Font.PLAIN, 0));
+                  
+                  
                 letra++;
                 fotoCol++;
-
                 if(fotoCol==10 || fotoCol == 19){
                     fotoCol=0;
                     fotoFil++;
                 }
+                
+                addIcon(fotoCol, fotoFil, buffImg);
 
             }
+        }
+        
+        private void addIcon(int fotoCol, int fotoFil,BufferedImage buffImg){
+            
         }
 
         private void addTeclado(){
              int columna=15;
                 int fila=5;
-            for(int i=0; i<27; i++){
+            for(int i=0; i<NUM_BOTTONS; i++){
 
 
                 if(i<10){
@@ -568,7 +609,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
 
             }
-            for(int i=0; i<27; i++){
+            for(int i=0; i<NUM_BOTTONS; i++){
 
                 p3.add(teclado[i]);
             }
@@ -830,6 +871,13 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
             }
             
+            for(int i=0; i<NUM_BOTTONS; i++){
+
+                p3.remove(teclado[i]);
+            }
+                initTeclado();
+                addTeclado();
+        
             glassPane.setVisible(false);
             
             
@@ -928,11 +976,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             }
             
             
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
     }
 
         
@@ -987,12 +1031,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                    String label=null;
                    txt = teclado[i].getText();
                    boolean pasa= verificarLetra(txt);
-                   if(pasa){
+                   if(String.valueOf(teclado[i].getText()).equals("*")){
+                       break;
+                   }
+                   else if(pasa){
                         addLetterToText(txt,indiceDeLetra);
+                        teclado[i].setText("*");
+                        teclado[i].setIcon(tecladoBlue[i]);
                    }
                    else{
                        numVidas--;
-                       
+                       teclado[i].setText("*");
+                       teclado[i].setIcon(tecladoRed[i]);
                        label=String.valueOf(numVidas);
                        labelVIdas.setText(label);
                    
