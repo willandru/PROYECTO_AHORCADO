@@ -33,6 +33,8 @@ public class Settings extends JPanel implements ActionListener{
 
      
      public Settings(){
+         
+         System.err.println("CONSTRUCTOR: SETTINGS");
          setLayout(null);
          inicializarBotones();
          agregarBotones();

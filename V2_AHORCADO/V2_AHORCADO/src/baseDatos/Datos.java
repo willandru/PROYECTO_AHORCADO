@@ -44,7 +44,6 @@ public class Datos implements Runnable{
       public  boolean customLOADED= false;
       public boolean defaultsLOADED=false;
    
-      
      static Datos instance;
      
      
@@ -74,9 +73,7 @@ public class Datos implements Runnable{
         }
         return instance;
     }
-    
-     
-     
+ 
    public Vector<Categoria> loadDefaults(Vector<Categoria> catDef){
        try{
        defaultWords= new File("./src/resources/defaultsWords.txt");
@@ -93,42 +90,7 @@ public class Datos implements Runnable{
        
        return catDef;
    }
-    
-    
-      
-    public void sendFileChoosener(){
-       
-        fileOpener = new JFileChooser();
-        
-          fileOpener.setCurrentDirectory(new File("./src/resources"));
-            int ans = fileOpener.showOpenDialog(null);
-        
-        if(ans== JFileChooser.APPROVE_OPTION){
-                  vecCategoriasCUSTOM = null ;
-            File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
-          vecCategoriasCUSTOM=saveFileContent(vecCategoriasCUSTOM, dataFile);
-                    
-          customLOADED= true;          
-          
-          StatesApp.fileState= WAIT;
-          
-                    System.out.println("CUSTOM FILE : LOADED");
-                  System.out.println("CATEGORIAS: " + numCategories);
-                  System.out.println("PALABRAS TOTALES: "+ numTotPalabras);
-                
-                 for (int i=0; i<numCategories; i++){
-                     vecCategoriasCUSTOM.get(i).printWords();
-                 }
-                               
 
-              
-}
-        
-         StatesApp.fileState= WAIT;
-        
-    }
-    
-    
     public Vector<Categoria> saveFileContent(Vector<Categoria> cats, File file){
         System.out.println("saveFileContent () BASE DE DATOS,...LEYENDO Y GUARDANDO DATOS . . .");
         
@@ -186,11 +148,41 @@ public class Datos implements Runnable{
         return cats;
     }
     
-  
-
-    
-    
-    
+    public void sendFileChoosener(){
+       
+        fileOpener = new JFileChooser();
+        
+          fileOpener.setCurrentDirectory(new File("./src/resources"));
+            int ans = fileOpener.showOpenDialog(null);
+        
+        if(ans== JFileChooser.APPROVE_OPTION){
+                  vecCategoriasCUSTOM = null ;
+            File dataFile = new File(fileOpener.getSelectedFile().getAbsolutePath());
+          vecCategoriasCUSTOM=saveFileContent(vecCategoriasCUSTOM, dataFile);
+                    
+          customLOADED= true;          
+          
+          StatesApp.fileState= WAIT;
+          
+                    System.out.println("CUSTOM FILE : LOADED");
+                  System.out.println("CATEGORIAS: " + numCategories);
+                  System.out.println("PALABRAS TOTALES: "+ numTotPalabras);
+                
+                 for (int i=0; i<numCategories; i++){
+                     vecCategoriasCUSTOM.get(i).printWords();
+                 }
+                               
+     StatesApp.fileState= WAIT;     
+         
+}
+        else{
+         StatesApp.fileState= WAIT;     
+        //StatesApp.fileState= DEFAULT_FILE; 
+        vecCategoriasCUSTOM=vecCategoriasDEFAULTS;
+        customLOADED=true;
+        }
+    }
+      
     @Override
     public void run() {
         System.out.println("HILO BASE DATOS: inica");
@@ -262,7 +254,6 @@ public class Datos implements Runnable{
     public Vector<Categoria> getVecCategoriasDEFAULTS() {
         return vecCategoriasDEFAULTS;
     }
-
     public Vector<Categoria> getVecCategoriasCUSTOM() {
         return vecCategoriasCUSTOM;
     }
