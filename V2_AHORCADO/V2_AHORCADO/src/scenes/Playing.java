@@ -38,9 +38,9 @@ import static main.StatesApp.*;
 public class Playing extends JPanel implements ActionListener, Runnable{
     
     
-    public JButton goMenu, btnHELP, options;
+    public JButton goHome, giveLetter, changeWord, giveWord;
     public int number=1;
-    public JPanel p1,p2,p3,p4,p5,p6, panelImagenAhorcado;
+    public JPanel p1,p2,p3,p4,p5,p6, panelImagenAhorcado, panelDatos;
 
     private static final int WIDTHP=400;
     private static final int HEIGHTP=680;
@@ -134,9 +134,11 @@ public class Playing extends JPanel implements ActionListener, Runnable{
        
         gameThread= new Thread(this);
        //*****
-        p1.add(p5);
-        p1.add(p6);
-        p2.add(panelCategory);
+       // p4.add(p5);
+        //p4.add(p6);
+        panelDatos.setLayout(null);
+        panelDatos.add(panelCategory);
+        panelDatos.add(p5);
         p1.revalidate();
         p1.repaint();
        ///****
@@ -201,16 +203,21 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p4= new JPanel();
             p5= new JPanel();
             p6= new JPanel();
-
+            panelDatos= new JPanel();
+            
+            panelDatos.setBounds(0, 250, WIDTHP, 40);
+            panelDatos.setBackground(new Color(0x123456));
+            
+            
             panelCategory= new JPanel();
-            panelCategory.setBounds(250, 0, 140,35);
+            panelCategory.setBounds(130, 0, 140,35);
             panelCategory.setBackground(Color.gray);
 
 
             p1.setBounds(0, 0, WIDTHP, 250);
             p1.setBackground(Color.black);
            
-            p2.setBounds(0, 250, WIDTHP, 150);
+            p2.setBounds(0, 290, WIDTHP, 110);
             p2.setBackground(Color.white);
             
             
@@ -219,12 +226,12 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p3.setBackground(Color.darkGray);
             p4.setBounds(0, 600, WIDTHP, 100);
             p4.setBackground(Color.yellow);
-            p5.setBounds(140,0, 50, 40);
-            p5.setBackground(Color.blue);
-            p6.setBounds(320,50, 80, 35);
+            p5.setBounds(0,0, 70, 40);
+            p5.setBackground(new Color(111,222,111));
+            p6.setBounds(0,0, 80, 100);
             p6.setBackground(Color.blue);
             
-            
+            p4.setLayout(null);
             
             
             
@@ -274,39 +281,50 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             this.add(p2);
             this.add(p3);
             this.add(p4);
-            this.add(p5);
-            this.add(p6);
+            this.add(panelDatos);
+           //this.add(p5);
+            //this.add(p6);
             
              
         }
 
         private void addButtons() {
-            p4.add(goMenu);
-            p4.add(btnHELP);
-            p4.add(options);
+            p4.add(goHome);
+            p4.add(giveLetter);
+            p4.add(changeWord);
+            p4.add(giveWord);
+            p4.add(p6);
+            
             }
 
         private void initButtons() {
+          
+            int col= WIDTHP/5;
 
-            goMenu = new JButton("HOME");
-            btnHELP= new JButton("AYUDA");
-            options= new JButton("OPTIONS");
+            goHome = new JButton("HOME");
+            giveLetter= new JButton("LETRA");
+            changeWord= new JButton("CAMBIAR");
+            giveWord = new JButton("PALABRA");
+            
+            giveWord.setBounds(col*2,0,col,70);
+            giveWord.addActionListener(this);
+            giveWord.setBackground(new Color(222,150,123));
+            giveWord.setBorder(null);
 
+            goHome.setBounds(col*4,0,col,70);
+            goHome.addActionListener(this);
+            goHome.setBackground(new Color(222,22,123));
+            goHome.setBorder(null);
 
-            goMenu.setBounds(70,35,60,30);
-            goMenu.addActionListener(this);
-            goMenu.setBackground(new Color(222,22,123));
-            goMenu.setBorder(null);
+            giveLetter.setBounds(col*1,0,col,70);
+            giveLetter.addActionListener(this);
+            giveLetter.setBackground(new Color(111,222,111));
+            giveLetter.setBorder(null);
 
-            btnHELP.setBounds(170,35,60,30);
-            btnHELP.addActionListener(this);
-            btnHELP.setBackground(new Color(111,222,111));
-            btnHELP.setBorder(null);
-
-            options.setBounds(170,35,60,30);
-            options.addActionListener(this);
-            options.setBackground(new Color(111,2,231));
-            options.setBorder(null);
+            changeWord.setBounds(col*3,0,col,70);
+            changeWord.addActionListener(this);
+            changeWord.setBackground(new Color(121,222,223));
+            changeWord.setBorder(null);
 
         }
     
@@ -434,10 +452,6 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
         }
 
- 
-    
-    
-
     public String randomWord(Vector<Categoria> catsJugando){
         String palabraRandom;
         Categoria catRandom;
@@ -496,7 +510,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
        return word;
     }
     
-    private void addJtextandJLabel(int n){
+    private void removeJTextandJLabel(){
+        for (int i=0; i<numeroLetras; i++){
+            
+              p2.remove(labelRayas[i]);
+            p2.remove(letraText[i]);
+            p2.revalidate();
+            p2.repaint();
+        }
+    }
+    
+    
+        private void addJtextandJLabel(int n){
         letraText= new JTextField[n];  
         labelRayas= new JLabel[n];
         
@@ -516,8 +541,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             letraText[i]= new JTextField();
             labelRayas[i]= new JLabel(imageRaya);
             
-            labelRayas[i].setBounds(20*columna, fila * 50 +35, 30 , 3);
-             letraText[i].setBounds(20*columna, fila*50, 30, 30);
+            labelRayas[i].setBounds(20*columna, fila * 10 +35, 30 , 3);
+             letraText[i].setBounds(20*columna, fila*10, 30, 30);
             
             letraText[i].setText(" ");
             letraText[i].setEditable(false);
@@ -540,7 +565,15 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         
         System.out.println("--------RAYAS Y CAJAS DIBUJADAS ---------");
     }
-    
+    private void ayudarConPalabra(){
+        for (int i=0; i< numeroLetrasRandom; i++){
+            if(!letrasLLenadas[i]){
+            String l= String.valueOf(palabra.charAt(i));
+            addLetterToText(l,i);
+        }
+        }
+        
+    }
            
     private void ayudarConLetra( ) {
         
@@ -719,7 +752,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
   @Override
     public void actionPerformed(ActionEvent ae) {
             Object origen = ae.getSource();
-                if(origen == this.goMenu){
+                if(origen == this.goHome){
                     number=0;
                     gameThread=null;
                     
@@ -727,21 +760,29 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                  
                   System.out.println("action MENU,  (from PLAYING)");
 
-               }else if(origen == this.btnHELP){
+               }else if(origen == this.giveLetter){
                    p1.setBackground(new Color(0x911111));
                    //TODO_ ----> ayuda: revelar una letra al azar
                    
                    // NECESITO TENER; REVISAR LA PALABRA, TOMAR UNA LETRA AL AZAR, LLENAR EL CAMPO,CORREPSONDIENTE.
                    // BOOLEAN para dar 1 sola oportunidad (o 2,3)
                    if (ayudaLeftt && StatesApp.playingState== NOT_DONE){
-                        ayudarConLetra();
-                        
+                        ayudarConLetra();                 
                    }
                       
                    System.out.println("action HELP (from PLAYING)");
+               }else if(origen == this.giveWord){
+                   
+                   if (ayudaLeftt && StatesApp.playingState== NOT_DONE){
+                            ayudarConPalabra();                 
+                   }
                }
-                else if(origen == this.options){
+               
+               
+                else if(origen == this.changeWord){
                    p1.setBackground(new Color(0x91a211));
+                   removeJTextandJLabel();
+                   StatesApp.playingState=DONE;
                }
                 for(int i=0; i<NUM_BOTTONS; i++){
                     if(origen == teclado[i]){
