@@ -60,7 +60,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private int letraAlAzar;
     
-    private int numVidas=6;
+    private int numVidas=7;
     
     private boolean ayudaLeftt=true;
     
@@ -102,14 +102,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private ImageIcon i1, i2, i3, i4, i5, i6;
     
-    private boolean b1,b2,b3,b4,b5,b6 = false;
+    private boolean b1,b2,b3,b4,b5,b6, b7 = false;
     
     
     private JLabel labelNivel, labelVIdas, labelCategoria, labelIntentos;
     
     private JPanel panelIntentos, panelLabels;
     
+    private JLabel labelIconVida;
     
+    String namCateg= " ";
+    
+    private int nivel=1;
     
     public Playing(){
        
@@ -188,14 +192,14 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             buffA= loadSpreadSheet(fileA);
             iconA= getIconAHORCADO(2, 1, buffA);
             
-            imageAhorcado = new ImageIcon[6];
+            imageAhorcado = new ImageIcon[7];
                 imageAhorcado[0] = getIconAHORCADO(0, 0, buffA);
                 imageAhorcado[1] = getIconAHORCADO(1, 0, buffA);
                 imageAhorcado[2] = getIconAHORCADO(2, 0, buffA);         
                 imageAhorcado[3] = getIconAHORCADO(0, 1, buffA);
                 imageAhorcado[4] = getIconAHORCADO(1, 1, buffA);
                 imageAhorcado[5] = getIconAHORCADO(2, 1, buffA);
-            
+                 imageAhorcado[6] = getIconAHORCADO(3, 1, buffA);
       
     }
     
@@ -249,6 +253,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p5.setBackground(new Color(111,222,111));
             p6.setBounds(15,0, 50, 50);
             p6.setBackground(Color.blue);
+            p6.setLayout(null);
+            
             
             p4.setLayout(null);
             
@@ -260,10 +266,11 @@ public class Playing extends JPanel implements ActionListener, Runnable{
              
              
              
-             labelVIdas= new JLabel("6");
-             labelVIdas.setBounds(15, 0, 50, 30);
+             labelVIdas= new JLabel(String.valueOf(numVidas));
+             labelVIdas.setBounds(35, 0, 50, 30);
              
-            
+             
+            labelCategoria= new JLabel();
             
            
 
@@ -314,6 +321,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             panelDatos.add(panelIntentos);
             
             panelLabels.add(labelVIdas);
+            
+            panelCategory.add(labelCategoria);
            //this.add(p5);
             //this.add(p6);
             
@@ -325,6 +334,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p4.add(giveLetter);
             p4.add(changeWord);
             p4.add(giveWord);
+            p6.add(labelIconVida);
             p4.add(p6);
             
             }
@@ -361,11 +371,17 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             changeWord.setBorder(null);
             
             
-            for (int i=1; i<6; i++){
-                ImageIcon icon= getIconButton(i);
+           
+                ImageIcon icon= getIconButton(5);
                  goHome.setIcon(icon);
-                 goHome.setHorizontalAlignment(0);
-            }
+                 ImageIcon iconVida= getIconButton(1);
+              
+                 labelIconVida= new JLabel(iconVida);
+                 
+                 labelIconVida.setBounds(0, 0, 50, 50);
+           
+                 
+                 
             
 
         }
@@ -404,7 +420,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             switch (n){
                 case 1:
                     
-                    path= new File("./src/resources/ahorcado.jpg");
+                    path= new File("./src/resources/Recurso 3.png");
               buff= loadSpreadSheet(path);
              im= new ImageIcon(buff);
                     
@@ -420,7 +436,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                     
                     
                    case 3:
-                    path= new File("./src/resources/Recurso 3.png");
+                    path= new File("./src/resources/ahorcado.jpg");
               buff= loadSpreadSheet(path);
              im= new ImageIcon(buff);
                     break;    
@@ -570,6 +586,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
         
         palabraRandom= catRandom.getPalabra(numPalabraRandom);
         
+        namCateg=catRandom.getNameCategory();
+        
         System.out.println(catRandom.getNameCategory());
         System.out.println(palabraRandom);
         return palabraRandom;
@@ -620,6 +638,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             p2.revalidate();
             p2.repaint();
         }
+        
+        
     }
     
     
@@ -664,7 +684,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
         }
         
-        
+        labelCategoria.setText(namCateg);
         System.out.println("--------RAYAS Y CAJAS DIBUJADAS ---------");
     }
     private void ayudarConPalabra(){
@@ -790,18 +810,26 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             switch(numVidas){
                 
-                case 6:
-                    if(!b6){
+                case 7:
+                    if(!b7){
                         initPanelAhorcado(0);
-                        b6=true;
+                        b7=true;
                     }
                     
                     break;
-                case 5:
+                case 6:
                    
-                    if(!b5){
+                    if(!b6){
                          p1.remove(panelImagenAhorcado);
                 initPanelAhorcado(1);
+                        b6=true;
+                    }
+                    break;
+                case 5:
+                    
+                    if(!b5){
+                        p1.remove(panelImagenAhorcado);
+                initPanelAhorcado(2);
                         b5=true;
                     }
                     break;
@@ -809,34 +837,34 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                     
                     if(!b4){
                         p1.remove(panelImagenAhorcado);
-                initPanelAhorcado(2);
+                initPanelAhorcado(3);
                         b4=true;
                     }
                     break;
                 case 3:
                     
                     if(!b3){
-                        p1.remove(panelImagenAhorcado);
-                initPanelAhorcado(3);
+                       p1.remove(panelImagenAhorcado);
+                initPanelAhorcado(4);
                         b3=true;
                     }
                     break;
                 case 2:
                     
                     if(!b2){
-                       p1.remove(panelImagenAhorcado);
-                initPanelAhorcado(4);
+                        p1.remove(panelImagenAhorcado);
+                        initPanelAhorcado(5);
                         b2=true;
                     }
                     break;
-                case 1:
+                
+                case 1: 
                     
                     if(!b1){
                         p1.remove(panelImagenAhorcado);
-                        initPanelAhorcado(5);
+                        initPanelAhorcado(6);
                         b1=true;
                     }
-                    break;
                 
                 
                 
@@ -889,6 +917,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 for(int i=0; i<NUM_BOTTONS; i++){
                     if(origen == teclado[i]){
                    String txt=null;
+                   String label=null;
                    txt = teclado[i].getText();
                    boolean pasa= verificarLetra(txt);
                    if(pasa){
@@ -897,7 +926,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                    else{
                        numVidas--;
                        
-                     
+                       label=String.valueOf(numVidas);
+                       labelVIdas.setText(label);
+                   
                   
 
                        
