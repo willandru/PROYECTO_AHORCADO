@@ -105,12 +105,18 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     private boolean b1,b2,b3,b4,b5,b6 = false;
     
     
+    private JLabel labelNivel, labelVIdas, labelCategoria, labelIntentos;
+    
+    private JPanel panelIntentos, panelLabels;
+    
+    
+    
     public Playing(){
        
         System.err.println("CONSTRUCTOR PLAYING");
         
         
-        pathAhorcado= new File("./src/resources/ahorcado.jpg");  
+        pathAhorcado= new File("./src/resources/Recurso 2.png");  
         buffImgAhor = loadSpreadSheet(pathAhorcado);
         //initImages();
         
@@ -178,7 +184,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     
     private void initA(){
-            fileA = new File("./src/resources/ahorcado.jpg");
+            fileA = new File("./src/resources/Recurso 2.png");
             buffA= loadSpreadSheet(fileA);
             iconA= getIconAHORCADO(2, 1, buffA);
             
@@ -209,6 +215,10 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             panelDatos.setBackground(new Color(0x123456));
             
             
+            
+            
+            
+            
             panelCategory= new JPanel();
             panelCategory.setBounds(130, 0, 140,35);
             panelCategory.setBackground(Color.gray);
@@ -222,13 +232,13 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             
             
-            p3.setBounds(0, 400, WIDTHP, 200);
+            p3.setBounds(0, 400, WIDTHP, 170);
             p3.setBackground(Color.darkGray);
-            p4.setBounds(0, 600, WIDTHP, 100);
+            p4.setBounds(0, 600, WIDTHP, 45);
             p4.setBackground(Color.yellow);
             p5.setBounds(0,0, 70, 40);
             p5.setBackground(new Color(111,222,111));
-            p6.setBounds(0,0, 80, 100);
+            p6.setBounds(0,0, 55, 100);
             p6.setBackground(Color.blue);
             
             p4.setLayout(null);
@@ -246,7 +256,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                
             labelA= new JLabel(imageAhorcado[n]);
             panelImagenAhorcado= new JPanel();    
-            panelImagenAhorcado.setBounds(35, 47, 220, 150);
+            panelImagenAhorcado.setBounds(0, 0,  WIDTHP, 250);
             panelImagenAhorcado.setBackground(Color.white);
             panelImagenAhorcado.add(labelA);
             p1.add(panelImagenAhorcado);
@@ -301,7 +311,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
           
             int col= WIDTHP/5;
 
-            goHome = new JButton("HOME");
+            goHome = new JButton();
             giveLetter= new JButton("LETRA");
             changeWord= new JButton("CAMBIAR");
             giveWord = new JButton("PALABRA");
@@ -311,7 +321,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             giveWord.setBackground(new Color(222,150,123));
             giveWord.setBorder(null);
 
-            goHome.setBounds(col*4,0,col,70);
+            goHome.setBounds(col*4,0,col,55);
             goHome.addActionListener(this);
             goHome.setBackground(new Color(222,22,123));
             goHome.setBorder(null);
@@ -325,6 +335,14 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             changeWord.addActionListener(this);
             changeWord.setBackground(new Color(121,222,223));
             changeWord.setBorder(null);
+            
+            
+            for (int i=1; i<6; i++){
+                ImageIcon icon= getIconButton(i);
+                 goHome.setIcon(icon);
+                 goHome.setHorizontalAlignment(0);
+            }
+            
 
         }
     
@@ -334,7 +352,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             BufferedImage subImage;
             
-            subImage= bf.getSubimage(x*190, y*210, 220, 150);
+            subImage= bf.getSubimage(x*WIDTHP, y*250,  WIDTHP, 250);
             
             im= new ImageIcon(subImage);
             
@@ -348,9 +366,69 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                 sub=ig.getSubimage(fotoCol*32, fotoFil*30, 30, 30);
                 img = new ImageIcon(sub);
                 return img;
-
-
             }
+         
+         
+         private ImageIcon getIconButton(int n){
+             
+             ImageIcon im ;
+             File path;
+             BufferedImage buff;
+            
+             
+            // pathB= new File("./src/resources/spriteABC.png");
+            switch (n){
+                case 1:
+                    
+                    path= new File("./src/resources/ahorcado.jpg");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    
+                    
+                    break;
+                                       
+                 case 2:
+                    path= new File("./src/resources/Ss1.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;       
+                    
+                    
+                    
+                   case 3:
+                    path= new File("./src/resources/Recurso 3.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;    
+                    
+                    
+                    
+                  case 4:
+                    path= new File("./src/resources/RAYA_AHORCADO2.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;
+                    
+                    
+                    
+                     case 5:
+                    path= new File("./src/resources/Recurso 5.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;   
+                    
+                     default:
+                          path= new File("./src/resources/RAYA_AHORCADO.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                       break;
+                    
+            }
+            
+            
+             return im;
+             
+         }
             private ImageIcon getIconBLACK(int fotoCol, int fotoFil, BufferedImage ig) {
 
                 ImageIcon img;
@@ -413,7 +491,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
         private void addTeclado(){
              int columna=15;
-                int fila=40;
+                int fila=5;
             for(int i=0; i<27; i++){
 
 
@@ -423,15 +501,15 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
                      if (i==9){
                          columna=35;
-                         fila= 90;
+                         fila= 46;
                      }
                 }
                 else if(i<20 && i>=10){
                     teclado[i].setLocation(columna, fila);
                      columna+=35;
                      if (i==19){
-                         columna=65;
-                         fila= 140;
+                         columna=55;
+                         fila= 90;
                      }
 
                 }else{
