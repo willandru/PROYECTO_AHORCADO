@@ -118,6 +118,8 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     private int nivel=1;
     
+    private boolean wasHelp, nextLevel=false;
+    
     public Playing(){
        
         System.err.println("CONSTRUCTOR PLAYING");
@@ -789,9 +791,10 @@ public class Playing extends JPanel implements ActionListener, Runnable{
     
     @Override
     public void run() {
-        boolean itsDone=itsDone();
-        
+        boolean itsDone;
+       Container  glassPane= (Container) getRootPane();
         while(gameThread != null){
+            itsDone=itsDone();
         
         if(StatesApp.playingState==DONE){
             
@@ -802,6 +805,10 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             setVariablesOfWord();
             StatesApp.playingState=NOT_DONE;
             System.err.println("   TABLERO PINTADO -----");
+            
+        }else if(StatesApp.playingState== NOT_DONE){
+            
+            nextLevel=false;
         }
         else if(StatesApp.playingState==LOST){
             
@@ -814,11 +821,42 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             }
              StatesApp.gameState=MENU;
              StatesApp.playingState=NOT_DONE;
+        } else if(StatesApp.playingState==NEW_LEVEL){
+            System.out.println("U ARE A WINNER");
+            
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            glassPane.setVisible(false);
+            
+            
+            nextLevel=true;
+            
+            removeJTextandJLabel();
+                   StatesApp.playingState=DONE;
+            
         }
 
-        if(itsDone){
+        if(itsDone && !nextLevel){
             StatesApp.playingState=DONE;
             System.out.println("THE WORD HAS BEEN COMPLETED #2");
+            if(!wasHelp){
+                setGlass();
+                           nivel++;
+                          
+                           glassPane= (Container) getRootPane().getGlassPane();
+                           
+                           JButton b= new JButton("GANASTE");
+                           b.setBounds(150,300,100,100);
+                           glassPane.add(b);
+                           
+                            glassPane.setVisible(true);
+                            StatesApp.playingState=NEW_LEVEL;
+                           
+            }
            
         }
         
@@ -891,7 +929,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             
             try {
-                Thread.sleep(20);
+                Thread.sleep(2000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -929,7 +967,11 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                }else if(origen == this.giveWord){
                    
                    if (ayudaLeftt && StatesApp.playingState== NOT_DONE){
-                            ayudarConPalabra();                 
+                            wasHelp=true;
+                            ayudarConPalabra();  
+                            System.out.println("AYODAR PALABRA");
+                            
+                           
                    }
                }
                
