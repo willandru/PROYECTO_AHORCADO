@@ -9,9 +9,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -50,20 +52,35 @@ public class Menu extends JPanel implements ActionListener{
 
     private void initButtons() {
 
-        btnClasssic = new JButton("CLASSIC");
-        btnClasssic.setBounds(70,130,250,70);
+        btnClasssic = new JButton();
+        btnClasssic.setBounds(70,130,250,73);
+        btnClasssic.setIcon(getIconBUtton(1));
+        btnClasssic.setBackground(null);
+        btnClasssic.setBorderPainted(false);
         
-        btnHistory=new JButton("HISTORY");
-        btnHistory.setBounds(70,220,250,70);
+        btnHistory=new JButton();
+        btnHistory.setBounds(70,220,250,73);
+        btnHistory.setIcon(getIconBUtton(2));
+        btnHistory.setBackground(null);
+        btnHistory.setBorderPainted(false);
         
-        btnStore=new JButton("TIENDA");
-        btnStore.setBounds(70,310,250,70);
+        btnStore=new JButton();
+        btnStore.setBounds(70,310,250,73);
+        btnStore.setIcon(getIconBUtton(3));
+        btnStore.setBackground(null);
+        btnStore.setBorderPainted(false);
         
-        btnSetts=new JButton("SETTINGS");
-        btnSetts.setBounds(70,400,250,70);
+        btnSetts=new JButton();
+        btnSetts.setBounds(70,400,250,73);
+        btnSetts.setIcon(getIconBUtton(4));
+        btnSetts.setBackground(null);
+        btnSetts.setBorderPainted(false);
         
-        btnQuit=new JButton("QUIT");
-        btnQuit.setBounds(150,490,100,70);
+        btnQuit=new JButton();
+        btnQuit.setBounds(70,490,250,73);
+        btnQuit.setIcon(getIconBUtton(5));
+        btnQuit.setBackground(null);
+        btnQuit.setBorderPainted(false);
         
        
 
@@ -83,8 +100,74 @@ public class Menu extends JPanel implements ActionListener{
         
 
     }
+    
+     public BufferedImage loadSpreadSheet(File path){
+                 BufferedImage ig= null;
+                //InputStream is = Playing.class.getClassLoader().getResourceAsStream("./src/resources/spriteABC.png");
+                try {
+                    ig = ImageIO.read(path);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                return ig;
+            }
 
     
+    private ImageIcon getIconBUtton(int n){
+             ImageIcon im ;
+             File path;
+             BufferedImage buff;
+             
+             switch (n){
+                case 1:
+                    
+                    path= new File("./src/resources/jugar.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    
+                    
+                    break;
+                                       
+                 case 2:
+                    path= new File("./src/resources/historia.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;       
+             
+                                         
+                       case 3:
+                    path= new File("./src/resources/tienda.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;       
+             
+                       case 4:
+                          path= new File("./src/resources/archivo.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                       break;
+                       
+                       
+                       
+                       
+                       case 5:
+                    path= new File("./src/resources/quitar.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                    break;       
+                    
+                    default:
+                          path= new File("./src/resources/RAYA_AHORCADO.png");
+              buff= loadSpreadSheet(path);
+             im= new ImageIcon(buff);
+                       break;
+                    
+            }
+            
+            
+             return im;
+             
+         }
     
     
     
