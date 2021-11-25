@@ -216,6 +216,15 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             
             
+            panelIntentos = new JPanel();
+            panelIntentos.setBounds(300, 0, 70, 30);
+            panelIntentos.setBackground(Color.red);
+            
+            
+            panelLabels =  new JPanel();
+            panelLabels.setBounds(0,565,WIDTHP, 30);
+            panelLabels.setLayout(null);
+                    
             
             
             
@@ -232,13 +241,13 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             
             
             
-            p3.setBounds(0, 400, WIDTHP, 170);
+            p3.setBounds(0, 400, WIDTHP, 165);
             p3.setBackground(Color.darkGray);
-            p4.setBounds(0, 600, WIDTHP, 45);
+            p4.setBounds(0, 595, WIDTHP, 55);
             p4.setBackground(Color.yellow);
             p5.setBounds(0,0, 70, 40);
             p5.setBackground(new Color(111,222,111));
-            p6.setBounds(0,0, 55, 100);
+            p6.setBounds(15,0, 50, 50);
             p6.setBackground(Color.blue);
             
             p4.setLayout(null);
@@ -248,6 +257,13 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             initA();
             
              p1.setLayout(null);
+             
+             
+             
+             labelVIdas= new JLabel("6");
+             labelVIdas.setBounds(15, 0, 50, 30);
+             
+            
             
            
 
@@ -292,6 +308,12 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             this.add(p3);
             this.add(p4);
             this.add(panelDatos);
+            
+            this.add(panelLabels);
+            
+            panelDatos.add(panelIntentos);
+            
+            panelLabels.add(labelVIdas);
            //this.add(p5);
             //this.add(p6);
             
@@ -309,29 +331,31 @@ public class Playing extends JPanel implements ActionListener, Runnable{
 
         private void initButtons() {
           
-            int col= WIDTHP/5;
+            int col= (WIDTHP/5);
+            
+            int size =50;
 
             goHome = new JButton();
-            giveLetter= new JButton("LETRA");
-            changeWord= new JButton("CAMBIAR");
-            giveWord = new JButton("PALABRA");
+            giveLetter= new JButton();
+            changeWord= new JButton();
+            giveWord = new JButton();
             
-            giveWord.setBounds(col*2,0,col,70);
+            giveWord.setBounds(col*2+15,0,size,size);
             giveWord.addActionListener(this);
             giveWord.setBackground(new Color(222,150,123));
             giveWord.setBorder(null);
 
-            goHome.setBounds(col*4,0,col,55);
+            goHome.setBounds(col*4+15,0,size,size);
             goHome.addActionListener(this);
             goHome.setBackground(new Color(222,22,123));
             goHome.setBorder(null);
 
-            giveLetter.setBounds(col*1,0,col,70);
+            giveLetter.setBounds(col*1+15,0,size,size);
             giveLetter.addActionListener(this);
             giveLetter.setBackground(new Color(111,222,111));
             giveLetter.setBorder(null);
 
-            changeWord.setBounds(col*3,0,col,70);
+            changeWord.setBounds(col*3+15,0,size,size);
             changeWord.addActionListener(this);
             changeWord.setBackground(new Color(121,222,223));
             changeWord.setBorder(null);
