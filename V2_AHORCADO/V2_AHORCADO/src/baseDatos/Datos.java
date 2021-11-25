@@ -73,9 +73,7 @@ public class Datos implements Runnable{
         }
         return instance;
     }
-    
-     
-     
+ 
    public Vector<Categoria> loadDefaults(Vector<Categoria> catDef){
        try{
        defaultWords= new File("./src/resources/defaultsWords.txt");
@@ -92,10 +90,7 @@ public class Datos implements Runnable{
        
        return catDef;
    }
-    
-    
-   
-    
+
     public Vector<Categoria> saveFileContent(Vector<Categoria> cats, File file){
         System.out.println("saveFileContent () BASE DE DATOS,...LEYENDO Y GUARDANDO DATOS . . .");
         
@@ -153,9 +148,6 @@ public class Datos implements Runnable{
         return cats;
     }
     
-  
-
-       
     public void sendFileChoosener(){
        
         fileOpener = new JFileChooser();
@@ -190,9 +182,7 @@ public class Datos implements Runnable{
         customLOADED=true;
         }
     }
-    
-    
-    
+      
     @Override
     public void run() {
         System.out.println("HILO BASE DATOS: inica");
@@ -264,7 +254,6 @@ public class Datos implements Runnable{
     public Vector<Categoria> getVecCategoriasDEFAULTS() {
         return vecCategoriasDEFAULTS;
     }
-
     public Vector<Categoria> getVecCategoriasCUSTOM() {
         return vecCategoriasCUSTOM;
     }
