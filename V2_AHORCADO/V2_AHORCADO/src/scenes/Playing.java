@@ -928,11 +928,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
             }
             
             
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Playing.class.getName()).log(Level.SEVERE, null, ex);
-            }
+           
     }
 
         
