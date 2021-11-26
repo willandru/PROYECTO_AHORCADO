@@ -27,6 +27,8 @@ import static main.StatesApp.*;
  * @author kaliw
  */
 public class Settings extends JPanel implements ActionListener{
+    
+    
      private JButton btnGoMenu, btnUploadFile, btnMusic, btnDefaults;
      private  JFileChooser fileOpener = new JFileChooser(); 
      
