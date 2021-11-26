@@ -484,7 +484,7 @@ public class Playing extends JPanel implements ActionListener, Runnable{
          }
          
          private ImageIcon getIconButton(int n){
-             
+
              ImageIcon im ;
              File path;
              BufferedImage buff;
@@ -1117,8 +1117,9 @@ public class Playing extends JPanel implements ActionListener, Runnable{
                        label=String.valueOf(numVidas);
                        labelVIdas.setText("VIDAS: "+label);
                    
-                  numeroIntentos++;
-                        labelIntentos.setText("INTENTOS: "+String.valueOf(numeroIntentos));
+                       numeroIntentos++;
+                       
+                       labelIntentos.setText("INTENTOS: "+String.valueOf(numeroIntentos));
 
                        
                        System.err.println("NUm vidas:"+ numVidas);

@@ -59,7 +59,7 @@ public class SplashScreen extends JFrame implements Runnable{
 
          while(thread1 !=null){
             try{
-                Thread.sleep(6000);
+                Thread.sleep(3000);
                 this.dispose();
                 uiInst.getInstance();
             }catch (Exception e){

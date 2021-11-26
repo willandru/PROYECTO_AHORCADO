@@ -134,7 +134,7 @@ public class UI extends JFrame {
                 if(!settsPintado){
                 s= new Settings();
                 s.setSize(ANCHO, ALTO);
-                s.setBackground(Color.green);
+                s.setBackground(new Color(0x123456));
                 
                 myPanel.removeAll();
                 myPanel.add(s);
